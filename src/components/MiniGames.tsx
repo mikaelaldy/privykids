@@ -514,6 +514,8 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
   const [feedback, setFeedback] = useState('');
   const [showFeedback, setShowFeedback] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(10);
+  const [questionStarted, setQuestionStarted] = useState(false);
 
   const infoCards = [
     { info: 'Warna favoritmu', safe: true, explanation: 'Warna favorit umumnya aman untuk dibagikan!' },
@@ -530,7 +532,107 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
     { info: 'Tempat favoritmu untuk liburan', safe: true, explanation: 'Tempat liburan favorit umumnya aman untuk dibagikan!' }
   ];
 
+  // Create audio contexts for different ticking sounds
+  const createTickSound = (frequency: number, duration: number = 0.1) => {
+    try {
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+      oscillator.type = 'square';
+      
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + duration);
+    } catch (error) {
+      console.log('Audio not supported:', error);
+    }
+  };
+
+  const playTickSound = () => {
+    if (timeLeft <= 3) {
+      // Urgent fast ticking
+      createTickSound(800, 0.05);
+    } else if (timeLeft <= 5) {
+      // Warning ticking
+      createTickSound(600, 0.08);
+    } else {
+      // Normal ticking
+      createTickSound(400, 0.1);
+    }
+  };
+
+  // Timer useEffect with sound
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (questionStarted && timeLeft > 0 && !showFeedback) {
+      // Play tick sound
+      playTickSound();
+      
+      timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+    } else if (timeLeft === 0 && !showFeedback) {
+      // Time's up! Play different sound
+      try {
+        createTickSound(200, 0.5); // Lower, longer sound for timeout
+      } catch (error) {
+        console.log('Audio not supported:', error);
+      }
+      
+      const currentInfo = infoCards[currentCard];
+      setFeedback(`Waktu habis! ${currentInfo.explanation}`);
+      setShowFeedback(true);
+      
+      setTimeout(() => {
+        if (currentCard < infoCards.length - 1) {
+          setCurrentCard(prev => prev + 1);
+          setShowFeedback(false);
+          setTimeLeft(10);
+          setQuestionStarted(true);
+        } else {
+          onComplete(score);
+        }
+      }, 2500);
+    }
+    return () => clearTimeout(timer);
+  }, [timeLeft, questionStarted, showFeedback, currentCard, score]);
+
+  // Start timer when card changes
+  useEffect(() => {
+    if (gameStarted && !showFeedback) {
+      setTimeLeft(10);
+      setQuestionStarted(true);
+    }
+  }, [currentCard, gameStarted, showFeedback]);
+
   const makeChoice = (choice: 'share' | 'shield') => {
+    if (showFeedback) return;
+    
+    setQuestionStarted(false);
+    
+    // Play answer sound
+    try {
+      const currentInfo = infoCards[currentCard];
+      const isCorrect = (choice === 'share' && currentInfo.safe) || (choice === 'shield' && !currentInfo.safe);
+      
+      if (isCorrect) {
+        // Success sound
+        createTickSound(523, 0.3); // C note
+        setTimeout(() => createTickSound(659, 0.3), 150); // E note
+        setTimeout(() => createTickSound(784, 0.3), 300); // G note
+      } else {
+        // Error sound
+        createTickSound(150, 0.5); // Low buzz
+      }
+    } catch (error) {
+      console.log('Audio not supported:', error);
+    }
+    
     const currentInfo = infoCards[currentCard];
     const isCorrect = (choice === 'share' && currentInfo.safe) || (choice === 'shield' && !currentInfo.safe);
     
@@ -553,6 +655,60 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
     }, 2500);
   };
 
+  // Circular timer component
+  const CircularTimer = () => {
+    const radius = 40;
+    const circumference = 2 * Math.PI * radius;
+    const progress = (timeLeft / 10) * 100;
+    const strokeDashoffset = circumference - (progress / 100) * circumference;
+
+    return (
+      <div className="relative w-24 h-24 mx-auto mb-6">
+        <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 100 100">
+          {/* Background circle */}
+          <circle
+            cx="50"
+            cy="50"
+            r={radius}
+            stroke="rgb(229, 231, 235)"
+            strokeWidth="8"
+            fill="transparent"
+          />
+          {/* Progress circle */}
+          <circle
+            cx="50"
+            cy="50"
+            r={radius}
+            stroke={timeLeft <= 3 ? "rgb(239, 68, 68)" : timeLeft <= 5 ? "rgb(245, 158, 11)" : "rgb(59, 130, 246)"}
+            strokeWidth="8"
+            fill="transparent"
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            className="transition-all duration-1000 ease-linear"
+          />
+        </svg>
+        {/* Timer text with pulse animation when urgent */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className={`text-2xl font-bold ${
+            timeLeft <= 3 
+              ? 'text-red-600 animate-pulse' 
+              : timeLeft <= 5 
+                ? 'text-yellow-600' 
+                : 'text-blue-600'
+          }`}>
+            {timeLeft}
+          </span>
+        </div>
+        
+        {/* Add visual pulse effect for urgency */}
+        {timeLeft <= 3 && (
+          <div className="absolute inset-0 rounded-full border-4 border-red-500 animate-ping opacity-25"></div>
+        )}
+      </div>
+    );
+  };
+
   if (!gameStarted) {
     return (
       <div className="max-w-4xl mx-auto">
@@ -569,10 +725,21 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
             <h3 className="font-bold text-blue-800 mb-4">Cara Bermain:</h3>
             <ul className="space-y-2 text-blue-700">
               <li>• Kartu dengan berbagai jenis informasi akan muncul</li>
+              <li>• Kamu punya 10 detik untuk setiap pertanyaan! ⏰</li>
+              <li>• Dengarkan suara detik-detik waktu berjalan! 🔊</li>
               <li>• Putuskan apakah aman untuk DIBAGIKAN atau harus DILINDUNGI</li>
               <li>• Kamu akan mendapat umpan balik langsung untuk setiap pilihan</li>
-              <li>• Coba jawab sebanyak mungkin dengan benar!</li>
+              <li>• Coba jawab sebanyak mungkin dengan benar sebelum waktu habis!</li>
             </ul>
+          </div>
+
+          <div className="bg-yellow-50 rounded-2xl p-4 mb-8">
+            <div className="flex items-center gap-2 text-yellow-700">
+              <span className="text-xl">🔊</span>
+              <p className="text-sm">
+                <strong>Tip:</strong> Pastikan volume perangkatmu menyala untuk mendengar efek suara yang membantu!
+              </p>
+            </div>
           </div>
 
           <div className="text-center">
@@ -612,6 +779,9 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
 
         {!showFeedback ? (
           <div className="text-center">
+            {/* Timer */}
+            <CircularTimer />
+            
             <div className="bg-gradient-to-br from-blue-100 to-purple-100 rounded-3xl p-12 mb-8 shadow-lg">
               <h3 className="text-3xl font-bold text-gray-800 mb-6">
                 {infoCards[currentCard].info}
@@ -623,14 +793,16 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
               <div className="flex justify-center gap-8">
                 <button
                   onClick={() => makeChoice('share')}
-                  className="bg-green-600 text-white px-8 py-4 rounded-2xl font-bold text-xl hover:bg-green-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  disabled={showFeedback}
+                  className="bg-green-600 text-white px-8 py-4 rounded-2xl font-bold text-xl hover:bg-green-700 transition-all duration-300 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Eye className="h-6 w-6 mx-auto mb-2" />
                   BAGIKAN
                 </button>
                 <button
                   onClick={() => makeChoice('shield')}
-                  className="bg-red-600 text-white px-8 py-4 rounded-2xl font-bold text-xl hover:bg-red-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  disabled={showFeedback}
+                  className="bg-red-600 text-white px-8 py-4 rounded-2xl font-bold text-xl hover:bg-red-700 transition-all duration-300 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <EyeOff className="h-6 w-6 mx-auto mb-2" />
                   LINDUNGI
@@ -642,10 +814,10 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
           <div className="text-center">
             <div className="bg-blue-50 rounded-3xl p-12 mb-8">
               <div className="text-6xl mb-4">
-                {feedback.startsWith('Benar') ? '🎉' : '💡'}
+                {feedback.startsWith('Benar') ? '🎉' : feedback.startsWith('Waktu habis') ? '⏰' : '💡'}
               </div>
               <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                {feedback.startsWith('Benar') ? 'Hebat!' : 'Coba Lagi!'}
+                {feedback.startsWith('Benar') ? 'Hebat!' : feedback.startsWith('Waktu habis') ? 'Waktu Habis!' : 'Coba Lagi!'}
               </h3>
               <p className="text-gray-700 text-lg">{feedback}</p>
             </div>
