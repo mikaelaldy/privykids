@@ -73,7 +73,7 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
       title: 'Password Power',
       description: 'Master the art of creating strong, secure passwords',
       level: 2,
-      requiredLevel: 1, // Only need to complete Privacy Basics
+      requiredLevel: 2, // Need to be level 2 (complete Privacy Basics first)
       requiredScore: 75, // Need 3/4 questions correct (75%)
       questions: [
         {
@@ -115,7 +115,7 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
       title: 'Phishing Detective',
       description: 'Learn to spot and avoid online tricks and scams',
       level: 3,
-      requiredLevel: 1, // Only need to complete Privacy Basics
+      requiredLevel: 3, // Need to be level 3 (complete Password Power first)
       requiredScore: 70, // Need 3/4 questions correct (70%)
       questions: [
         {
@@ -157,7 +157,7 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
       title: 'Social Media Safety',
       description: 'Navigate social platforms like a privacy pro',
       level: 4,
-      requiredLevel: 1, // Only need to complete Privacy Basics
+      requiredLevel: 4, // Need to be level 4 (complete Phishing Detective first)
       requiredScore: 80, // Need 4/5 questions correct (80%)
       questions: [
         {
@@ -205,10 +205,12 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
   ];
 
   const handleAnswerSelect = (answerIndex: number) => {
+    if (!selectedQuiz || showResult) return; // Prevent double-clicking
+    
     setSelectedAnswer(answerIndex);
     setShowResult(true);
     
-    const currentQ = selectedQuiz!.questions[currentQuestion];
+    const currentQ = selectedQuiz.questions[currentQuestion];
     if (answerIndex === currentQ.correctAnswer) {
       setQuizScore(prev => prev + currentQ.points);
       setCorrectAnswers(prev => prev + 1);
@@ -216,7 +218,9 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
   };
 
   const handleNextQuestion = () => {
-    if (currentQuestion < selectedQuiz!.questions.length - 1) {
+    if (!selectedQuiz) return;
+    
+    if (currentQuestion < selectedQuiz.questions.length - 1) {
       setCurrentQuestion(prev => prev + 1);
       setSelectedAnswer(null);
       setShowResult(false);
@@ -226,29 +230,35 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
   };
 
   const completeQuiz = () => {
-    const totalQuestions = selectedQuiz!.questions.length;
+    if (!selectedQuiz) {
+      console.error('No quiz selected when trying to complete');
+      return;
+    }
+    
+    const totalQuestions = selectedQuiz.questions.length;
     const scorePercentage = (correctAnswers / totalQuestions) * 100;
-    const passed = scorePercentage >= selectedQuiz!.requiredScore;
+    const passed = scorePercentage >= selectedQuiz.requiredScore;
     
     setMissionPassed(passed);
     
     if (passed) {
-      const newCompletedQuizzes = [...userProgress.completedQuizzes, selectedQuiz!.id];
+      // Prevent duplicate completions
+      if (userProgress.completedQuizzes.includes(selectedQuiz.id)) {
+        console.log('Quiz already completed, not adding duplicate');
+        setQuizCompleted(true);
+        return;
+      }
+      
+      const newCompletedQuizzes = [...userProgress.completedQuizzes, selectedQuiz.id];
       const newTotalPoints = userProgress.totalPoints + quizScore;
       
-      // Calculate new level based on completed quizzes, not just points
+      // Fix: Calculate level based on completed quizzes using quiz.level instead of hardcoded values
       let newLevel = userProgress.level;
-      if (selectedQuiz!.id === 'privacy-basics' && !userProgress.completedQuizzes.includes('privacy-basics')) {
-        newLevel = Math.max(newLevel, 2); // Unlock level 2 after completing Privacy Basics
-      }
-      if (selectedQuiz!.id === 'password-power' && !userProgress.completedQuizzes.includes('password-power')) {
-        newLevel = Math.max(newLevel, 3); // Unlock level 3 after completing Password Power
-      }
-      if (selectedQuiz!.id === 'phishing-detective' && !userProgress.completedQuizzes.includes('phishing-detective')) {
-        newLevel = Math.max(newLevel, 4); // Unlock level 4 after completing Phishing Detective
-      }
-      if (selectedQuiz!.id === 'social-media-safety' && !userProgress.completedQuizzes.includes('social-media-safety')) {
-        newLevel = Math.max(newLevel, 5); // Unlock level 5 after completing Social Media Safety
+      const completedQuizLevel = selectedQuiz.level;
+      
+      // Only advance level if this quiz completion would unlock a higher level
+      if (completedQuizLevel >= newLevel) {
+        newLevel = Math.max(newLevel, completedQuizLevel + 1);
       }
       
       updateProgress({
@@ -286,14 +296,13 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
     const isCompleted = userProgress.completedQuizzes.includes(quiz.id);
     if (isCompleted) return 'completed';
     
-    // Special logic for unlocking quizzes
+    // Fix: Use proper level-based unlocking instead of only checking privacy-basics
     if (quiz.id === 'privacy-basics') {
       return 'available'; // Always available as the first mission
     }
     
-    // For other quizzes, check if Privacy Basics is completed
-    const privacyBasicsCompleted = userProgress.completedQuizzes.includes('privacy-basics');
-    if (privacyBasicsCompleted) {
+    // Check if user level meets the required level for this quiz
+    if (userProgress.level >= quiz.requiredLevel) {
       return 'available';
     }
     
@@ -430,7 +439,13 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
   }
 
   if (quizCompleted) {
-    const totalQuestions = selectedQuiz!.questions.length;
+    if (!selectedQuiz) {
+      console.error('Quiz completed but no quiz selected');
+      resetQuiz();
+      return null;
+    }
+    
+    const totalQuestions = selectedQuiz.questions.length;
     const scorePercentage = Math.round((correctAnswers / totalQuestions) * 100);
 
     return (
@@ -442,13 +457,13 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
                 <Trophy className="h-16 w-16 text-yellow-500 mx-auto mb-4" />
                 <h2 className="text-3xl font-bold text-gray-800 mb-2">Mission Complete! 🎉</h2>
                 <p className="text-green-600 text-lg font-semibold">You passed with {scorePercentage}%!</p>
-                <p className="text-blue-600 text-sm mt-2">🔓 New missions unlocked!</p>
+                <p className="text-blue-600 text-sm mt-2">🔓 Level up! New missions may be available!</p>
               </>
             ) : (
               <>
                 <Target className="h-16 w-16 text-orange-500 mx-auto mb-4" />
                 <h2 className="text-3xl font-bold text-gray-800 mb-2">Mission Incomplete 📚</h2>
-                <p className="text-orange-600 text-lg font-semibold">You scored {scorePercentage}% - Need {selectedQuiz!.requiredScore}% to pass</p>
+                <p className="text-orange-600 text-lg font-semibold">You scored {scorePercentage}% - Need {selectedQuiz.requiredScore}% to pass</p>
               </>
             )}
           </div>
@@ -474,15 +489,15 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
             <div className="mb-6">
               <h3 className="font-bold text-gray-800 mb-2">🎯 Mission Accomplished!</h3>
               <p className="text-gray-600">
-                You've mastered "{selectedQuiz!.title}" and earned valuable privacy knowledge!
-                All other missions are now available to explore!
+                You've mastered "{selectedQuiz.title}" and earned valuable privacy knowledge!
+                Check if new missions are now available for your level!
               </p>
             </div>
           ) : (
             <div className="mb-6">
               <h3 className="font-bold text-gray-800 mb-2">💪 Keep Learning!</h3>
               <p className="text-gray-600">
-                You need to get {Math.ceil((selectedQuiz!.requiredScore / 100) * totalQuestions)} out of {totalQuestions} questions correct to pass this mission. 
+                You need to get {Math.ceil((selectedQuiz.requiredScore / 100) * totalQuestions)} out of {totalQuestions} questions correct to pass this mission. 
                 Review the explanations and try again!
               </p>
             </div>
@@ -514,10 +529,10 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-gray-800 mb-4">Knowledge Missions 🎯</h2>
-        <p className="text-gray-600 text-lg">Complete Privacy Basics first to unlock all other missions!</p>
+        <p className="text-gray-600 text-lg">Complete missions in order to unlock higher levels and advance!</p>
         <div className="mt-4 bg-blue-50 rounded-xl p-4 max-w-2xl mx-auto">
           <p className="text-blue-700 font-medium">
-            💡 <strong>Mission Rules:</strong> You need to answer most questions correctly to pass each mission and unlock the next one!
+            💡 <strong>Mission Rules:</strong> You need to answer most questions correctly to pass each mission and level up!
           </p>
         </div>
       </div>
@@ -572,7 +587,7 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
                 {status === 'locked' && (
                   <div className="text-gray-400 text-sm flex items-center gap-1">
                     <Lock className="h-4 w-4" />
-                    Complete Privacy Basics first
+                    Requires Level {quiz.requiredLevel}
                   </div>
                 )}
 
