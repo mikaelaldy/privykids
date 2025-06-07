@@ -549,7 +549,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
                 Memberdayakan generasi penerus warga digital
               </p>
               <p className="text-sm text-gray-500">
-                © 2024 Privykids. Dibuat dengan ❤️ untuk masa depan digital yang lebih aman.
+                © 2025 Privykids. Dibuat dengan ❤️ oleh mikael aldy untuk masa depan digital yang lebih aman.
               </p>
             </div>
           </div>
