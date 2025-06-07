@@ -1,54 +1,55 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
-
-const baseUrl = process.env.AZURE_OPENAI_ENDPOINT!;
-const apiKey = process.env.AZURE_OPENAI_API_KEY!;
-const apiVersion = '2024-05-01-preview';
-
-async function makeOpenAIRequest(endpoint: string, method: 'GET' | 'POST' = 'POST', body?: any) {
-  const url = `${baseUrl}/openai${endpoint}?api-version=${apiVersion}`;
-  
-  const response = await fetch(url, {
-    method,
-    headers: {
-      'Content-Type': 'application/json',
-      'api-key': apiKey,
-    },
-    body: body ? JSON.stringify(body) : undefined,
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`OpenAI API error: ${response.status} - ${errorText}`);
-  }
-
-  return response.json();
-}
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Enable CORS
-  res.setHeader('Access-Control-Allow-Credentials', true);
+  // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
+  // Handle preflight requests
   if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
+    return res.status(200).end();
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ success: false, error: 'Method not allowed' });
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    console.log('🧵 Creating new conversation thread...');
-    
-    const thread = await makeOpenAIRequest('/threads', 'POST', {});
-    
-    console.log('✅ Thread created successfully:', thread.id);
-    res.json({ success: true, data: thread });
+    const endpoint = process.env.AZURE_OPENAI_ENDPOINT;
+    const apiKey = process.env.AZURE_OPENAI_API_KEY;
+    const apiVersion = process.env.AZURE_OPENAI_API_VERSION || '2024-05-01-preview';
+
+    if (!endpoint || !apiKey) {
+      return res.status(500).json({ error: 'OpenAI configuration missing' });
+    }
+
+    const response = await fetch(`${endpoint}/openai/threads?api-version=${apiVersion}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'api-key': apiKey
+      },
+      body: JSON.stringify(req.body || {})
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('❌ OpenAI API Error:', errorText);
+      return res.status(response.status).json({ 
+        error: 'Failed to create thread',
+        details: errorText
+      });
+    }
+
+    const thread = await response.json();
+    return res.status(200).json(thread);
+
   } catch (error) {
-    console.error('❌ Error creating thread:', error);
-    res.status(500).json({ success: false, error: 'Failed to create thread' });
+    console.error('❌ Thread creation error:', error);
+    return res.status(500).json({ 
+      error: 'Internal server error',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 } 

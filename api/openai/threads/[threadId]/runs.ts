@@ -26,31 +26,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: 'OpenAI configuration missing' });
     }
 
-    if (req.method === 'GET') {
-      // Get messages from thread
-      const response = await fetch(`${endpoint}/openai/threads/${threadId}/messages?api-version=${apiVersion}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'api-key': apiKey
-        }
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('❌ OpenAI API Error:', errorText);
-        return res.status(response.status).json({ 
-          error: 'Failed to get messages',
-          details: errorText
-        });
-      }
-
-      const messages = await response.json();
-      return res.status(200).json(messages);
-
-    } else if (req.method === 'POST') {
-      // Add message to thread
-      const response = await fetch(`${endpoint}/openai/threads/${threadId}/messages?api-version=${apiVersion}`, {
+    if (req.method === 'POST') {
+      // Create a run
+      const response = await fetch(`${endpoint}/openai/threads/${threadId}/runs?api-version=${apiVersion}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -63,20 +41,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const errorText = await response.text();
         console.error('❌ OpenAI API Error:', errorText);
         return res.status(response.status).json({ 
-          error: 'Failed to create message',
+          error: 'Failed to create run',
           details: errorText
         });
       }
 
-      const message = await response.json();
-      return res.status(200).json(message);
+      const run = await response.json();
+      return res.status(200).json(run);
 
     } else {
       return res.status(405).json({ error: 'Method not allowed' });
     }
 
   } catch (error) {
-    console.error('❌ Thread messages error:', error);
+    console.error('❌ Thread runs error:', error);
     return res.status(500).json({ 
       error: 'Internal server error',
       details: error instanceof Error ? error.message : 'Unknown error'

@@ -379,6 +379,12 @@ class OpenAIService {
   }
 
   async isServiceAvailable(): Promise<boolean> {
+    // In development mode, skip API health checks
+    if (import.meta.env.DEV) {
+      console.log('🛠️ Development mode: Skipping OpenAI API health check');
+      return false; // Indicate API not available, will use fallbacks
+    }
+
     try {
       const result = await this.makeRequest('/health');
       return result.success && result.services?.openai;
@@ -394,6 +400,17 @@ class OpenAIService {
     error?: string;
   }> {
     const startTime = Date.now();
+    
+    // In development mode, skip API status checks  
+    if (import.meta.env.DEV) {
+      const latency = Date.now() - startTime;
+      console.log('🛠️ Development mode: Using fallback responses');
+      return { 
+        available: false, 
+        latency, 
+        error: 'Development mode - using fallback responses'
+      };
+    }
     
     try {
       const available = await this.isServiceAvailable();

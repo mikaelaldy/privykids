@@ -59,6 +59,17 @@ class CosmosDbService {
   }
 
   async getUserProgress(): Promise<DatabaseOperationResult<UserProgress>> {
+    // In development mode, skip API calls and use localStorage directly
+    if (import.meta.env.DEV) {
+      console.log('📱 Development mode: Loading progress from localStorage...');
+      const fallbackProgress = this.getFallbackProgress();
+      return { 
+        success: true, 
+        data: fallbackProgress, 
+        fromCache: true 
+      };
+    }
+
     try {
       console.log('📊 Loading user progress from API...');
       
@@ -85,6 +96,13 @@ class CosmosDbService {
   }
 
   async updateUserProgress(progress: UserProgress): Promise<DatabaseOperationResult<void>> {
+    // In development mode, skip API calls and use localStorage directly
+    if (import.meta.env.DEV) {
+      console.log('💾 Development mode: Saving progress to localStorage...');
+      this.setFallbackProgress(progress);
+      return { success: true, fromCache: true };
+    }
+
     try {
       console.log('💾 Saving user progress to API...');
       
@@ -176,6 +194,12 @@ class CosmosDbService {
 
   // Health check methods
   async isServiceAvailable(): Promise<boolean> {
+    // In development mode, skip API health checks
+    if (import.meta.env.DEV) {
+      console.log('🛠️ Development mode: Skipping API health check');
+      return false; // Indicate API not available, will use localStorage
+    }
+
     try {
       const result = await this.makeRequest('/health');
       console.log('✅ Cosmos DB service is available via API');
@@ -192,6 +216,17 @@ class CosmosDbService {
     error?: string;
   }> {
     const startTime = Date.now();
+    
+    // In development mode, skip API status checks
+    if (import.meta.env.DEV) {
+      const latency = Date.now() - startTime;
+      console.log('🛠️ Development mode: Using localStorage fallback');
+      return { 
+        available: false, 
+        latency, 
+        error: 'Development mode - using localStorage'
+      };
+    }
     
     try {
       const available = await this.isServiceAvailable();

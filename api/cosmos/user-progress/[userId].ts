@@ -1,135 +1,98 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { CosmosClient } from '@azure/cosmos';
-import { v4 as uuidv4 } from 'uuid';
 
-const client = new CosmosClient({
+// Initialize Cosmos client
+const cosmosClient = new CosmosClient({
   endpoint: process.env.COSMOS_DB_ENDPOINT!,
-  key: process.env.COSMOS_DB_KEY!,
+  key: process.env.COSMOS_DB_KEY!
 });
 
-const databaseId = process.env.COSMOS_DB_DATABASE_ID!;
-
-// Initialize database and containers if needed
-async function ensureContainerExists(containerId: string) {
-  try {
-    const { database } = await client.databases.createIfNotExists({ id: databaseId });
-    await database.containers.createIfNotExists({
-      id: containerId,
-      partitionKey: { paths: ['/userId'] }
-    });
-    return database.container(containerId);
-  } catch (error) {
-    console.error(`❌ Error ensuring container ${containerId}:`, error);
-    throw error;
-  }
-}
+const database = cosmosClient.database(process.env.COSMOS_DB_DATABASE_NAME || 'privykids');
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Enable CORS
-  res.setHeader('Access-Control-Allow-Credentials', true);
+  // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
+  // Handle preflight requests
   if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
+    return res.status(200).end();
   }
 
   const { userId } = req.query;
 
   if (!userId || typeof userId !== 'string') {
-    return res.status(400).json({ success: false, error: 'User ID is required' });
+    return res.status(400).json({ error: 'User ID is required' });
   }
 
   try {
-    const container = await ensureContainerExists('user-progress');
+    // Ensure container exists
+    const { container } = await database.containers.createIfNotExists({
+      id: 'user-progress',
+      partitionKey: '/userId'
+    });
 
-    if (req.method === 'GET') {
-      // Get user progress
-      const query = `SELECT * FROM c WHERE c.userId = @userId ORDER BY c.updatedAt DESC`;
-      const { resources } = await container.items.query({
-        query,
-        parameters: [{ name: '@userId', value: userId }]
-      }).fetchAll();
-
-      if (resources.length > 0) {
-        const doc = resources[0];
-        res.json({
-          success: true,
-          data: {
-            level: doc.level,
-            totalPoints: doc.totalPoints,
-            badges: doc.badges,
-            completedQuizzes: doc.completedQuizzes,
-            completedGames: doc.completedGames,
-            streakDays: doc.streakDays
-          }
-        });
-      } else {
-        res.json({
-          success: true,
-          data: {
-            level: 1,
-            totalPoints: 0,
+    switch (req.method) {
+      case 'GET':
+        try {
+          const { resource } = await container.item(userId, userId).read();
+          return res.status(200).json(resource || {
+            id: userId,
+            userId,
+            completedLevels: [],
+            totalScore: 0,
+            currentLevel: 1,
             badges: [],
-            completedQuizzes: [],
-            completedGames: [],
-            streakDays: 1
+            lastActivity: new Date().toISOString(),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          });
+        } catch (error: any) {
+          if (error.code === 404) {
+            return res.status(200).json({
+              id: userId,
+              userId,
+              completedLevels: [],
+              totalScore: 0,
+              currentLevel: 1,
+              badges: [],
+              lastActivity: new Date().toISOString(),
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString()
+            });
           }
-        });
-      }
-    } else if (req.method === 'POST') {
-      // Update user progress
-      const progress = req.body;
-      const now = new Date();
+          throw error;
+        }
 
-      // Try to find existing document
-      const query = `SELECT * FROM c WHERE c.userId = @userId ORDER BY c.updatedAt DESC`;
-      const { resources } = await container.items.query({
-        query,
-        parameters: [{ name: '@userId', value: userId }]
-      }).fetchAll();
-
-      if (resources.length > 0) {
-        // Update existing document
-        const existingDoc = resources[0];
-        const updatedDoc = {
-          ...existingDoc,
-          ...progress,
-          updatedAt: now,
-          version: existingDoc.version + 1
-        };
-        
-        await container.item(existingDoc.id, userId).replace(updatedDoc);
-      } else {
-        // Create new document
-        const newDoc = {
-          id: uuidv4(),
-          partitionKey: userId,
+      case 'POST':
+      case 'PUT':
+        const progressData = {
+          ...req.body,
+          id: userId,
           userId,
-          ...progress,
-          createdAt: now,
-          updatedAt: now,
-          version: 1,
-          lastLoginDate: now,
-          preferences: {
-            theme: 'light',
-            notifications: true,
-            language: 'en'
-          }
+          updatedAt: new Date().toISOString()
         };
-        
-        await container.items.create(newDoc);
-      }
 
-      console.log(`✅ User progress updated for ${userId}`);
-      res.json({ success: true });
-    } else {
-      res.status(405).json({ success: false, error: 'Method not allowed' });
+        if (!progressData.createdAt) {
+          progressData.createdAt = new Date().toISOString();
+        }
+
+        const { resource } = await container.items.upsert(progressData);
+        return res.status(200).json(resource);
+
+      case 'DELETE':
+        await container.item(userId, userId).delete();
+        return res.status(200).json({ success: true });
+
+      default:
+        return res.status(405).json({ error: 'Method not allowed' });
     }
   } catch (error) {
-    console.error('❌ Error in user progress API:', error);
-    res.status(500).json({ success: false, error: 'Internal server error' });
+    console.error('❌ Cosmos DB API error:', error);
+    return res.status(500).json({ 
+      error: 'Internal server error',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 } 
