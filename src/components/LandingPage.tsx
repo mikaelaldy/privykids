@@ -11,53 +11,67 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
   const features = [
     {
       icon: Brain,
-      title: 'Interactive Learning',
-      description: 'Fun quizzes and missions that make privacy education feel like an adventure!',
+      title: 'Pembelajaran Interaktif',
+      description: 'Bukan sekadar membaca, anak akan terlibat langsung dalam setiap misi untuk memahami konsep-konsep penting.',
       color: 'blue'
     },
     {
       icon: Gamepad2,
-      title: 'Engaging Games',
-      description: 'Mini-games like Password Fortress and Share or Shield teach through play.',
+      title: 'Game Edukatif Seru',
+      description: 'Latih skill keamanan melalui game menantang seperti "The Password Game" dan "Share or Shield".',
       color: 'purple'
     },
     {
       icon: MessageCircle,
-      title: 'AI Privacy Pal',
-      description: 'A friendly chatbot companion that answers questions and provides daily tips.',
+      title: 'Teman AI Pribadi',
+      description: 'Bingung? Tanya "Privy"! Asisten AI kami siap membantu menjelaskan topik sulit dengan cara yang mudah dimengerti.',
       color: 'green'
     },
     {
       icon: Trophy,
-      title: 'Achievement System',
-      description: 'Earn badges, level up, and track progress as you become a Privacy Guardian!',
+      title: 'Raih Level & Lencana',
+      description: 'Setiap kemajuan akan diapresiasi! Sistem poin dan lencana dirancang untuk menjaga semangat belajar anak tetap menyala.',
       color: 'yellow'
     }
   ];
 
   const testimonials = [
     {
-      quote: "My daughter loves playing the password games! She's actually excited to learn about online safety now.",
-      author: "Sarah M., Parent",
+      quote: "Anakku suka banget main game password! Sekarang dia excited belajar keamanan online.",
+      author: "Sarah M., Orang Tua",
       rating: 5
     },
     {
-      quote: "The Privacy Pal chatbot is amazing - it answers all my questions in a way I can understand!",
-      author: "Alex, Age 10",
+      quote: "Chatbot Teman Privasi keren banget - dia jawab semua pertanyaanku dengan cara yang gampang dimengerti!",
+      author: "Alex, Umur 10 tahun",
       rating: 5
     },
     {
-      quote: "Finally, an app that teaches digital citizenship in a way kids actually enjoy. Highly recommend!",
-      author: "Mr. Johnson, Elementary Teacher",
+      quote: "Akhirnya ada aplikasi yang ngajarin digital citizenship dengan cara yang beneran disukai anak-anak. Recommended banget!",
+      author: "Pak Johnson, Guru SD",
       rating: 5
     }
   ];
 
-  const stats = [
-    { number: '10,000+', label: 'Young Privacy Guardians' },
-    { number: '50+', label: 'Interactive Lessons' },
-    { number: '98%', label: 'Parent Satisfaction' },
-    { number: '15+', label: 'Achievement Badges' }
+  const importancePoints = [
+    {
+      icon: Shield,
+      title: 'Ancaman Siber Nyata',
+      description: 'Kejahatan online seperti penipuan dan pencurian data kini dapat menargetkan siapa saja, termasuk anak-anak yang belum paham risiko.',
+      color: 'red'
+    },
+    {
+      icon: Globe,
+      title: 'Jejak Digital Itu Abadi',
+      description: 'Setiap informasi yang dibagikan akan membentuk jejak digital anak di masa depan. Penting untuk memahami konsekuensinya sejak dini.',
+      color: 'blue'
+    },
+    {
+      icon: Heart,
+      title: 'Fondasi Kebiasaan Sehat',
+      description: 'Membangun pemahaman tentang privasi sejak kecil akan membentuk kebiasaan digital yang sehat dan bertanggung jawab seumur hidup.',
+      color: 'green'
+    }
   ];
 
   useEffect(() => {
@@ -86,60 +100,53 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
 
             {/* Hero Headline */}
             <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6 leading-tight">
-              Turn Your Child Into a
+              Ubah Anakmu Jadi
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                Digital Privacy Hero! 🚀
+                Pahlawan Privasi Digital! 🚀
               </span>
             </h2>
 
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-              Join thousands of kids on an epic adventure through the Digital Universe! 
-              Learn online safety, master password security, and become a Privacy Guardian 
-              through fun games, quizzes, and your personal AI companion.
+              Bekali anak dengan pengetahuan keamanan siber melalui petualangan game dan kuis yang seru. 
+              Belajar privasi data kini jadi menyenangkan!
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+            {/* Single CTA Button */}
+            <div className="flex justify-center items-center mb-12">
               <button
                 onClick={onStartAdventure}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center gap-3"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-5 rounded-2xl font-bold text-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center gap-3"
               >
-                <Rocket className="h-6 w-6" />
-                Start Your Adventure!
-              </button>
-              <button className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-blue-50 transition-all duration-300 flex items-center gap-3">
-                <Play className="h-6 w-6" />
-                Watch Demo
+                <Rocket className="h-7 w-7" />
+                Mulai Petualangan!
               </button>
             </div>
 
-            {/* Hero Image/Animation Placeholder */}
+            {/* Activities Section */}
             <div className="relative max-w-3xl mx-auto">
               <div className="bg-white rounded-3xl shadow-2xl p-8 border-4 border-blue-100">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                  <div className="text-center">
-                    <div className="bg-blue-100 p-4 rounded-full mb-3 mx-auto w-fit">
-                      <Brain className="h-8 w-8 text-blue-600" />
+                <h3 className="text-2xl font-bold text-gray-800 mb-6">Jelajahi Aktivitas Seru Kami:</h3>
+                <div className="space-y-4 text-left">
+                  <div className="flex items-center gap-4 p-4 bg-blue-50 rounded-lg">
+                    <span className="text-2xl">🎮</span>
+                    <div>
+                      <h4 className="font-bold text-gray-800">Game Interaktif</h4>
+                      <p className="text-gray-600">Latih insting keamanan anak.</p>
                     </div>
-                    <p className="font-semibold text-gray-700">Learn</p>
                   </div>
-                  <div className="text-center">
-                    <div className="bg-purple-100 p-4 rounded-full mb-3 mx-auto w-fit">
-                      <Gamepad2 className="h-8 w-8 text-purple-600" />
+                  <div className="flex items-center gap-4 p-4 bg-purple-50 rounded-lg">
+                    <span className="text-2xl">🧠</span>
+                    <div>
+                      <h4 className="font-bold text-gray-800">Kuis Cerdas</h4>
+                      <p className="text-gray-600">Uji dan tingkatkan pengetahuan.</p>
                     </div>
-                    <p className="font-semibold text-gray-700">Play</p>
                   </div>
-                  <div className="text-center">
-                    <div className="bg-green-100 p-4 rounded-full mb-3 mx-auto w-fit">
-                      <Trophy className="h-8 w-8 text-green-600" />
+                  <div className="flex items-center gap-4 p-4 bg-green-50 rounded-lg">
+                    <span className="text-2xl">🤖</span>
+                    <div>
+                      <h4 className="font-bold text-gray-800">Tanya AI Privy</h4>
+                      <p className="text-gray-600">Dapatkan jawaban instan dan ramah.</p>
                     </div>
-                    <p className="font-semibold text-gray-700">Achieve</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="bg-yellow-100 p-4 rounded-full mb-3 mx-auto w-fit">
-                      <Shield className="h-8 w-8 text-yellow-600" />
-                    </div>
-                    <p className="font-semibold text-gray-700">Protect</p>
                   </div>
                 </div>
               </div>
@@ -148,16 +155,34 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-white">
+      {/* Importance Section (Replacing Stats) */}
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl font-bold text-blue-600 mb-2">{stat.number}</div>
-                <div className="text-gray-600 font-medium">{stat.label}</div>
-              </div>
-            ))}
+          <div className="text-center mb-16">
+            <h3 className="text-4xl font-bold text-gray-800 mb-4">
+              Kenapa Literasi Privasi Digital Penting?
+            </h3>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Di dunia yang serba terhubung, membekali anak dengan pengetahuan adalah tameng terbaik mereka.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {importancePoints.map((point, index) => {
+              const Icon = point.icon;
+              return (
+                <div
+                  key={index}
+                  className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 text-center border-l-4 border-blue-500"
+                >
+                  <div className={`bg-${point.color}-100 p-4 rounded-full mb-6 mx-auto w-fit`}>
+                    <Icon className={`h-8 w-8 text-${point.color}-600`} />
+                  </div>
+                  <h4 className="text-xl font-bold text-gray-800 mb-4">{point.title}</h4>
+                  <p className="text-gray-600 leading-relaxed">{point.description}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -167,11 +192,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h3 className="text-4xl font-bold text-gray-800 mb-4">
-              Why Kids Love Privykids 💖
+              Kenapa Anak-anak Akan Suka Privykids ❤️
             </h3>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              We've transformed boring privacy lessons into an exciting adventure 
-              that kids actually want to experience!
+              Kami merancang setiap fitur agar proses belajar terasa seperti bermain.
             </p>
           </div>
 
@@ -200,10 +224,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h3 className="text-4xl font-bold text-gray-800 mb-4">
-              Your Child's Privacy Journey 🗺️
+              Perjalanan Privasi Anakmu 🗺️
             </h3>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              From Privacy Cadet to Digital Guardian in just a few fun steps!
+              Dari Kadet Privasi jadi Pahlawan Privasi hanya dalam beberapa langkah seru!
             </p>
           </div>
 
@@ -213,9 +237,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
                 <div className="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold mx-auto mb-6">
                   1
                 </div>
-                <h4 className="text-xl font-bold text-gray-800 mb-4">Start as a Privacy Cadet</h4>
+                <h4 className="text-xl font-bold text-gray-800 mb-4">Mulai sebagai Kadet Privasi</h4>
                 <p className="text-gray-600">
-                  Begin your adventure with basic privacy concepts through fun, interactive quizzes and meet your AI Privacy Pal!
+                  Mulai petualanganmu dengan konsep privasi dasar lewat kuis interaktif yang seru dan kenalan sama Teman Privasi AI!
                 </p>
               </div>
 
@@ -223,9 +247,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
                 <div className="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold mx-auto mb-6">
                   2
                 </div>
-                <h4 className="text-xl font-bold text-gray-800 mb-4">Master Safety Games</h4>
+                <h4 className="text-xl font-bold text-gray-800 mb-4">Taklukkan Game Keamanan</h4>
                 <p className="text-gray-600">
-                  Play Password Fortress, Share or Shield, and other mini-games that teach real-world digital safety skills.
+                  Main Benteng Password, Share or Shield, dan mini-game lain yang ngajarin skill keamanan digital dunia nyata.
                 </p>
               </div>
 
@@ -233,9 +257,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
                 <div className="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold mx-auto mb-6">
                   3
                 </div>
-                <h4 className="text-xl font-bold text-gray-800 mb-4">Become a Privacy Guardian</h4>
+                <h4 className="text-xl font-bold text-gray-800 mb-4">Lulus sebagai Pahlawan Privasi</h4>
                 <p className="text-gray-600">
-                  Earn badges, level up, and graduate as a certified Privacy Guardian ready to navigate the digital world safely!
+                  Raih lencana, naik level, dan lulus jadi Pahlawan Privasi tersertifikasi yang siap menjelajahi dunia digital dengan aman!
                 </p>
               </div>
             </div>
@@ -243,43 +267,27 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Vision Section (Replacing Testimonials) */}
       <section className="py-20 bg-gradient-to-br from-purple-50 to-pink-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h3 className="text-4xl font-bold text-gray-800 mb-4">
-              What Families Are Saying 🌟
+              Visi Kami untuk Anak Indonesia 🇮🇩
             </h3>
-            <p className="text-xl text-gray-600">
-              Join thousands of happy families on the privacy adventure!
+            <p className="text-xl text-gray-600 mb-8">
+              Menciptakan Generasi Emas Digital yang Cerdas, Kritis, dan Aman.
             </p>
           </div>
 
           <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
-              <div className="flex justify-center mb-4">
-                {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
-                  <Star key={i} className="h-6 w-6 text-yellow-400 fill-current" />
-                ))}
-              </div>
-              <blockquote className="text-xl text-gray-700 mb-6 italic">
-                "{testimonials[currentTestimonial].quote}"
-              </blockquote>
-              <cite className="text-gray-600 font-semibold">
-                — {testimonials[currentTestimonial].author}
-              </cite>
-            </div>
-
-            <div className="flex justify-center mt-6 gap-2">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentTestimonial(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    index === currentTestimonial ? 'bg-purple-600' : 'bg-gray-300'
-                  }`}
-                />
-              ))}
+            <div className="bg-white rounded-3xl shadow-xl p-12 text-center">
+              <p className="text-xl text-gray-700 leading-relaxed">
+                Kami membangun Privykids bukan hanya sebagai aplikasi, tetapi sebagai sebuah gerakan. 
+                Visi kami adalah memberdayakan setiap anak di Indonesia dengan pemahaman mendalam tentang 
+                hak privasi dan cara melindungi diri di dunia maya. Melalui permainan yang menyenangkan, 
+                kami percaya fondasi untuk masa depan digital yang lebih aman dapat kita bangun bersama, 
+                sejak hari ini.
+              </p>
             </div>
           </div>
         </div>
@@ -290,7 +298,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h3 className="text-4xl font-bold text-gray-800 mb-8">
-              Built with Safety & Trust in Mind 🛡️
+              Dibangun dengan Prinsip Keamanan & Kepercayaan 🛡️
             </h3>
             
             <div className="grid md:grid-cols-3 gap-8 mb-12">
@@ -298,24 +306,24 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
                 <div className="bg-green-100 p-4 rounded-full mb-4 mx-auto w-fit">
                   <Shield className="h-8 w-8 text-green-600" />
                 </div>
-                <h4 className="font-bold text-gray-800 mb-2">Privacy First</h4>
-                <p className="text-gray-600">No personal data collection. Everything stays on your device.</p>
+                <h4 className="font-bold text-gray-800 mb-2">Privasi Terjaga</h4>
+                <p className="text-gray-600">Kami berkomitmen untuk tidak mengumpulkan data pribadi yang tidak diperlukan. Progres belajar dirancang untuk tetap aman.</p>
               </div>
               
               <div className="text-center">
                 <div className="bg-blue-100 p-4 rounded-full mb-4 mx-auto w-fit">
                   <Heart className="h-8 w-8 text-blue-600" />
                 </div>
-                <h4 className="font-bold text-gray-800 mb-2">Age-Appropriate</h4>
-                <p className="text-gray-600">Designed by educators specifically for children ages 8-12.</p>
+                <h4 className="font-bold text-gray-800 mb-2">Konten Sesuai Usia</h4>
+                <p className="text-gray-600">Semua materi dan permainan dirancang oleh tim kami khusus untuk anak-anak, dengan bahasa yang positif dan mudah dipahami.</p>
               </div>
               
               <div className="text-center">
                 <div className="bg-purple-100 p-4 rounded-full mb-4 mx-auto w-fit">
-                  <CheckCircle className="h-8 w-8 text-purple-600" />
+                  <Users className="h-8 w-8 text-purple-600" />
                 </div>
-                <h4 className="font-bold text-gray-800 mb-2">Parent Approved</h4>
-                <p className="text-gray-600">Trusted by educators and recommended by child safety experts.</p>
+                <h4 className="font-bold text-gray-800 mb-2">Dirancang untuk Orang Tua</h4>
+                <p className="text-gray-600">Kami menyediakan platform yang aman bagi orang tua untuk memperkenalkan konsep privasi digital kepada anak-anak mereka.</p>
               </div>
             </div>
           </div>
@@ -326,24 +334,21 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
       <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
         <div className="container mx-auto px-4 text-center">
           <h3 className="text-4xl font-bold mb-6">
-            Ready to Start the Adventure? 🚀
+            Siap Memulai Petualangan Digital yang Aman? 🚀
           </h3>
           <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-            Join the Privacy Academy today and help your child become a confident, 
-            safe digital citizen through the power of play!
+            Bergabunglah dalam misi kami untuk menciptakan generasi digital yang lebih bijak. 
+            Coba prototipe Privykids sekarang!
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex justify-center items-center">
             <button
               onClick={onStartAdventure}
-              className="bg-white text-blue-600 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center gap-3"
+              className="bg-white text-blue-600 px-10 py-5 rounded-2xl font-bold text-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center gap-3"
             >
-              <Sparkles className="h-6 w-6" />
-              Begin Your Journey Now!
+              <Sparkles className="h-7 w-7" />
+              Mulai Sekarang, Gratis!
             </button>
-            <p className="text-blue-100 text-sm">
-              Free to start • No downloads required • Safe & secure
-            </p>
           </div>
         </div>
       </section>
@@ -361,10 +366,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
             
             <div className="text-center md:text-right">
               <p className="text-gray-400 mb-2">
-                Empowering the next generation of digital citizens
+                Memberdayakan generasi penerus warga digital
               </p>
               <p className="text-sm text-gray-500">
-                © 2024 Privykids. Made with ❤️ for safer digital futures.
+                © 2024 Privykids. Dibuat dengan ❤️ untuk masa depan digital yang lebih aman.
               </p>
             </div>
           </div>

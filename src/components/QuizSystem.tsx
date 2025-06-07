@@ -341,43 +341,46 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
 
     return (
       <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-xl p-8">
-          <div className="flex items-center justify-between mb-8">
+        <div className="bg-white rounded-2xl shadow-xl p-4">
+          {/* Compact Header */}
+          <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-2xl font-bold text-gray-800">{selectedQuiz.title}</h2>
-              <p className="text-gray-600">Mission Level {selectedQuiz.level}</p>
+              <h2 className="text-lg font-bold text-gray-800">{selectedQuiz.title}</h2>
+              <p className="text-sm text-gray-600">Mission Level {selectedQuiz.level}</p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <div className="text-center">
-                <span className="text-sm font-semibold text-gray-600">
-                  Question {currentQuestion + 1} of {selectedQuiz.questions.length}
+                <span className="text-xs font-semibold text-gray-600">
+                  {currentQuestion + 1}/{selectedQuiz.questions.length}
                 </span>
                 <div className="text-xs text-gray-500">
-                  Need {Math.ceil((selectedQuiz.requiredScore / 100) * selectedQuiz.questions.length)} correct to pass
+                  Need {Math.ceil((selectedQuiz.requiredScore / 100) * selectedQuiz.questions.length)} correct
                 </div>
               </div>
-              <div className="bg-blue-100 px-3 py-1 rounded-full">
-                <span className="text-blue-600 font-semibold">{correctAnswers}/{selectedQuiz.questions.length} ✓</span>
+              <div className="bg-blue-100 px-2 py-1 rounded-full">
+                <span className="text-blue-600 font-semibold text-sm">{correctAnswers}/{selectedQuiz.questions.length} ✓</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-gray-200 rounded-full h-3 mb-8">
+          {/* Compact Progress Bar */}
+          <div className="bg-gray-200 rounded-full h-2 mb-4">
             <div 
-              className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-500"
+              className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-500"
               style={{ width: `${((currentQuestion + 1) / selectedQuiz.questions.length) * 100}%` }}
             ></div>
           </div>
 
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold text-gray-800 mb-6">{currentQ.question}</h3>
-            <div className="grid gap-4">
+          {/* Question Section */}
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">{currentQ.question}</h3>
+            <div className="grid gap-3">
               {currentQ.options.map((option, index) => (
                 <button
                   key={index}
                   onClick={() => !showResult && handleAnswerSelect(index)}
                   disabled={showResult}
-                  className={`p-4 rounded-xl border-2 text-left transition-all duration-300 ${
+                  className={`p-3 rounded-lg border-2 text-left transition-all duration-300 text-sm ${
                     showResult
                       ? index === currentQ.correctAnswer
                         ? 'border-green-500 bg-green-50 text-green-700'
@@ -387,12 +390,12 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
                       : 'border-gray-200 hover:border-blue-500 hover:bg-blue-50 cursor-pointer'
                   }`}
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
                     {showResult && index === currentQ.correctAnswer && (
-                      <CheckCircle className="h-5 w-5 text-green-500" />
+                      <CheckCircle className="h-4 w-4 text-green-500" />
                     )}
                     {showResult && index === selectedAnswer && !isCorrect && (
-                      <XCircle className="h-5 w-5 text-red-500" />
+                      <XCircle className="h-4 w-4 text-red-500" />
                     )}
                     <span className="font-medium">{option}</span>
                   </div>
@@ -401,32 +404,34 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
             </div>
           </div>
 
+          {/* Compact Feedback Section */}
           {showResult && (
-            <div className={`p-6 rounded-xl mb-6 ${isCorrect ? 'bg-green-50 border border-green-200' : 'bg-blue-50 border border-blue-200'}`}>
-              <div className="flex items-center gap-3 mb-3">
+            <div className={`p-4 rounded-lg mb-4 ${isCorrect ? 'bg-green-50 border border-green-200' : 'bg-blue-50 border border-blue-200'}`}>
+              <div className="flex items-center gap-2 mb-2">
                 {isCorrect ? (
-                  <CheckCircle className="h-6 w-6 text-green-500" />
+                  <CheckCircle className="h-5 w-5 text-green-500" />
                 ) : (
-                  <Star className="h-6 w-6 text-blue-500" />
+                  <Star className="h-5 w-5 text-blue-500" />
                 )}
-                <h4 className="font-bold text-lg">
+                <h4 className="font-bold text-base">
                   {isCorrect ? 'Excellent! 🎉' : 'Good try! 💪'}
                 </h4>
+                {isCorrect && (
+                  <span className="text-green-600 font-semibold text-sm ml-auto">
+                    +{currentQ.points} points! ⭐
+                  </span>
+                )}
               </div>
-              <p className="text-gray-700 mb-3">{currentQ.explanation}</p>
-              {isCorrect && (
-                <div className="text-green-600 font-semibold">
-                  +{currentQ.points} points! ⭐
-                </div>
-              )}
+              <p className="text-gray-700 text-sm">{currentQ.explanation}</p>
             </div>
           )}
 
+          {/* Compact Action Button */}
           {showResult && (
             <div className="flex justify-end">
               <button
                 onClick={handleNextQuestion}
-                className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors flex items-center gap-2"
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center gap-2 text-sm"
               >
                 {currentQuestion < selectedQuiz.questions.length - 1 ? 'Next Question' : 'Complete Mission'}
                 <ArrowRight className="h-4 w-4" />
@@ -450,64 +455,64 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
 
     return (
       <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
-          <div className="mb-6">
+        <div className="bg-white rounded-2xl shadow-xl p-6 text-center">
+          <div className="mb-4">
             {missionPassed ? (
               <>
-                <Trophy className="h-16 w-16 text-yellow-500 mx-auto mb-4" />
-                <h2 className="text-3xl font-bold text-gray-800 mb-2">Mission Complete! 🎉</h2>
-                <p className="text-green-600 text-lg font-semibold">You passed with {scorePercentage}%!</p>
-                <p className="text-blue-600 text-sm mt-2">🔓 Level up! New missions may be available!</p>
+                <Trophy className="h-12 w-12 text-yellow-500 mx-auto mb-3" />
+                <h2 className="text-xl font-bold text-gray-800 mb-2">Mission Complete! 🎉</h2>
+                <p className="text-green-600 text-base font-semibold">You passed with {scorePercentage}%!</p>
+                <p className="text-blue-600 text-xs mt-1">🔓 Level up! New missions may be available!</p>
               </>
             ) : (
               <>
-                <Target className="h-16 w-16 text-orange-500 mx-auto mb-4" />
-                <h2 className="text-3xl font-bold text-gray-800 mb-2">Mission Incomplete 📚</h2>
-                <p className="text-orange-600 text-lg font-semibold">You scored {scorePercentage}% - Need {selectedQuiz.requiredScore}% to pass</p>
+                <Target className="h-12 w-12 text-orange-500 mx-auto mb-3" />
+                <h2 className="text-xl font-bold text-gray-800 mb-2">Mission Incomplete 📚</h2>
+                <p className="text-orange-600 text-base font-semibold">You scored {scorePercentage}% - Need {selectedQuiz.requiredScore}% to pass</p>
               </>
             )}
           </div>
           
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 mb-6">
+          <div className="bg-gray-50 rounded-lg p-4 mb-4">
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
-                <div className="text-2xl font-bold text-blue-600">{correctAnswers}</div>
-                <div className="text-sm text-gray-600">Correct</div>
+                <div className="text-lg font-bold text-blue-600">{correctAnswers}</div>
+                <div className="text-xs text-gray-600">Correct</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-purple-600">{totalQuestions - correctAnswers}</div>
-                <div className="text-sm text-gray-600">Incorrect</div>
+                <div className="text-lg font-bold text-purple-600">{totalQuestions - correctAnswers}</div>
+                <div className="text-xs text-gray-600">Incorrect</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-green-600">{missionPassed ? quizScore : 0}</div>
-                <div className="text-sm text-gray-600">Points Earned</div>
+                <div className="text-lg font-bold text-green-600">{missionPassed ? quizScore : 0}</div>
+                <div className="text-xs text-gray-600">Points Earned</div>
               </div>
             </div>
           </div>
 
           {missionPassed ? (
-            <div className="mb-6">
-              <h3 className="font-bold text-gray-800 mb-2">🎯 Mission Accomplished!</h3>
-              <p className="text-gray-600">
+            <div className="mb-4">
+              <h3 className="font-bold text-gray-800 mb-1 text-sm">🎯 Mission Accomplished!</h3>
+              <p className="text-gray-600 text-sm">
                 You've mastered "{selectedQuiz.title}" and earned valuable privacy knowledge!
                 Check if new missions are now available for your level!
               </p>
             </div>
           ) : (
-            <div className="mb-6">
-              <h3 className="font-bold text-gray-800 mb-2">💪 Keep Learning!</h3>
-              <p className="text-gray-600">
+            <div className="mb-4">
+              <h3 className="font-bold text-gray-800 mb-1 text-sm">💪 Keep Learning!</h3>
+              <p className="text-gray-600 text-sm">
                 You need to get {Math.ceil((selectedQuiz.requiredScore / 100) * totalQuestions)} out of {totalQuestions} questions correct to pass this mission. 
                 Review the explanations and try again!
               </p>
             </div>
           )}
 
-          <div className="flex gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-2 justify-center">
             {!missionPassed && (
               <button
                 onClick={retryQuiz}
-                className="bg-orange-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-orange-700 transition-colors flex items-center gap-2"
+                className="bg-orange-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-orange-700 transition-colors flex items-center gap-2 text-sm"
               >
                 <Zap className="h-4 w-4" />
                 Try Again
@@ -515,7 +520,7 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
             )}
             <button
               onClick={resetQuiz}
-              className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-sm"
             >
               {missionPassed ? 'Choose Next Mission' : 'Back to Missions'}
             </button>

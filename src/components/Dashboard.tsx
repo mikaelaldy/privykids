@@ -19,8 +19,8 @@ const Dashboard: React.FC<DashboardProps> = ({ userProgress, achievements, setCu
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-8 text-white shadow-xl">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-3xl font-bold mb-2">Welcome back, Privacy Cadet! 🚀</h2>
-            <p className="text-blue-100 text-lg">Ready for another adventure in digital safety?</p>
+            <h2 className="text-3xl font-bold mb-2">Selamat datang kembali, pahlawan digital! </h2>
+            <p className="text-blue-100 text-lg">Siap untuk petualangan lain dalam keamanan digital?</p>
           </div>
           <div className="text-center">
             <div className="bg-white/20 rounded-full p-4 mb-2">
@@ -40,7 +40,7 @@ const Dashboard: React.FC<DashboardProps> = ({ userProgress, achievements, setCu
             </div>
             <div>
               <h3 className="text-2xl font-bold text-gray-800">{userProgress.totalPoints}</h3>
-              <p className="text-gray-600 font-medium">Total Points</p>
+              <p className="text-gray-600 font-medium">Total Poin</p>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@ const Dashboard: React.FC<DashboardProps> = ({ userProgress, achievements, setCu
             </div>
             <div>
               <h3 className="text-2xl font-bold text-gray-800">{unlockedAchievements.length}</h3>
-              <p className="text-gray-600 font-medium">Badges Earned</p>
+              <p className="text-gray-600 font-medium">Lencana Diraih</p>
             </div>
           </div>
         </div>
@@ -64,7 +64,7 @@ const Dashboard: React.FC<DashboardProps> = ({ userProgress, achievements, setCu
             </div>
             <div>
               <h3 className="text-2xl font-bold text-gray-800">{userProgress.streakDays}</h3>
-              <p className="text-gray-600 font-medium">Day Streak</p>
+              <p className="text-gray-600 font-medium">Streak Hari</p>
             </div>
           </div>
         </div>
@@ -82,10 +82,10 @@ const Dashboard: React.FC<DashboardProps> = ({ userProgress, achievements, setCu
             </div>
             <ChevronRight className="h-6 w-6 text-gray-400 group-hover:text-blue-600 transition-colors" />
           </div>
-          <h3 className="text-xl font-bold text-gray-800 mb-2">Knowledge Missions</h3>
-          <p className="text-gray-600">Test your privacy knowledge and earn points!</p>
+          <h3 className="text-xl font-bold text-gray-800 mb-2">Misi Pengetahuan</h3>
+          <p className="text-gray-600">Uji pengetahuan privasimu dan raih poin!</p>
           <div className="mt-4 text-sm text-blue-600 font-semibold">
-            {userProgress.completedQuizzes.length} missions completed
+            {userProgress.completedQuizzes.length} misi selesai
           </div>
         </button>
 
@@ -99,17 +99,17 @@ const Dashboard: React.FC<DashboardProps> = ({ userProgress, achievements, setCu
             </div>
             <ChevronRight className="h-6 w-6 text-gray-400 group-hover:text-purple-600 transition-colors" />
           </div>
-          <h3 className="text-xl font-bold text-gray-800 mb-2">Safety Simulators</h3>
-          <p className="text-gray-600">Play fun games while learning digital safety!</p>
+          <h3 className="text-xl font-bold text-gray-800 mb-2">Simulator Keamanan</h3>
+          <p className="text-gray-600">Main game seru sambil belajar keamanan digital!</p>
           <div className="mt-4 text-sm text-purple-600 font-semibold">
-            {userProgress.completedGames.length} games completed
+            {userProgress.completedGames.length} game selesai
           </div>
         </button>
       </div>
 
       {/* Progress to Next Level */}
       <div className="bg-white rounded-2xl p-6 shadow-lg">
-        <h3 className="text-xl font-bold text-gray-800 mb-4">Progress to Level {nextLevel}</h3>
+        <h3 className="text-xl font-bold text-gray-800 mb-4">Kemajuan ke Level {nextLevel}</h3>
         <div className="flex items-center gap-4">
           <div className="flex-1">
             <div className="bg-gray-200 rounded-full h-4 overflow-hidden">
@@ -120,7 +120,7 @@ const Dashboard: React.FC<DashboardProps> = ({ userProgress, achievements, setCu
             </div>
           </div>
           <span className="text-sm font-semibold text-gray-600">
-            {pointsNeeded > 0 ? `${pointsNeeded} points to go!` : 'Level up available!'}
+            {pointsNeeded > 0 ? `${pointsNeeded} poin lagi!` : 'Level up tersedia!'}
           </span>
         </div>
       </div>
@@ -128,7 +128,7 @@ const Dashboard: React.FC<DashboardProps> = ({ userProgress, achievements, setCu
       {/* Recent Achievements */}
       {unlockedAchievements.length > 0 && (
         <div className="bg-white rounded-2xl p-6 shadow-lg">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Your Achievements 🏆</h3>
+          <h3 className="text-xl font-bold text-gray-800 mb-4">Pencapaianmu 🏆</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {unlockedAchievements.slice(0, 4).map((achievement) => (
               <div key={achievement.id} className="text-center">

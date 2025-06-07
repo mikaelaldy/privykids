@@ -8,10 +8,10 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView }) => {
   const navItems = [
-    { id: 'dashboard', label: 'Home', icon: Home },
-    { id: 'quizzes', label: 'Missions', icon: Brain },
-    { id: 'games', label: 'Games', icon: Gamepad2 },
-    { id: 'chatbot', label: 'Privacy Pal', icon: MessageCircle }
+    { id: 'dashboard', label: 'Beranda', icon: Home },
+    { id: 'quizzes', label: 'Misi', icon: Brain },
+    { id: 'games', label: 'Permainan', icon: Gamepad2 },
+    { id: 'chatbot', label: 'Teman Privasi', icon: MessageCircle }
   ];
 
   return (

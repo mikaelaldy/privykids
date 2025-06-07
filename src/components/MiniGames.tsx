@@ -156,6 +156,8 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
   const [gameWon, setGameWon] = useState(false);
   const [timeLeft, setTimeLeft] = useState(120); // 2 minutes to complete
   const [hintsUsed, setHintsUsed] = useState(0);
+  const [showHint, setShowHint] = useState(false);
+  const [currentHint, setCurrentHint] = useState('');
 
   const rules = [
     {
@@ -262,6 +264,20 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
     return () => clearTimeout(timer);
   }, [timeLeft, gameStarted, gameWon]);
 
+  // Handle escape key to close hint modal
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && showHint) {
+        setShowHint(false);
+      }
+    };
+
+    if (showHint) {
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
+    }
+  }, [showHint]);
+
   const startGame = () => {
     setGameStarted(true);
     setPassword('');
@@ -274,7 +290,8 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
     setHintsUsed(prev => prev + 1);
     const rule = rules.find(r => r.id === ruleId);
     if (rule) {
-      alert(rule.hint);
+      setCurrentHint(rule.hint);
+      setShowHint(true);
     }
   };
 
@@ -333,6 +350,35 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
 
   return (
     <div className="max-w-4xl mx-auto">
+      {/* Custom Hint Modal */}
+      {showHint && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 animate-fade-in"
+          onClick={() => setShowHint(false)}
+        >
+          <div 
+            className="bg-white rounded-2xl shadow-2xl p-6 max-w-md mx-4 transform transition-all duration-300 animate-bounce-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-center">
+              <div className="bg-yellow-100 p-3 rounded-full w-fit mx-auto mb-4">
+                <svg className="h-8 w-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">💡 Hint!</h3>
+              <p className="text-gray-600 mb-6 text-lg leading-relaxed">{currentHint}</p>
+              <button
+                onClick={() => setShowHint(false)}
+                className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow-lg"
+              >
+                Got it! ✨
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      
       <div className="bg-white rounded-3xl shadow-xl p-8">
         <div className="flex items-center justify-between mb-8">
           <button

@@ -27,11 +27,11 @@ function App() {
   });
 
   const [achievements] = useState<Achievement[]>([
-    { id: 'first-steps', name: 'First Steps', description: 'Complete your first quiz!', icon: '🎯', unlocked: false },
-    { id: 'password-pro', name: 'Password Pro', description: 'Master the Password Fortress game!', icon: '🔒', unlocked: false },
-    { id: 'info-detective', name: 'Info Detective', description: 'Perfect score on Share or Shield!', icon: '🕵️', unlocked: false },
-    { id: 'privacy-guardian', name: 'Privacy Guardian', description: 'Reach Level 5!', icon: '🛡️', unlocked: false },
-    { id: 'curious-explorer', name: 'Curious Explorer', description: 'Ask your Privacy Pal 10 questions!', icon: '🤔', unlocked: false }
+    { id: 'first-steps', name: 'Langkah Pertama', description: 'Selesaikan kuis pertamamu!', icon: '🎯', unlocked: false },
+    { id: 'password-pro', name: 'Ahli Kata Sandi', description: 'Kuasai permainan Benteng Password!', icon: '🔒', unlocked: false },
+    { id: 'info-detective', name: 'Detektif Informasi', description: 'Skor sempurna di Share or Shield!', icon: '🕵️', unlocked: false },
+    { id: 'privacy-guardian', name: 'Penjaga Privasi', description: 'Capai Level 5!', icon: '🛡️', unlocked: false },
+    { id: 'curious-explorer', name: 'Penjelajah Penasaran', description: 'Tanya Teman Privasi 10 pertanyaan!', icon: '🤔', unlocked: false }
   ]);
 
   useEffect(() => {
@@ -118,7 +118,7 @@ function App() {
               Privykids
             </h1>
           </div>
-          <p className="text-lg text-gray-600 font-medium">Your Digital Privacy Academy Adventure!</p>
+          <p className="text-lg text-gray-600 font-medium">Akademi Privasi Digital Petualanganmu!</p>
         </header>
 
         <Navigation currentView={currentView} setCurrentView={setCurrentView} />
