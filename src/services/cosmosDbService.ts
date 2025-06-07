@@ -1,178 +1,215 @@
-import { UserProgress } from '../types';
 import { DatabaseOperationResult } from '../types/database';
-import { v4 as uuidv4 } from 'uuid';
+import { UserProgress } from '../types';
+import { getContainer, getUserId } from './cosmosdb';
+
+// Check if Cosmos DB is available
+const isCosmosDBAvailable = async (): Promise<boolean> => {
+  try {
+    const container = await getContainer('test');
+    return container !== null;
+  } catch {
+    return false;
+  }
+};
 
 class CosmosDbService {
   private userId: string;
-  private apiBaseUrl: string;
 
   constructor() {
-    this.userId = this.generateUserId();
-    this.apiBaseUrl = import.meta.env.VITE_API_BASE_URL || '/api';
-    console.log('👤 User ID:', this.userId);
-    
-    // In development, check if we're running locally
-    if (import.meta.env.DEV) {
-      console.log('🛠️ Development mode: API routes may not be available locally');
-    }
+    this.userId = getUserId();
+    console.log('📱 Using hybrid cloud-first storage with localStorage fallback');
   }
 
-  private generateUserId(): string {
-    let userId = localStorage.getItem('privykids-user-id');
-    if (!userId) {
-      userId = `user_${uuidv4()}`;
-      localStorage.setItem('privykids-user-id', userId);
-      console.log('🆕 Generated new user ID');
-    }
-    return userId;
-  }
-
-  private async makeRequest(endpoint: string, options: RequestInit = {}) {
-    const url = `${this.apiBaseUrl}${endpoint}`;
-    
-    try {
-      const response = await fetch(url, {
-        headers: {
-          'Content-Type': 'application/json',
-          ...options.headers,
-        },
-        ...options,
-      });
-
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(`❌ API request failed for ${endpoint}:`, error);
-      
-      // In development, provide helpful message
-      if (import.meta.env.DEV && error instanceof Error && error.message.includes('Unexpected token')) {
-        console.warn('💡 API routes not available in development. Using localStorage fallback.');
-        throw new Error('API routes unavailable in development');
-      }
-      
-      throw error;
-    }
-  }
-
+  // User Progress Storage
   async getUserProgress(): Promise<DatabaseOperationResult<UserProgress>> {
-    // In development mode, skip API calls and use localStorage directly
-    if (import.meta.env.DEV) {
-      console.log('📱 Development mode: Loading progress from localStorage...');
-      const fallbackProgress = this.getFallbackProgress();
+    try {
+      const container = await getContainer('user-progress');
+      if (!container) throw new Error('Cosmos DB not available');
+      
+      const userId = this.userId;
+      const { resources } = await container.items
+        .query({
+          query: 'SELECT * FROM c WHERE c.userId = @userId AND c.type = @type ORDER BY c.lastUpdated DESC',
+          parameters: [
+            { name: '@userId', value: userId },
+            { name: '@type', value: 'progress' }
+          ]
+        })
+        .fetchAll();
+      
+      if (resources.length > 0) {
+        console.log('✅ User progress loaded from Cosmos DB');
+        return { 
+          success: true, 
+          data: resources[0].progress 
+        };
+      } else {
+        // Return default progress if not found
+        const defaultProgress = this.getDefaultProgress();
+        return { 
+          success: true, 
+          data: defaultProgress 
+        };
+      }
+    } catch {
+      console.log('⚠️ Cosmos DB unavailable, using localStorage fallback');
       return { 
         success: true, 
-        data: fallbackProgress, 
-        fromCache: true 
-      };
-    }
-
-    try {
-      console.log('📊 Loading user progress from API...');
-      
-      const result = await this.makeRequest(`/cosmos/user-progress/${this.userId}`);
-      
-      if (result.success && result.data) {
-        console.log('✅ User progress loaded from Cosmos DB');
-        return { success: true, data: result.data };
-      } else {
-        throw new Error('Failed to load user progress');
-      }
-    } catch (error) {
-      console.error('❌ Error getting user progress from API:', error);
-      
-      // Fallback to localStorage
-      const fallbackProgress = this.getFallbackProgress();
-      return { 
-        success: false, 
-        data: fallbackProgress, 
-        error: error instanceof Error ? error.message : 'Unknown error',
+        data: this.getUserProgressFromLocal(), 
         fromCache: true 
       };
     }
   }
 
   async updateUserProgress(progress: UserProgress): Promise<DatabaseOperationResult<void>> {
-    // In development mode, skip API calls and use localStorage directly
-    if (import.meta.env.DEV) {
-      console.log('💾 Development mode: Saving progress to localStorage...');
-      this.setFallbackProgress(progress);
-      return { success: true, fromCache: true };
-    }
-
     try {
-      console.log('💾 Saving user progress to API...');
+      const container = await getContainer('user-progress');
+      if (!container) throw new Error('Cosmos DB not available');
       
-      const result = await this.makeRequest(`/cosmos/user-progress/${this.userId}`, {
-        method: 'POST',
-        body: JSON.stringify(progress),
-      });
+      const userId = this.userId;
+      const document = {
+        id: `${userId}_${Date.now()}`,
+        userId,
+        progress,
+        lastUpdated: new Date().toISOString(),
+        type: 'progress'
+      };
       
-      if (result.success) {
-        console.log('✅ User progress saved to Cosmos DB');
-        // Also save to localStorage as backup
-        this.setFallbackProgress(progress);
-        return { success: true };
-      } else {
-        throw new Error('Failed to save user progress');
-      }
-    } catch (error) {
-      console.error('❌ Error updating user progress via API:', error);
+      await container.items.create(document);
+      console.log('✅ User progress saved to Cosmos DB');
+      
+      // Also save to localStorage as backup
+      this.saveUserProgressToLocal(progress);
+      return { success: true };
+    } catch {
+      console.log('⚠️ Cosmos DB unavailable, using localStorage fallback');
       
       // Fallback to localStorage
-      this.setFallbackProgress(progress);
+      this.saveUserProgressToLocal(progress);
       return { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error',
+        success: true, 
         fromCache: true 
       };
     }
   }
 
-  // Chat History Operations (for future use)
+  // Chat History Storage
   async saveChatHistory(messages: unknown[], sessionId?: string): Promise<DatabaseOperationResult<void>> {
     try {
-      // This would be implemented when we add chat history API endpoint
-      console.log('💬 Chat history saved locally (API endpoint pending)', { messages: messages.length, sessionId });
+      const container = await getContainer('chat-history');
+      if (!container) throw new Error('Cosmos DB not available');
+      
+      const userId = this.userId;
+      const document = {
+        id: `${userId}_${sessionId || 'default'}_${Date.now()}`,
+        userId,
+        sessionId: sessionId || 'default',
+        messages,
+        timestamp: new Date().toISOString(),
+        type: 'chat'
+      };
+      
+      await container.items.create(document);
+      console.log('✅ Chat history saved to Cosmos DB');
       return { success: true };
-    } catch (error) {
-      console.error('❌ Error saving chat history:', error);
+    } catch {
+      console.log('⚠️ Cosmos DB unavailable, using localStorage fallback');
+      
+      // Fallback to localStorage
+      const chatHistory = {
+        sessionId: sessionId || 'default',
+        messages,
+        timestamp: new Date().toISOString(),
+        userId: this.userId
+      };
+      
+      localStorage.setItem('privykids-chat-history', JSON.stringify(chatHistory));
       return { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error' 
+        success: true, 
+        fromCache: true 
       };
     }
   }
 
-  // Achievement Operations (for future use)
+  // Achievement Storage
   async saveAchievement(achievementId: string, progressValue: number = 100): Promise<DatabaseOperationResult<void>> {
     try {
-      console.log('🏆 Achievement saved locally (API endpoint pending):', { achievementId, progress: progressValue });
+      const container = await getContainer('achievements');
+      if (!container) throw new Error('Cosmos DB not available');
+      
+      const userId = this.userId;
+      const document = {
+        id: `${userId}_${achievementId}`,
+        userId,
+        achievementId,
+        progress: progressValue,
+        unlockedAt: new Date().toISOString(),
+        type: 'achievement'
+      };
+      
+      await container.items.create(document);
+      console.log('✅ Achievement saved to Cosmos DB');
       return { success: true };
-    } catch (error) {
-      console.error('❌ Error saving achievement:', error);
+    } catch {
+      console.log('⚠️ Cosmos DB unavailable, using localStorage fallback');
+      
+      // Fallback to localStorage
+      const achievements = this.getAchievementsFromLocal();
+      achievements[achievementId] = {
+        id: achievementId,
+        progress: progressValue,
+        unlockedAt: new Date().toISOString(),
+        userId: this.userId
+      };
+      
+      localStorage.setItem('privykids-achievements', JSON.stringify(achievements));
       return { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error' 
+        success: true, 
+        fromCache: true 
       };
     }
   }
 
-  // Fallback methods for localStorage
-  private getFallbackProgress(): UserProgress {
+  // Get achievements
+  async getAchievements(): Promise<DatabaseOperationResult<Record<string, unknown>>> {
     try {
-      const savedProgress = localStorage.getItem('privykids-progress');
-      if (savedProgress) {
-        console.log('📱 Loading progress from localStorage fallback');
-        return JSON.parse(savedProgress);
-      }
-    } catch (error) {
-      console.error('❌ Error reading from localStorage:', error);
+      const container = await getContainer('achievements');
+      if (!container) throw new Error('Cosmos DB not available');
+      
+      const userId = this.userId;
+      const { resources } = await container.items
+        .query({
+          query: 'SELECT * FROM c WHERE c.userId = @userId AND c.type = @type',
+          parameters: [
+            { name: '@userId', value: userId },
+            { name: '@type', value: 'achievement' }
+          ]
+        })
+        .fetchAll();
+      
+      const achievements: Record<string, unknown> = {};
+      resources.forEach(item => {
+        achievements[item.achievementId] = {
+          id: item.achievementId,
+          progress: item.progress,
+          unlockedAt: item.unlockedAt
+        };
+      });
+      
+      console.log('✅ Achievements loaded from Cosmos DB');
+      return { success: true, data: achievements };
+    } catch {
+      console.log('⚠️ Cosmos DB unavailable, using localStorage fallback');
+      return { 
+        success: true, 
+        data: this.getAchievementsFromLocal(), 
+        fromCache: true 
+      };
     }
-    
+  }
+
+  // Fallback functions for localStorage
+  private getDefaultProgress(): UserProgress {
     return {
       level: 1,
       totalPoints: 0,
@@ -183,31 +220,25 @@ class CosmosDbService {
     };
   }
 
-  private setFallbackProgress(progress: UserProgress): void {
-    try {
-      localStorage.setItem('privykids-progress', JSON.stringify(progress));
-      console.log('💾 Progress saved to localStorage backup');
-    } catch (error) {
-      console.error('❌ Error saving to localStorage:', error);
-    }
+  private getUserProgressFromLocal(): UserProgress {
+    const stored = localStorage.getItem('privykids-progress');
+    return stored ? JSON.parse(stored) : this.getDefaultProgress();
+  }
+
+  private saveUserProgressToLocal(progress: UserProgress): void {
+    localStorage.setItem('privykids-progress', JSON.stringify(progress));
+    localStorage.setItem('privykids-progress-timestamp', new Date().toISOString());
+    console.log('💾 Progress saved to localStorage backup');
+  }
+
+  private getAchievementsFromLocal(): Record<string, unknown> {
+    const stored = localStorage.getItem('privykids-achievements');
+    return stored ? JSON.parse(stored) : {};
   }
 
   // Health check methods
   async isServiceAvailable(): Promise<boolean> {
-    // In development mode, skip API health checks
-    if (import.meta.env.DEV) {
-      console.log('🛠️ Development mode: Skipping API health check');
-      return false; // Indicate API not available, will use localStorage
-    }
-
-    try {
-      const result = await this.makeRequest('/health');
-      console.log('✅ Cosmos DB service is available via API');
-      return result.success;
-    } catch (error) {
-      console.warn('⚠️ Cosmos DB service unavailable via API:', error);
-      return false;
-    }
+    return await isCosmosDBAvailable();
   }
 
   async getServiceStatus(): Promise<{
@@ -217,36 +248,98 @@ class CosmosDbService {
   }> {
     const startTime = Date.now();
     
-    // In development mode, skip API status checks
-    if (import.meta.env.DEV) {
-      const latency = Date.now() - startTime;
-      console.log('🛠️ Development mode: Using localStorage fallback');
-      return { 
-        available: false, 
-        latency, 
-        error: 'Development mode - using localStorage'
-      };
-    }
-    
     try {
       const available = await this.isServiceAvailable();
       const latency = Date.now() - startTime;
       
-      return { available, latency };
+      return { 
+        available, 
+        latency,
+        error: available ? undefined : 'Cosmos DB not available, using localStorage fallback'
+      };
     } catch (error) {
       const latency = Date.now() - startTime;
       return { 
         available: false, 
-        latency, 
+        latency,
         error: error instanceof Error ? error.message : 'Unknown error'
       };
+    }
+  }
+
+  // Get all stored data (for debugging)
+  async getAllStoredData(): Promise<{
+    userId: string;
+    progress: UserProgress | null;
+    chatHistory: unknown;
+    achievements: unknown;
+    timestamp: string | null;
+    source: 'cosmos' | 'localStorage';
+  }> {
+    try {
+      // Try Cosmos DB first
+      const cosmosAvailable = await this.isServiceAvailable();
+      
+      if (cosmosAvailable) {
+        const progressResult = await this.getUserProgress();
+        const achievementsResult = await this.getAchievements();
+        
+        return {
+          userId: this.userId,
+          progress: progressResult.data || null,
+          chatHistory: null, // Would need separate query
+          achievements: achievementsResult.data || {},
+          timestamp: new Date().toISOString(),
+          source: 'cosmos'
+        };
+      } else {
+        throw new Error('Cosmos DB not available');
+      }
+    } catch {
+      // Fallback to localStorage
+      return {
+        userId: this.userId,
+        progress: JSON.parse(localStorage.getItem('privykids-progress') || 'null'),
+        chatHistory: JSON.parse(localStorage.getItem('privykids-chat-history') || 'null'),
+        achievements: JSON.parse(localStorage.getItem('privykids-achievements') || '{}'),
+        timestamp: localStorage.getItem('privykids-progress-timestamp'),
+        source: 'localStorage'
+      };
+    }
+  }
+
+  // Clear all data (for testing)
+  async clearAllData(): Promise<void> {
+    try {
+      // Clear localStorage
+      localStorage.removeItem('privykids-progress');
+      localStorage.removeItem('privykids-chat-history');
+      localStorage.removeItem('privykids-achievements');
+      localStorage.removeItem('privykids-progress-timestamp');
+      // Don't remove user-id to maintain user identity
+      
+      console.log('🧹 All progress data cleared from localStorage');
+      
+      // Note: Cosmos DB data would need separate deletion logic
+      // For hackathon purposes, localStorage clearing is sufficient
+    } catch (error) {
+      console.error('❌ Error clearing data:', error);
+    }
+  }
+
+  // Test connection
+  async testConnection(): Promise<boolean> {
+    try {
+      return await this.isServiceAvailable();
+    } catch {
+      return false;
     }
   }
 
   // Cleanup method
   async cleanup(): Promise<void> {
     try {
-      console.log('🧹 Cosmos DB service cleanup completed');
+      console.log('🧹 CosmosDb service cleanup completed (hybrid storage)');
     } catch (error) {
       console.error('❌ Error during cleanup:', error);
     }

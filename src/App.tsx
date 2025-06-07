@@ -42,37 +42,24 @@ function App() {
     console.log('🚀 Initializing Privykids app...');
     
     try {
-      // Validate Azure configuration
-      const configValidation = logConfigStatus();
+      // Log Azure configuration status
+      const configStatus = logConfigStatus();
 
-      // Check service availability in background
-      const [cosmosStatus, openAIStatus] = await Promise.all([
-        cosmosDbService.getServiceStatus(),
-        openAIService.getServiceStatus()
-      ]);
-
+      // Set service availability based on configuration
       setServicesAvailable({
-        cosmosDb: cosmosStatus.available,
-        openAI: openAIStatus.available
+        cosmosDb: configStatus.cosmosDbAvailable,
+        openAI: configStatus.openAIAvailable
       });
 
       // Load user progress
-      if (cosmosStatus.available) {
-        console.log('📊 Loading progress from Cosmos DB...');
-        const result = await cosmosDbService.getUserProgress();
-        
-        if (result.success && result.data) {
-          setUserProgress(result.data);
-          console.log('✅ Progress loaded successfully');
-        } else {
-          console.warn('⚠️ Failed to load from Cosmos DB, using fallback');
-        }
+      console.log('📊 Loading user progress...');
+      const result = await cosmosDbService.getUserProgress();
+      
+      if (result.success && result.data) {
+        setUserProgress(result.data);
+        console.log('✅ Progress loaded successfully');
       } else {
-        console.log('📱 Loading progress from localStorage fallback...');
-        const savedProgress = localStorage.getItem('privykids-progress');
-        if (savedProgress) {
-          setUserProgress(JSON.parse(savedProgress));
-        }
+        console.warn('⚠️ Using default progress');
       }
     } catch (error) {
       console.error('💥 App initialization error:', error);
@@ -96,18 +83,13 @@ function App() {
     setUserProgress(newProgress);
 
     try {
-      if (servicesAvailable.cosmosDb) {
-        console.log('💾 Saving progress to Cosmos DB...');
-        const result = await cosmosDbService.updateUserProgress(newProgress);
-        
-        if (result.success) {
-          console.log('✅ Progress saved to Cosmos DB');
-        } else {
-          console.warn('⚠️ Cosmos DB save failed, using localStorage backup');
-        }
+      console.log('💾 Saving progress...');
+      const result = await cosmosDbService.updateUserProgress(newProgress);
+      
+      if (result.success) {
+        console.log('✅ Progress saved successfully');
       } else {
-        console.log('📱 Saving progress to localStorage (offline mode)');
-        localStorage.setItem('privykids-progress', JSON.stringify(newProgress));
+        console.warn('⚠️ Progress saved to localStorage only');
       }
     } catch (error) {
       console.error('❌ Failed to save progress:', error);
