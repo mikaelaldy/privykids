@@ -1,22 +1,109 @@
 # Privykids - Digital Privacy Academy 🛡️
 
-A fun, interactive web application designed to teach children (ages 8-12) about digital privacy and online safety through games, quizzes, and an AI chatbot companion.
+> **Demo**: [privykids.mikascend.xyz](https://privykids.mikascend.xyz)
 
-## 🚀 Features
+Platform edukasi privasi digital yang interaktif untuk anak-anak Indonesia usia 8-12 tahun. Belajar keamanan internet melalui game seru, kuis edukatif, dan chatbot AI yang ramah anak.
 
-- **Interactive Quizzes** - Learn privacy fundamentals through engaging questions
-- **Mini Games** - Password Fortress and Share or Shield games
-- **AI Chatbot** - Privacy Pal, powered by Azure OpenAI Assistant API
-- **Progress Tracking** - Level up system with badges and achievements
-- **Cloud Storage** - Azure Cosmos DB for user progress with localStorage fallback
+![Privykids Banner](https://img.shields.io/badge/Privykids-Digital%20Privacy%20Academy-blue?style=for-the-badge&logo=shield)
+
+## 🎯 Fitur Utama
+
+### 🎮 **Game Edukatif Interaktif**
+- **Benteng Kata Sandi** - Game menantang untuk membuat password yang kuat dengan 10 aturan progresif
+- **Bagikan atau Lindungi** - Game dengan timer untuk melatih keputusan berbagi informasi online
+- Audio feedback dan animasi visual yang engaging
+
+### 🧠 **Sistem Kuis Bertingkat**
+- **4 Level Misi**: Dasar-Dasar Privasi → Kekuatan Kata Sandi → Detektif Phishing → Keamanan Media Sosial
+- Sistem progresif dengan unlocking berdasarkan level
+- Feedback instant dengan penjelasan detail
+- Passing score yang dapat dikonfigurasi
+
+### 🤖 **AI Assistant "Privacy Pal"**
+- Chatbot berbasis Azure OpenAI (GPT-4o-mini)
+- Khusus membahas topik keamanan digital
+- Bahasa Indonesia yang ramah anak
+- Sistem pencegahan off-topic otomatis
+
+### 📊 **Tracking Progress**
+- Sistem level dan poin
+- Badge collection dan achievements
+- Streak tracking
+- Cloud storage dengan fallback localStorage
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React 18 + TypeScript + Tailwind CSS
-- **Backend**: Vercel Serverless Functions
-- **Database**: Azure Cosmos DB
-- **AI**: Azure OpenAI (GPT-4o-mini)
-- **Hosting**: Vercel
+### Frontend
+- **React 18** + **TypeScript** 
+- **Tailwind CSS** untuk styling
+- **Lucide React** untuk icons
+- **Vite** sebagai build tool
+
+### Backend & Cloud
+- **Azure Cosmos DB** untuk penyimpanan data
+- **Azure OpenAI** untuk AI assistant
+- **Vercel** untuk hosting dan serverless functions
+
+### Audio
+- **Web Audio API** untuk sound effects dinamis
+- Sistem audio procedural tanpa file eksternal
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+
+- Azure account (untuk cloud features)
+- Vercel account (untuk deployment)
+
+### Installation
+
+```bash
+# Clone repository
+git clone <repository-url>
+cd privykids
+
+# Install dependencies
+npm install
+
+# Setup environment variables
+cp .env.example .env.local
+# Edit .env.local dengan konfigurasi Azure Anda
+```
+
+### Environment Variables
+
+```env
+# Azure Cosmos DB
+VITE_COSMOS_DB_ENDPOINT=https://your-cosmos-account.documents.azure.com:443/
+VITE_COSMOS_DB_KEY=your-cosmos-db-primary-key
+VITE_COSMOS_DB_DATABASE_ID=privykids-database
+
+# Azure OpenAI
+VITE_AZURE_OPENAI_ENDPOINT=https://your-openai-resource.openai.azure.com/
+VITE_AZURE_OPENAI_API_KEY=your-openai-api-key
+VITE_AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4o-mini-privykid
+VITE_AZURE_OPENAI_API_VERSION=2024-08-01-preview
+```
+
+### Development
+
+```bash
+# Local development (frontend only)
+npm run dev
+
+# Full development dengan Vercel serverless functions
+npm install -g vercel
+vercel dev
+```
+
+### Production Build
+
+```bash
+npm run build
+npm run preview
+```
+
+## 🏗️ Project Structure
 
 ## 📋 Prerequisites
 

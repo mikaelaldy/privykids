@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Bot, User, Sparkles, RotateCcw, Zap } from 'lucide-react';
+import { Send, Bot, User, Sparkles, RotateCcw, Zap, Trash2, AlertTriangle } from 'lucide-react';
 import { UserProgress } from '../types';
 import { openAIService, ChatMessage } from '../services/openAIService';
 
@@ -29,6 +29,7 @@ Aku bisa jawab pertanyaan tentang password, informasi pribadi, keamanan online, 
   const [isTyping, setIsTyping] = useState(false);
   const [questionsAsked, setQuestionsAsked] = useState(0);
   const [conversationStarted, setConversationStarted] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const quickSuggestions = [
@@ -136,6 +137,42 @@ Aku bisa jawab pertanyaan tentang password, informasi pribadi, keamanan online, 
     }
   };
 
+  const handleDeleteChat = () => {
+    setShowDeleteConfirm(true);
+  };
+
+  const confirmDeleteChat = async () => {
+    try {
+      // Clear conversation in OpenAI service
+      await openAIService.clearConversation();
+      
+      // Reset all chat state
+      setMessages([
+        {
+          id: Date.now().toString(),
+          role: 'assistant',
+          content: `Chat berhasil dibersihkan! 🧹✨ 
+
+Halo, Privacy Guardian! Aku Privacy Pal, siap membantu kamu belajar tentang keamanan internet dari awal lagi! Mau tanya apa nih? 🛡️`,
+          timestamp: new Date()
+        }
+      ]);
+      
+      setQuestionsAsked(0);
+      setConversationStarted(false);
+      setShowDeleteConfirm(false);
+      
+      console.log('🧹 Chat history cleared successfully');
+    } catch (error) {
+      console.error('❌ Failed to clear chat:', error);
+      setShowDeleteConfirm(false);
+    }
+  };
+
+  const cancelDeleteChat = () => {
+    setShowDeleteConfirm(false);
+  };
+
   const sendDailyTip = () => {
     const tips = [
       "💡 Tips hari ini: Password yang kuat itu seperti kunci rumah yang super aman! Pastikan ada huruf besar, kecil, angka, dan simbol ya! 🔐",
@@ -157,6 +194,44 @@ Aku bisa jawab pertanyaan tentang password, informasi pribadi, keamanan online, 
 
   return (
     <div className="max-w-4xl mx-auto">
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 animate-fade-in"
+          onClick={cancelDeleteChat}
+        >
+          <div 
+            className="bg-white rounded-2xl shadow-2xl p-6 max-w-md mx-4 transform transition-all duration-300 animate-bounce-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-center">
+              <div className="bg-red-100 p-3 rounded-full w-fit mx-auto mb-4">
+                <AlertTriangle className="h-8 w-8 text-red-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">Hapus Riwayat Chat? 🗑️</h3>
+              <p className="text-gray-600 mb-6 text-sm leading-relaxed">
+                Semua percakapan dengan Privacy Pal akan dihapus dan tidak bisa dikembalikan. 
+                Yakin mau melanjutkan?
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={cancelDeleteChat}
+                  className="flex-1 bg-gray-100 text-gray-700 px-4 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
+                >
+                  Batal
+                </button>
+                <button
+                  onClick={confirmDeleteChat}
+                  className="flex-1 bg-red-600 text-white px-4 py-3 rounded-xl font-semibold hover:bg-red-700 transition-colors"
+                >
+                  Ya, Hapus! 🗑️
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
         {/* Header */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
@@ -171,16 +246,28 @@ Aku bisa jawab pertanyaan tentang password, informasi pribadi, keamanan online, 
               </div>
             </div>
             
-            {/* New Conversation Button */}
-            {conversationStarted && (
-              <button
-                onClick={startNewConversation}
-                className="bg-white/20 hover:bg-white/30 p-2 rounded-full transition-colors"
-                title="Mulai percakapan baru"
-              >
-                <RotateCcw className="h-5 w-5" />
-              </button>
-            )}
+            {/* Action Buttons */}
+            <div className="flex items-center gap-2">
+              {conversationStarted && (
+                <button
+                  onClick={startNewConversation}
+                  className="bg-white/20 hover:bg-white/30 p-2 rounded-full transition-colors"
+                  title="Mulai percakapan baru"
+                >
+                  <RotateCcw className="h-5 w-5" />
+                </button>
+              )}
+              
+              {messages.length > 1 && (
+                <button
+                  onClick={handleDeleteChat}
+                  className="bg-white/20 hover:bg-red-500/30 p-2 rounded-full transition-colors"
+                  title="Hapus riwayat chat"
+                >
+                  <Trash2 className="h-5 w-5" />
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
@@ -201,6 +288,15 @@ Aku bisa jawab pertanyaan tentang password, informasi pribadi, keamanan online, 
               >
                 <RotateCcw className="h-4 w-4" />
                 Obrolan Baru
+              </button>
+            )}
+            {messages.length > 1 && (
+              <button
+                onClick={handleDeleteChat}
+                className="bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-semibold hover:bg-red-200 transition-colors flex items-center gap-2"
+              >
+                <Trash2 className="h-4 w-4" />
+                Bersihkan Chat
               </button>
             )}
           </div>
@@ -306,14 +402,23 @@ Aku bisa jawab pertanyaan tentang password, informasi pribadi, keamanan online, 
             <p className="text-xs text-gray-500">
               Privacy Pal siap membantu! Selalu minta bantuan orang dewasa untuk keputusan penting. 🤗
             </p>
-            {questionsAsked > 0 && (
-              <div className="flex items-center gap-2 text-xs">
-                <Zap className="h-3 w-3 text-blue-600" />
-                <span className="text-blue-600 font-semibold">
-                  {questionsAsked}/10 pertanyaan 🎯
-                </span>
-              </div>
-            )}
+            <div className="flex items-center gap-4">
+              {questionsAsked > 0 && (
+                <div className="flex items-center gap-2 text-xs">
+                  <Zap className="h-3 w-3 text-blue-600" />
+                  <span className="text-blue-600 font-semibold">
+                    {questionsAsked}/10 pertanyaan 🎯
+                  </span>
+                </div>
+              )}
+              {messages.length > 1 && (
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="text-gray-500">
+                    {messages.length - 1} pesan
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
