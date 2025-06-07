@@ -136,6 +136,22 @@ class OpenAIService {
 
   async sendMessage(message: string): Promise<DatabaseOperationResult<string>> {
     try {
+      // In development mode, skip API calls and use fallback responses directly
+      if (import.meta.env.DEV) {
+        console.log('💬 Development mode: Using fallback response for:', message);
+        const fallbackResponse = this.getFallbackResponse(message);
+        
+        // Simulate some processing time for better UX
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        return { 
+          success: true, 
+          data: fallbackResponse,
+          fromCache: true 
+        };
+      }
+
+      // Production/deployed environment - use real API
       if (!this.isInitialized) {
         const initResult = await this.initialize();
         if (!initResult.success) {
@@ -193,6 +209,16 @@ class OpenAIService {
     }
   }
 
+  // Backward compatibility method for existing Chatbot component
+  async generateResponse(message: string): Promise<DatabaseOperationResult<string>> {
+    return this.sendMessage(message);
+  }
+
+  // Backward compatibility method for starting new conversations
+  async startNewConversation(): Promise<void> {
+    return this.clearConversation();
+  }
+
   private async waitForCompletion(runId: string, maxAttempts: number = 30): Promise<string> {
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
       await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
@@ -230,15 +256,95 @@ class OpenAIService {
   private getFallbackResponse(message: string): string {
     const lowerMessage = message.toLowerCase();
     
-    if (lowerMessage.includes('password') || lowerMessage.includes('kata sandi')) {
-      return '🔐 Halo! Kata sandi yang kuat itu penting banget lho! Pastikan kata sandimu unik dan jangan dibagi sama siapa-siapa ya! 😊';
-    } else if (lowerMessage.includes('pribadi') || lowerMessage.includes('personal')) {
-      return '🛡️ Wah, pertanyaan tentang privasi nih! Ingat ya, jangan pernah kasih tau informasi pribadi kayak nama lengkap, alamat, atau nomor telepon ke orang yang nggak kamu kenal di internet! 🌟';
-    } else if (lowerMessage.includes('aman') || lowerMessage.includes('safety')) {
-      return '⭐ Bagus banget kamu mau belajar tentang keamanan internet! Selalu minta izin orang tua sebelum download atau install aplikasi baru ya! 🎉';
-    } else {
-      return '😊 Halo! Aku Privacy Pal, teman kamu untuk belajar keamanan internet! Ayo tanya tentang password, privasi, atau keamanan online! 🌈';
+    // Password related questions
+    if (lowerMessage.includes('password') || lowerMessage.includes('kata sandi') || lowerMessage.includes('sandi')) {
+      const passwordResponses = [
+        '🔐 Halo! Kata sandi yang kuat itu seperti kunci rumah yang super aman! Pastikan ada huruf besar, kecil, angka, dan simbol ya! Jangan pernah kasih tau kata sandi ke siapa-siapa! 😊',
+        '🔒 Wah, pertanyaan bagus! Password yang kuat itu minimal 8 karakter, campuran huruf dan angka. Jangan pakai tanggal lahir atau nama hewan peliharaan ya! Kamu pintar bertanya! 🌟',
+        '🛡️ Password itu seperti rahasia super penting! Buat yang unik untuk setiap akun, jangan yang mudah ditebak kayak "123456". Kamu sudah jadi Privacy Guardian yang hebat! 🏆'
+      ];
+      return passwordResponses[Math.floor(Math.random() * passwordResponses.length)];
     }
+    
+    // Privacy and personal information
+    if (lowerMessage.includes('pribadi') || lowerMessage.includes('personal') || lowerMessage.includes('informasi') || lowerMessage.includes('data')) {
+      const privacyResponses = [
+        '🛡️ Wah, pertanyaan tentang privasi nih! Ingat ya, jangan pernah kasih tau informasi pribadi kayak nama lengkap, alamat, atau nomor telepon ke orang yang nggak kamu kenal di internet! 🌟',
+        '🕵️ Informasi pribadi itu seperti harta karun yang harus dijaga! Nama sekolah, alamat rumah, nomor HP - semua itu rahasia. Hanya kasih tau ke orang yang kamu percaya ya! 💎',
+        '📱 Data pribadi itu penting banget! Di internet, jangan share foto rumah, plat nomor mobil, atau lokasi real-time. Kamu keren sudah peduli privasi! ⭐'
+      ];
+      return privacyResponses[Math.floor(Math.random() * privacyResponses.length)];
+    }
+    
+    // Safety and security
+    if (lowerMessage.includes('aman') || lowerMessage.includes('safety') || lowerMessage.includes('keamanan') || lowerMessage.includes('bahaya')) {
+      const safetyResponses = [
+        '⭐ Bagus banget kamu mau belajar tentang keamanan internet! Selalu minta izin orang tua sebelum download aplikasi baru atau ngasih informasi pribadi ya! 🎉',
+        '🚨 Keamanan online itu penting! Kalau ada yang aneh di internet, langsung cerita ke orang dewasa yang kamu percaya. Kamu pintar menjaga diri! 🛡️',
+        '🌟 Tips keamanan: Jangan klik link yang mencurigakan, jangan download dari sumber yang nggak jelas, dan selalu tanya orang tua kalau ragu! Kamu hebat! 👏'
+      ];
+      return safetyResponses[Math.floor(Math.random() * safetyResponses.length)];
+    }
+    
+    // Social media related
+    if (lowerMessage.includes('sosial') || lowerMessage.includes('instagram') || lowerMessage.includes('facebook') || lowerMessage.includes('tiktok') || lowerMessage.includes('medsos')) {
+      const socialResponses = [
+        '📱 Media sosial bisa seru, tapi hati-hati ya! Jangan share lokasi asli, jangan terima pertemanan dari orang asing, dan pikir dulu sebelum posting. Kamu smart! 🌈',
+        '📸 Kalau mau posting, tanya diri sendiri: "Apakah aku masih bangga dengan ini 5 tahun lagi?" Kalau ragu, mending jangan! Privacy Guardian yang bijak! 🤗',
+        '👥 Di medsos, jadilah diri sendiri yang positif! Jangan bully, jangan share hal negatif, dan selalu hormat sama orang lain. Kamu keren! ✨'
+      ];
+      return socialResponses[Math.floor(Math.random() * socialResponses.length)];
+    }
+    
+    // Game related
+    if (lowerMessage.includes('game') || lowerMessage.includes('main') || lowerMessage.includes('privykids') || lowerMessage.includes('bermain')) {
+      const gameResponses = [
+        '🎮 Wah, seru banget! Di Privykids ada Password Fortress yang mengajarkan cara bikin password kuat, dan Share or Shield yang melatih kemampuan deteksi informasi pribadi! Yuk main! 🏆',
+        '🎯 Game di Privykids itu edukatif banget! Sambil main, kamu belajar jadi Privacy Guardian yang hebat. Ada quiz juga lho yang bikin kamu makin pintar soal keamanan! 🌟',
+        '🏅 Asyik! Main game sambil belajar itu menyenangkan. Di sini kamu bisa dapat badge dan naik level dengan belajar tentang keamanan internet! Kamu amazing! 🚀'
+      ];
+      return gameResponses[Math.floor(Math.random() * gameResponses.length)];
+    }
+    
+    // Phishing related
+    if (lowerMessage.includes('phishing') || lowerMessage.includes('penipuan') || lowerMessage.includes('tipu') || lowerMessage.includes('link')) {
+      const phishingResponses = [
+        '🎣 Phishing itu seperti pancing ikan, tapi yang dipancing adalah data kamu! Kalau ada email atau pesan yang menjanjikan hadiah gratis, hati-hati ya. Tanya orang tua dulu! 🚨',
+        '⚠️ Link mencurigakan itu bahaya! Kalau ada yang nawarin hadiah jutaan rupiah atau bilang kamu menang undian yang nggak pernah kamu ikuti, jangan diklik! Kamu pintar! 🛡️',
+        '🔍 Selalu cek sender email atau pesan. Kalau dari alamat aneh atau typo banyak, kemungkinan besar itu penipuan. Kamu jadi detektif yang hebat! 🕵️'
+      ];
+      return phishingResponses[Math.floor(Math.random() * phishingResponses.length)];
+    }
+    
+    // Greeting responses
+    if (lowerMessage.includes('halo') || lowerMessage.includes('hai') || lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+      const greetingResponses = [
+        '😊 Halo juga, Privacy Guardian! Aku Privacy Pal, teman kamu untuk belajar keamanan internet! Mau tanya tentang password, privasi, atau keamanan online? Yuk tanya apa aja! 🌈',
+        '👋 Hai! Senang banget bisa ngobrol sama kamu! Aku siap bantu kamu jadi ahli keamanan internet. Mau bahas password kuat? Atau tips aman di media sosial? 🛡️✨',
+        '🤗 Halo, teman! Aku Privacy Pal yang siap membantu kamu menjelajahi dunia internet dengan aman. Ada yang mau ditanyakan tentang privasi data? 🌟'
+      ];
+      return greetingResponses[Math.floor(Math.random() * greetingResponses.length)];
+    }
+    
+    // General questions about internet/technology
+    if (lowerMessage.includes('internet') || lowerMessage.includes('online') || lowerMessage.includes('teknologi') || lowerMessage.includes('digital')) {
+      const internetResponses = [
+        '🌐 Internet itu tempat yang luas dan seru! Tapi seperti di dunia nyata, ada tempat yang aman dan ada yang nggak. Aku siap ajarin kamu cara jelajah internet dengan aman! 🗺️',
+        '💻 Dunia digital itu amazing! Tapi ingat, setiap jejak digital kita itu tersimpan lama. Makanya penting banget belajar cara melindungi diri. Kamu sudah di jalan yang benar! 🚀',
+        '📡 Online safety itu skill penting di zaman sekarang! Kayak belajar nyebrang jalan, kita perlu tau aturannya biar aman. Yuk belajar bareng! 🎯'
+      ];
+      return internetResponses[Math.floor(Math.random() * internetResponses.length)];
+    }
+    
+    // Default encouraging responses
+    const defaultResponses = [
+      '😊 Halo! Aku Privacy Pal, teman kamu untuk belajar keamanan internet! Ayo tanya tentang password, privasi, atau keamanan online! 🌈',
+      '🛡️ Wah, senang banget bisa ngobrol sama kamu! Aku spesialis keamanan internet untuk anak-anak. Yuk, kita bahas tentang cara aman berinternet! 🌟',
+      '🎯 Keren banget kamu mau belajar tentang keamanan online! Aku bisa bantu kamu jadi Privacy Guardian yang hebat. Mau tanya tentang apa nih? 🚀',
+      '👋 Hai, Privacy Guardian! Aku di sini buat bantu kamu belajar melindungi diri di internet. Password, privasi, game edukatif - tanya apa aja! 🏆'
+    ];
+    
+    return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
   }
 
   async getConversationHistory(): Promise<DatabaseOperationResult<ChatMessage[]>> {
