@@ -4,7 +4,7 @@ import Dashboard from './components/Dashboard';
 import QuizSystem from './components/QuizSystem';
 import MiniGames from './components/MiniGames';
 import Chatbot from './components/Chatbot';
-import Navigation from './components/Navigation';
+import AppNavbar from './components/AppNavbar';
 import LandingPage from './components/LandingPage';
 import { UserProgress, Achievement } from './types';
 import { cosmosDbService } from './services/cosmosDbService';
@@ -102,6 +102,10 @@ function App() {
     setCurrentView('dashboard');
   };
 
+  const backToLanding = () => {
+    setCurrentView('landing');
+  };
+
   if (currentView === 'landing') {
     return <LandingPage onStartAdventure={startAdventure} />;
   }
@@ -109,21 +113,13 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 font-nunito">
       <div className="container mx-auto px-4 py-6">
-        <header className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="bg-blue-600 p-3 rounded-full shadow-lg">
-              <Shield className="h-8 w-8 text-white" />
-            </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Privykids
-            </h1>
-          </div>
-          <p className="text-lg text-gray-600 font-medium">Akademi Privasi Digital Petualanganmu!</p>
-        </header>
+        <AppNavbar 
+          currentView={currentView} 
+          setCurrentView={setCurrentView}
+          onBackToLanding={backToLanding}
+        />
 
-        <Navigation currentView={currentView} setCurrentView={setCurrentView} />
-
-        <main className="mt-8">
+        <main>
           {currentView === 'dashboard' && (
             <Dashboard 
               userProgress={userProgress} 

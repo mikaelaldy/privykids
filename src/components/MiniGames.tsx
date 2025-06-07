@@ -15,16 +15,16 @@ const MiniGames: React.FC<MiniGamesProps> = ({ userProgress, updateProgress }) =
   const games: Game[] = [
     {
       id: 'password-game',
-      title: 'The Password Game',
-      description: 'Create a password while following an ever-growing list of rules!',
+      title: 'Benteng Kata Sandi',
+      description: 'Buat kata sandi yang super kuat dengan mengikuti aturan seru yang makin banyak!',
       component: 'PasswordGame',
       requiredLevel: 1,
       maxPoints: 100
     },
     {
       id: 'share-shield',
-      title: 'Share or Shield',
-      description: 'Decide what information is safe to share online!',
+      title: 'Bagikan atau Lindungi',
+      description: 'Putuskan informasi mana yang aman dibagikan online dan mana yang harus dilindungi!',
       component: 'ShareOrShield',
       requiredLevel: 1,
       maxPoints: 80
@@ -65,14 +65,14 @@ const MiniGames: React.FC<MiniGamesProps> = ({ userProgress, updateProgress }) =
         <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
           <div className="mb-6">
             <Trophy className="h-16 w-16 text-yellow-500 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold text-gray-800 mb-2">Game Complete! 🎮</h2>
-            <p className="text-gray-600 text-lg">You earned {gameScore} points!</p>
+            <h2 className="text-3xl font-bold text-gray-800 mb-2">Game Selesai! 🎮</h2>
+            <p className="text-gray-600 text-lg">Kamu berhasil meraih {gameScore} poin!</p>
           </div>
           
           <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-6 mb-6">
-            <h3 className="font-bold text-gray-800 mb-2">Great Job!</h3>
+            <h3 className="font-bold text-gray-800 mb-2">Kerja Bagus!</h3>
             <p className="text-gray-600">
-              You completed "{selectedGame!.title}" and learned important safety skills!
+              Kamu telah menyelesaikan "{selectedGame!.title}" dan mempelajari keterampilan keamanan yang penting!
             </p>
           </div>
 
@@ -80,7 +80,7 @@ const MiniGames: React.FC<MiniGamesProps> = ({ userProgress, updateProgress }) =
             onClick={resetGame}
             className="bg-blue-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
           >
-            Play Another Game
+            Main Game Lain
           </button>
         </div>
       </div>
@@ -90,8 +90,8 @@ const MiniGames: React.FC<MiniGamesProps> = ({ userProgress, updateProgress }) =
   return (
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-4">Safety Simulators 🎮</h2>
-        <p className="text-gray-600 text-lg">Learn digital safety through fun, interactive games!</p>
+        <h2 className="text-3xl font-bold text-gray-800 mb-4">Simulator Keamanan 🎮</h2>
+        <p className="text-gray-600 text-lg">Belajar keamanan digital melalui permainan interaktif yang seru!</p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
@@ -121,7 +121,7 @@ const MiniGames: React.FC<MiniGamesProps> = ({ userProgress, updateProgress }) =
                 </div>
                 {isCompleted && (
                   <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm font-semibold">
-                    Completed! ✓
+                    Selesai! ✓
                   </span>
                 )}
               </div>
@@ -131,10 +131,10 @@ const MiniGames: React.FC<MiniGamesProps> = ({ userProgress, updateProgress }) =
 
               <div className="flex items-center justify-between">
                 <span className="text-purple-600 font-semibold">
-                  Up to {game.maxPoints} points
+                  Hingga {game.maxPoints} poin
                 </span>
                 {!isUnlocked && (
-                  <span className="text-gray-400 text-sm">Requires Level {game.requiredLevel}</span>
+                  <span className="text-gray-400 text-sm">Perlu Level {game.requiredLevel}</span>
                 )}
                 {isUnlocked && (
                   <ArrowRight className="h-6 w-6 text-purple-600" />
@@ -162,63 +162,63 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
   const rules = [
     {
       id: 1,
-      text: "Your password must be at least 5 characters",
+      text: "Kata sandi harus minimal 5 karakter",
       check: (pwd: string) => pwd.length >= 5,
-      hint: "Try typing more letters or numbers!"
+      hint: "Coba ketik lebih banyak huruf atau angka!"
     },
     {
       id: 2,
-      text: "Your password must include a number",
+      text: "Kata sandi harus mengandung angka",
       check: (pwd: string) => /\d/.test(pwd),
-      hint: "Add any number like 1, 2, 3..."
+      hint: "Tambahkan angka seperti 1, 2, 3..."
     },
     {
       id: 3,
-      text: "Your password must include an uppercase letter",
+      text: "Kata sandi harus mengandung huruf besar",
       check: (pwd: string) => /[A-Z]/.test(pwd),
-      hint: "Add a capital letter like A, B, C..."
+      hint: "Tambahkan huruf kapital seperti A, B, C..."
     },
     {
       id: 4,
-      text: "Your password must include a special character",
+      text: "Kata sandi harus mengandung karakter khusus",
       check: (pwd: string) => /[!@#$%^&*(),.?\":{}|<>]/.test(pwd),
-      hint: "Try adding ! or @ or # or $"
+      hint: "Coba tambahkan ! atau @ atau # atau $"
     },
     {
       id: 5,
-      text: "Your password must be at least 8 characters",
+      text: "Kata sandi harus minimal 8 karakter",
       check: (pwd: string) => pwd.length >= 8,
-      hint: "Make your password longer!"
+      hint: "Buat kata sandimu lebih panjang!"
     },
     {
       id: 6,
-      text: "Your password must include a lowercase letter",
+      text: "Kata sandi harus mengandung huruf kecil",
       check: (pwd: string) => /[a-z]/.test(pwd),
-      hint: "Add a small letter like a, b, c..."
+      hint: "Tambahkan huruf kecil seperti a, b, c..."
     },
     {
       id: 7,
-      text: "Your password must not contain the word 'password'",
-      check: (pwd: string) => !pwd.toLowerCase().includes('password'),
-      hint: "Remove the word 'password' from your password!"
+      text: "Kata sandi tidak boleh mengandung kata 'sandi'",
+      check: (pwd: string) => !pwd.toLowerCase().includes('sandi'),
+      hint: "Hapus kata 'sandi' dari kata sandimu!"
     },
     {
       id: 8,
-      text: "Your password must include the current year (2024)",
-      check: (pwd: string) => pwd.includes('2024'),
-      hint: "Add 2024 somewhere in your password!"
+      text: "Kata sandi harus mengandung tahun sekarang (2025)",
+      check: (pwd: string) => pwd.includes('2025'),
+      hint: "Tambahkan 2025 di kata sandimu!"
     },
     {
       id: 9,
-      text: "Your password must be at least 12 characters",
+      text: "Kata sandi harus minimal 12 karakter",
       check: (pwd: string) => pwd.length >= 12,
-      hint: "Your password needs to be even longer!"
+      hint: "Kata sandimu perlu lebih panjang lagi!"
     },
     {
       id: 10,
-      text: "Your password must include an emoji 🔒",
+      text: "Kata sandi harus mengandung emoji gembok 🔒",
       check: (pwd: string) => pwd.includes('🔒'),
-      hint: "Copy and paste this emoji: 🔒"
+      hint: "Salin dan tempel emoji ini: 🔒"
     }
   ];
 
@@ -307,31 +307,31 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
         <div className="bg-white rounded-3xl shadow-xl p-8">
           <div className="text-center mb-8">
             <Shield className="h-16 w-16 text-blue-600 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">The Password Game 🔐</h2>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">Benteng Kata Sandi 🔐</h2>
             <p className="text-gray-600 text-lg">
-              Create a password while following an ever-growing list of rules! 
-              Each time you satisfy all current rules, a new rule appears. Can you satisfy them all?
+              Buat kata sandi yang kuat sambil mengikuti aturan yang terus bertambah! 
+              Setiap kali kamu memenuhi semua aturan, aturan baru akan muncul. Bisakah kamu memenuhi semuanya?
             </p>
           </div>
 
           <div className="bg-blue-50 rounded-2xl p-6 mb-8">
-            <h3 className="font-bold text-blue-800 mb-4">How to Play:</h3>
+            <h3 className="font-bold text-blue-800 mb-4">Cara Bermain:</h3>
             <ul className="space-y-2 text-blue-700">
-              <li>• Start with simple rules like "must be 5 characters"</li>
-              <li>• Each time you satisfy all rules, a new rule appears!</li>
-              <li>• Rules get progressively more challenging and creative</li>
-              <li>• You have 2 minutes to satisfy all 10 rules</li>
-              <li>• Use hints if you get stuck (but they cost points!)</li>
+              <li>• Mulai dengan aturan sederhana seperti "minimal 5 karakter"</li>
+              <li>• Setiap kali kamu memenuhi semua aturan, aturan baru akan muncul!</li>
+              <li>• Aturan akan semakin menantang dan unik</li>
+              <li>• Kamu punya waktu 2 menit untuk memenuhi semua 10 aturan</li>
+              <li>• Gunakan petunjuk jika stuck (tapi akan mengurangi poin!)</li>
             </ul>
           </div>
 
           <div className="bg-yellow-50 rounded-2xl p-6 mb-8">
-            <h3 className="font-bold text-yellow-800 mb-2">🏆 Scoring:</h3>
+            <h3 className="font-bold text-yellow-800 mb-2">🏆 Sistem Poin:</h3>
             <ul className="space-y-1 text-yellow-700">
-              <li>• Complete all rules: 60 points</li>
-              <li>• Time bonus: +1 point per 10 seconds remaining</li>
-              <li>• Hint penalty: -2 points per hint used</li>
-              <li>• Maximum score: 100 points</li>
+              <li>• Selesaikan semua aturan: 60 poin</li>
+              <li>• Bonus waktu: +1 poin per 10 detik tersisa</li>
+              <li>• Penalti petunjuk: -2 poin per petunjuk yang digunakan</li>
+              <li>• Poin maksimal: 100 poin</li>
             </ul>
           </div>
 
@@ -340,7 +340,7 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
               onClick={startGame}
               className="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition-colors"
             >
-              Start The Challenge! 🚀
+              Mulai Tantangan! 🚀
             </button>
           </div>
         </div>
@@ -366,13 +366,13 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">💡 Hint!</h3>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">💡 Petunjuk!</h3>
               <p className="text-gray-600 mb-6 text-lg leading-relaxed">{currentHint}</p>
               <button
                 onClick={() => setShowHint(false)}
                 className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow-lg"
               >
-                Got it! ✨
+                Mengerti! ✨
               </button>
             </div>
           </div>
@@ -385,46 +385,46 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
             onClick={onBack}
             className="text-gray-600 hover:text-gray-800 font-semibold"
           >
-            ← Back to Games
+            ← Kembali ke Games
           </button>
           <div className="flex items-center gap-6">
             <div className="text-center">
               <div className={`text-2xl font-bold ${timeLeft <= 30 ? 'text-red-600' : 'text-blue-600'}`}>
                 {formatTime(timeLeft)}
               </div>
-              <div className="text-sm text-gray-600">Time Left</div>
+              <div className="text-sm text-gray-600">Waktu Tersisa</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-green-600">{currentRuleIndex + 1}/{rules.length}</div>
-              <div className="text-sm text-gray-600">Rules Active</div>
+              <div className="text-sm text-gray-600">Aturan Aktif</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-purple-600">{hintsUsed}</div>
-              <div className="text-sm text-gray-600">Hints Used</div>
+              <div className="text-sm text-gray-600">Petunjuk Digunakan</div>
             </div>
           </div>
         </div>
 
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Create Your Password! 🔐</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Buat Kata Sandimu! 🔐</h2>
           <div className="relative">
             <input
               type="text"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Start typing your password..."
+              placeholder="Mulai ketik kata sandimu..."
               className="w-full p-4 text-xl border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none font-mono"
               autoFocus
             />
             <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-              <span className="text-gray-400 text-sm">{password.length} chars</span>
+              <span className="text-gray-400 text-sm">{password.length} karakter</span>
             </div>
           </div>
         </div>
 
         {/* Rules List */}
         <div className="space-y-4 mb-8">
-          <h3 className="text-lg font-bold text-gray-800">Password Rules:</h3>
+          <h3 className="text-lg font-bold text-gray-800">Aturan Kata Sandi:</h3>
           {getActiveRules().map((rule, index) => {
             const isValid = rule.check(password);
             const isLatest = index === currentRuleIndex;
@@ -450,11 +450,11 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
                     <span className={`font-medium ${
                       isValid ? 'text-green-700' : 'text-red-700'
                     }`}>
-                      Rule {rule.id}: {rule.text}
+                      Aturan {rule.id}: {rule.text}
                     </span>
                     {isLatest && !isValid && (
                       <span className="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs font-semibold">
-                        NEW!
+                        BARU!
                       </span>
                     )}
                   </div>
@@ -463,7 +463,7 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
                       onClick={() => useHint(rule.id)}
                       className="bg-yellow-500 text-white px-3 py-1 rounded-lg text-sm font-semibold hover:bg-yellow-600 transition-colors"
                     >
-                      Hint (-2 pts)
+                      Petunjuk (-2 poin)
                     </button>
                   )}
                 </div>
@@ -475,7 +475,7 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
         {/* Progress Bar */}
         <div className="bg-gray-100 rounded-2xl p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="font-bold text-gray-800">Progress:</span>
+            <span className="font-bold text-gray-800">Kemajuan:</span>
             <span className="font-bold text-blue-600">
               {Math.round(((currentRuleIndex + (checkAllActiveRules() ? 1 : 0)) / rules.length) * 100)}%
             </span>
@@ -493,11 +493,11 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
           <div className="mt-6 bg-red-50 border border-red-200 rounded-xl p-4">
             <div className="flex items-center gap-2 mb-2">
               <AlertCircle className="h-5 w-5 text-red-600" />
-              <span className="font-bold text-red-700">Rules that need fixing:</span>
+              <span className="font-bold text-red-700">Aturan yang perlu diperbaiki:</span>
             </div>
             <ul className="text-red-600 text-sm space-y-1">
               {getFailedRules().map(rule => (
-                <li key={rule.id}>• Rule {rule.id}: {rule.text}</li>
+                <li key={rule.id}>• Aturan {rule.id}: {rule.text}</li>
               ))}
             </ul>
           </div>
@@ -507,7 +507,7 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
   );
 };
 
-// Share or Shield Game Component (unchanged)
+// Share or Shield Game Component
 const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: () => void }> = ({ onComplete, onBack }) => {
   const [currentCard, setCurrentCard] = useState(0);
   const [score, setScore] = useState(0);
@@ -516,16 +516,18 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
   const [gameStarted, setGameStarted] = useState(false);
 
   const infoCards = [
-    { info: 'Your favorite color', safe: true, explanation: 'Your favorite color is generally safe to share!' },
-    { info: 'Your home address', safe: false, explanation: 'Your address should be kept private for your safety!' },
-    { info: 'Your favorite movie', safe: true, explanation: 'Sharing your favorite movie is usually fine!' },
-    { info: 'Your school name', safe: false, explanation: 'Your school name can help strangers find you!' },
-    { info: 'Your pet\'s name', safe: true, explanation: 'Pet names are usually okay to share!' },
-    { info: 'Your phone number', safe: false, explanation: 'Phone numbers should only be shared with trusted people!' },
-    { info: 'Your favorite food', safe: true, explanation: 'Food preferences are safe to share!' },
-    { info: 'Your birthday', safe: false, explanation: 'Birthdays can be used to steal your identity!' },
-    { info: 'Your hobby', safe: true, explanation: 'Sharing hobbies is a great way to make friends!' },
-    { info: 'Your password', safe: false, explanation: 'Never share passwords with anyone!' }
+    { info: 'Warna favoritmu', safe: true, explanation: 'Warna favorit umumnya aman untuk dibagikan!' },
+    { info: 'Alamat rumahmu', safe: false, explanation: 'Alamat rumah harus dirahasiakan demi keamananmu!' },
+    { info: 'Film favoritmu', safe: true, explanation: 'Membagikan film favorit biasanya tidak masalah!' },
+    { info: 'Nama sekolahmu', safe: false, explanation: 'Nama sekolah bisa membantu orang asing menemukanmu!' },
+    { info: 'Nama hewan peliharaanmu', safe: true, explanation: 'Nama hewan peliharaan biasanya aman untuk dibagikan!' },
+    { info: 'Nomor teleponmu', safe: false, explanation: 'Nomor telepon hanya boleh dibagikan dengan orang terpercaya!' },
+    { info: 'Makanan favoritmu', safe: true, explanation: 'Preferensi makanan aman untuk dibagikan!' },
+    { info: 'Tanggal ulang tahunmu', safe: false, explanation: 'Tanggal lahir bisa digunakan untuk mencuri identitasmu!' },
+    { info: 'Hobimu', safe: true, explanation: 'Membagikan hobi adalah cara yang bagus untuk berteman!' },
+    { info: 'Kata sandimu', safe: false, explanation: 'Jangan pernah bagikan kata sandi kepada siapa pun!' },
+    { info: 'Nama lengkap orang tuamu', safe: false, explanation: 'Nama orang tua adalah informasi pribadi yang harus dilindungi!' },
+    { info: 'Tempat favoritmu untuk liburan', safe: true, explanation: 'Tempat liburan favorit umumnya aman untuk dibagikan!' }
   ];
 
   const makeChoice = (choice: 'share' | 'shield') => {
@@ -534,9 +536,9 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
     
     if (isCorrect) {
       setScore(prev => prev + 8);
-      setFeedback(`Correct! ${currentInfo.explanation}`);
+      setFeedback(`Benar! ${currentInfo.explanation}`);
     } else {
-      setFeedback(`Not quite. ${currentInfo.explanation}`);
+      setFeedback(`Belum tepat. ${currentInfo.explanation}`);
     }
     
     setShowFeedback(true);
@@ -557,19 +559,19 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
         <div className="bg-white rounded-3xl shadow-xl p-8">
           <div className="text-center mb-8">
             <Eye className="h-16 w-16 text-blue-600 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Share or Shield? 🛡️</h2>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">Bagikan atau Lindungi? 🛡️</h2>
             <p className="text-gray-600 text-lg">
-              Help decide what information is safe to share online and what should be kept private!
+              Bantu putuskan informasi mana yang aman dibagikan online dan mana yang harus dijaga kerahasiaannya!
             </p>
           </div>
 
           <div className="bg-blue-50 rounded-2xl p-6 mb-8">
-            <h3 className="font-bold text-blue-800 mb-4">How to Play:</h3>
+            <h3 className="font-bold text-blue-800 mb-4">Cara Bermain:</h3>
             <ul className="space-y-2 text-blue-700">
-              <li>• Cards with different types of information will appear</li>
-              <li>• Decide whether it's safe to SHARE or if you should SHIELD it</li>
-              <li>• You'll get immediate feedback on each choice</li>
-              <li>• Try to get as many correct as possible!</li>
+              <li>• Kartu dengan berbagai jenis informasi akan muncul</li>
+              <li>• Putuskan apakah aman untuk DIBAGIKAN atau harus DILINDUNGI</li>
+              <li>• Kamu akan mendapat umpan balik langsung untuk setiap pilihan</li>
+              <li>• Coba jawab sebanyak mungkin dengan benar!</li>
             </ul>
           </div>
 
@@ -578,7 +580,7 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
               onClick={() => setGameStarted(true)}
               className="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition-colors"
             >
-              Start the Challenge! 🚀
+              Mulai Tantangan! 🚀
             </button>
           </div>
         </div>
@@ -594,16 +596,16 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
             onClick={onBack}
             className="text-gray-600 hover:text-gray-800 font-semibold"
           >
-            ← Back to Games
+            ← Kembali ke Games
           </button>
           <div className="flex items-center gap-6">
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-600">{currentCard + 1}/{infoCards.length}</div>
-              <div className="text-sm text-gray-600">Card</div>
+              <div className="text-sm text-gray-600">Kartu</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-green-600">{score}</div>
-              <div className="text-sm text-gray-600">Points</div>
+              <div className="text-sm text-gray-600">Poin</div>
             </div>
           </div>
         </div>
@@ -615,7 +617,7 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
                 {infoCards[currentCard].info}
               </h3>
               <p className="text-gray-600 text-lg mb-8">
-                Should you share this information online?
+                Apakah kamu boleh membagikan informasi ini online?
               </p>
               
               <div className="flex justify-center gap-8">
@@ -624,14 +626,14 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
                   className="bg-green-600 text-white px-8 py-4 rounded-2xl font-bold text-xl hover:bg-green-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
                 >
                   <Eye className="h-6 w-6 mx-auto mb-2" />
-                  SHARE
+                  BAGIKAN
                 </button>
                 <button
                   onClick={() => makeChoice('shield')}
                   className="bg-red-600 text-white px-8 py-4 rounded-2xl font-bold text-xl hover:bg-red-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
                 >
                   <EyeOff className="h-6 w-6 mx-auto mb-2" />
-                  SHIELD
+                  LINDUNGI
                 </button>
               </div>
             </div>
@@ -640,10 +642,10 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
           <div className="text-center">
             <div className="bg-blue-50 rounded-3xl p-12 mb-8">
               <div className="text-6xl mb-4">
-                {feedback.startsWith('Correct') ? '🎉' : '💡'}
+                {feedback.startsWith('Benar') ? '🎉' : '💡'}
               </div>
               <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                {feedback.startsWith('Correct') ? 'Excellent!' : 'Good Try!'}
+                {feedback.startsWith('Benar') ? 'Hebat!' : 'Coba Lagi!'}
               </h3>
               <p className="text-gray-700 text-lg">{feedback}</p>
             </div>
@@ -652,7 +654,7 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
 
         <div className="bg-gray-100 rounded-2xl p-4">
           <div className="flex items-center justify-between">
-            <span className="font-bold text-gray-800">Progress:</span>
+            <span className="font-bold text-gray-800">Kemajuan:</span>
             <div className="flex-1 mx-4">
               <div className="bg-gray-300 rounded-full h-3">
                 <div 

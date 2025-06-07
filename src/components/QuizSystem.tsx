@@ -20,184 +20,184 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
   const quizzes: Quiz[] = [
     {
       id: 'privacy-basics',
-      title: 'Privacy Basics',
-      description: 'Learn what personal information is and why it matters',
+      title: 'Dasar-Dasar Privasi',
+      description: 'Pelajari apa itu informasi pribadi dan mengapa itu penting',
       level: 1,
       requiredLevel: 1,
-      requiredScore: 60, // Need 3/5 questions correct (60%)
+      requiredScore: 60, // Perlu 3/5 jawaban benar (60%)
       questions: [
         {
           id: 'q1',
-          question: 'Which of these is considered personal information?',
-          options: ['Your favorite color', 'Your full name', 'Your favorite movie', 'Your pet\'s breed'],
+          question: 'Manakah yang termasuk informasi pribadi?',
+          options: ['Warna favoritmu', 'Nama lengkapmu', 'Film favoritmu', 'Jenis hewan peliharaanmu'],
           correctAnswer: 1,
-          explanation: 'Your full name is personal information because it can identify you specifically! Keep it safe and only share with trusted people.',
+          explanation: 'Nama lengkapmu adalah informasi pribadi karena bisa mengenali dirimu secara khusus! Jagalah dengan baik dan hanya bagikan dengan orang yang terpercaya.',
           points: 20
         },
         {
           id: 'q2',
-          question: 'Who should you share your home address with online?',
-          options: ['Anyone who asks nicely', 'Only people you know in real life', 'Everyone on social media', 'No one, unless it\'s necessary and with a trusted adult'],
+          question: 'Kepada siapa kamu boleh membagikan alamat rumahmu secara online?',
+          options: ['Siapa saja yang bertanya dengan sopan', 'Hanya orang yang kamu kenal di dunia nyata', 'Semua orang di media sosial', 'Tidak kepada siapa pun, kecuali perlu dan dengan persetujuan orang dewasa terpercaya'],
           correctAnswer: 3,
-          explanation: 'Your address is very private information! Only share it when absolutely necessary and always with a trusted adult\'s permission.',
+          explanation: 'Alamatmu adalah informasi yang sangat pribadi! Hanya bagikan jika benar-benar perlu dan selalu dengan izin orang dewasa yang terpercaya.',
           points: 20
         },
         {
           id: 'q3',
-          question: 'What is a digital footprint?',
-          options: ['Footprints you make while using a computer', 'The trail of information you leave online', 'A special type of shoe for gamers', 'Pictures of feet on the internet'],
+          question: 'Apa itu jejak digital?',
+          options: ['Jejak kaki yang kamu buat saat menggunakan komputer', 'Jejak informasi yang kamu tinggalkan online', 'Jenis sepatu khusus untuk gamer', 'Foto kaki di internet'],
           correctAnswer: 1,
-          explanation: 'A digital footprint is all the information about you that exists online - like comments, photos, and searches! It follows you everywhere.',
+          explanation: 'Jejak digital adalah semua informasi tentang dirimu yang ada di internet - seperti komentar, foto, dan pencarian! Jejak ini mengikutimu ke mana-mana.',
           points: 20
         },
         {
           id: 'q4',
-          question: 'If someone online asks for your school name, you should:',
-          options: ['Tell them right away', 'Ask a trusted adult first', 'Only tell them if they seem nice', 'Share it on social media'],
+          question: 'Jika ada orang online yang menanyakan nama sekolahmu, kamu harus:',
+          options: ['Langsung memberitahu mereka', 'Bertanya dulu kepada orang dewasa terpercaya', 'Memberitahu hanya jika mereka terlihat baik', 'Membagikannya di media sosial'],
           correctAnswer: 1,
-          explanation: 'Always ask a trusted adult before sharing information about where you go to school. This helps keep you safe!',
+          explanation: 'Selalu tanyakan dulu kepada orang dewasa terpercaya sebelum membagikan informasi tentang sekolahmu. Ini membantu menjaga keamananmu!',
           points: 20
         },
         {
           id: 'q5',
-          question: 'Which of these is the safest to share online?',
-          options: ['Your phone number', 'Your favorite book', 'Your birthday', 'Your home address'],
+          question: 'Manakah yang paling aman untuk dibagikan online?',
+          options: ['Nomor teleponmu', 'Buku favoritmu', 'Tanggal lahirmu', 'Alamat rumahmu'],
           correctAnswer: 1,
-          explanation: 'Your favorite book is safe to share! It\'s a great way to connect with others who like the same things without revealing personal details.',
+          explanation: 'Buku favoritmu aman untuk dibagikan! Ini cara yang bagus untuk terhubung dengan orang lain yang menyukai hal yang sama tanpa membuka detail pribadi.',
           points: 20
         }
       ]
     },
     {
       id: 'password-power',
-      title: 'Password Power',
-      description: 'Master the art of creating strong, secure passwords',
+      title: 'Kekuatan Kata Sandi',
+      description: 'Kuasai seni membuat kata sandi yang kuat dan aman',
       level: 2,
-      requiredLevel: 2, // Need to be level 2 (complete Privacy Basics first)
-      requiredScore: 75, // Need 3/4 questions correct (75%)
+      requiredLevel: 2, // Perlu level 2 (selesaikan Dasar-Dasar Privasi dulu)
+      requiredScore: 75, // Perlu 3/4 jawaban benar (75%)
       questions: [
         {
           id: 'p1',
-          question: 'Which password is strongest?',
+          question: 'Kata sandi mana yang paling kuat?',
           options: ['password123', 'MyP@ssw0rd!2024', '12345678', 'qwerty'],
           correctAnswer: 1,
-          explanation: 'Strong passwords have uppercase letters, lowercase letters, numbers, and symbols! They\'re like super-strong locks for your accounts.',
+          explanation: 'Kata sandi yang kuat memiliki huruf besar, huruf kecil, angka, dan simbol! Mereka seperti kunci super kuat untuk akun-akunmu.',
           points: 25
         },
         {
           id: 'p2',
-          question: 'Should you use the same password for everything?',
-          options: ['Yes, it\'s easier to remember', 'No, use different passwords for different accounts', 'Only for important accounts', 'It doesn\'t matter'],
+          question: 'Haruskah kamu menggunakan kata sandi yang sama untuk semua akun?',
+          options: ['Ya, lebih mudah diingat', 'Tidak, gunakan kata sandi berbeda untuk akun berbeda', 'Hanya untuk akun penting', 'Tidak masalah'],
           correctAnswer: 1,
-          explanation: 'Using different passwords keeps your accounts safer! If one gets compromised, the others stay protected.',
+          explanation: 'Menggunakan kata sandi berbeda membuat akun-akunmu lebih aman! Jika satu dikompromikan, yang lain tetap terlindungi.',
           points: 25
         },
         {
           id: 'p3',
-          question: 'What should you do if you forget your password?',
-          options: ['Use the same password for everything', 'Ask a friend to help you guess it', 'Use the "forgot password" feature', 'Write it on a sticky note'],
+          question: 'Apa yang harus kamu lakukan jika lupa kata sandi?',
+          options: ['Menggunakan kata sandi yang sama untuk semuanya', 'Minta teman membantu menebaknya', 'Menggunakan fitur "lupa kata sandi"', 'Menulisnya di kertas tempel'],
           correctAnswer: 2,
-          explanation: 'The "forgot password" feature is the safest way to reset your password! It sends a secure link to your email.',
+          explanation: 'Fitur "lupa kata sandi" adalah cara teraman untuk mereset kata sandimu! Ini mengirimkan tautan aman ke emailmu.',
           points: 25
         },
         {
           id: 'p4',
-          question: 'Who should you share your passwords with?',
-          options: ['Your best friend', 'Your teacher', 'A trusted adult like a parent', 'Anyone who asks'],
+          question: 'Kepada siapa kamu boleh membagikan kata sandimu?',
+          options: ['Sahabatmu', 'Gurumu', 'Orang dewasa terpercaya seperti orang tua', 'Siapa saja yang bertanya'],
           correctAnswer: 2,
-          explanation: 'Only share passwords with trusted adults like parents or guardians who help keep you safe online!',
+          explanation: 'Hanya bagikan kata sandi dengan orang dewasa terpercaya seperti orang tua atau wali yang membantu menjaga keamananmu online!',
           points: 25
         }
       ]
     },
     {
       id: 'phishing-detective',
-      title: 'Phishing Detective',
-      description: 'Learn to spot and avoid online tricks and scams',
+      title: 'Detektif Phishing',
+      description: 'Belajar mengenali dan menghindari trik serta penipuan online',
       level: 3,
-      requiredLevel: 3, // Need to be level 3 (complete Password Power first)
-      requiredScore: 70, // Need 3/4 questions correct (70%)
+      requiredLevel: 3, // Perlu level 3 (selesaikan Kekuatan Kata Sandi dulu)
+      requiredScore: 70, // Perlu 3/4 jawaban benar (70%)
       questions: [
         {
           id: 'ph1',
-          question: 'What is phishing?',
-          options: ['Catching fish online', 'Tricks to steal your information', 'A new social media app', 'A computer game'],
+          question: 'Apa itu phishing?',
+          options: ['Memancing ikan secara online', 'Trik untuk mencuri informasimu', 'Aplikasi media sosial baru', 'Permainan komputer'],
           correctAnswer: 1,
-          explanation: 'Phishing is when bad actors try to trick you into giving them your personal information! They pretend to be someone trustworthy.',
+          explanation: 'Phishing adalah saat orang jahat mencoba menipumu untuk memberikan informasi pribadimu! Mereka menyamar sebagai orang yang bisa dipercaya.',
           points: 25
         },
         {
           id: 'ph2',
-          question: 'You receive an email saying "You won $1000! Click here!" What should you do?',
-          options: ['Click immediately!', 'Ask a trusted adult first', 'Share it with friends', 'Reply with your information'],
+          question: 'Kamu menerima email yang mengatakan "Kamu menang Rp15.000.000! Klik di sini!" Apa yang harus kamu lakukan?',
+          options: ['Langsung klik!', 'Tanyakan dulu kepada orang dewasa terpercaya', 'Bagikan dengan teman-teman', 'Balas dengan informasimu'],
           correctAnswer: 1,
-          explanation: 'This sounds like a phishing scam! Always ask a trusted adult before clicking suspicious links or claiming prizes.',
+          explanation: 'Ini terdengar seperti penipuan phishing! Selalu tanyakan kepada orang dewasa terpercaya sebelum mengklik tautan mencurigakan atau mengklaim hadiah.',
           points: 25
         },
         {
           id: 'ph3',
-          question: 'A website asks for your password to "verify your account." What\'s the safest action?',
-          options: ['Enter your password right away', 'Check with a trusted adult', 'Give them a fake password', 'Share your username only'],
+          question: 'Sebuah website meminta kata sandimu untuk "memverifikasi akun." Tindakan paling aman adalah?',
+          options: ['Langsung masukkan kata sandimu', 'Cek dengan orang dewasa terpercaya', 'Berikan kata sandi palsu', 'Hanya bagikan username'],
           correctAnswer: 1,
-          explanation: 'Legitimate websites rarely ask you to verify by entering your password in emails or pop-ups. Always check with a trusted adult!',
+          explanation: 'Website resmi jarang meminta verifikasi dengan memasukkan kata sandi di email atau pop-up. Selalu cek dengan orang dewasa terpercaya!',
           points: 25
         },
         {
           id: 'ph4',
-          question: 'How can you tell if a website is safe?',
-          options: ['It has lots of colors', 'It has "https://" and a lock icon', 'It loads quickly', 'It has many ads'],
+          question: 'Bagaimana cara mengetahui apakah website aman?',
+          options: ['Memiliki banyak warna', 'Memiliki "https://" dan ikon gembok', 'Memuat dengan cepat', 'Memiliki banyak iklan'],
           correctAnswer: 1,
-          explanation: 'Look for "https://" and a lock icon in your browser! These show the website is using secure encryption to protect your information.',
+          explanation: 'Cari "https://" dan ikon gembok di browsermu! Ini menunjukkan website menggunakan enkripsi aman untuk melindungi informasimu.',
           points: 25
         }
       ]
     },
     {
       id: 'social-media-safety',
-      title: 'Social Media Safety',
-      description: 'Navigate social platforms like a privacy pro',
+      title: 'Keamanan Media Sosial',
+      description: 'Jelajahi platform sosial seperti ahli privasi',
       level: 4,
-      requiredLevel: 4, // Need to be level 4 (complete Phishing Detective first)
-      requiredScore: 80, // Need 4/5 questions correct (80%)
+      requiredLevel: 4, // Perlu level 4 (selesaikan Detektif Phishing dulu)
+      requiredScore: 80, // Perlu 4/5 jawaban benar (80%)
       questions: [
         {
           id: 's1',
-          question: 'What should you do before posting a photo online?',
-          options: ['Post it immediately', 'Think about who might see it', 'Add your location', 'Tag everyone you know'],
+          question: 'Apa yang harus kamu lakukan sebelum memposting foto online?',
+          options: ['Langsung posting', 'Pikirkan siapa yang mungkin melihatnya', 'Tambahkan lokasimu', 'Tag semua orang yang kamu kenal'],
           correctAnswer: 1,
-          explanation: 'Always think before you post! Once something is online, it can be seen by many people and stay there forever.',
+          explanation: 'Selalu pikirkan sebelum memposting! Sekali sesuatu ada online, bisa dilihat banyak orang dan bertahan selamanya.',
           points: 20
         },
         {
           id: 's2',
-          question: 'Someone you don\'t know wants to be your friend online. You should:',
-          options: ['Accept immediately', 'Ask a trusted adult first', 'Accept if they seem nice', 'Ignore them completely'],
+          question: 'Seseorang yang tidak kamu kenal ingin berteman denganmu online. Kamu harus:',
+          options: ['Langsung terima', 'Tanyakan dulu kepada orang dewasa terpercaya', 'Terima jika mereka terlihat baik', 'Abaikan sepenuhnya'],
           correctAnswer: 1,
-          explanation: 'Always ask a trusted adult before accepting friend requests from people you don\'t know in real life!',
+          explanation: 'Selalu tanyakan kepada orang dewasa terpercaya sebelum menerima permintaan pertemanan dari orang yang tidak kamu kenal di dunia nyata!',
           points: 20
         },
         {
           id: 's3',
-          question: 'What information should you keep private on social media?',
-          options: ['Your favorite color', 'Your school name and location', 'Your favorite movies', 'Your hobbies'],
+          question: 'Informasi apa yang harus kamu rahasiakan di media sosial?',
+          options: ['Warna favoritmu', 'Nama sekolah dan lokasimu', 'Film favoritmu', 'Hobimu'],
           correctAnswer: 1,
-          explanation: 'Keep your school name and location private! This information could help strangers find you in real life.',
+          explanation: 'Rahasiakan nama sekolah dan lokasimu! Informasi ini bisa membantu orang asing menemukanmu di dunia nyata.',
           points: 20
         },
         {
           id: 's4',
-          question: 'If someone online is being mean to you, what should you do?',
-          options: ['Be mean back', 'Tell a trusted adult', 'Keep it secret', 'Post about it publicly'],
+          question: 'Jika ada orang online yang berlaku jahat kepadamu, apa yang harus kamu lakukan?',
+          options: ['Berlaku jahat balik', 'Beritahu orang dewasa terpercaya', 'Rahasiakan', 'Posting secara umum tentang itu'],
           correctAnswer: 1,
-          explanation: 'Always tell a trusted adult if someone is being mean online! They can help you handle the situation safely.',
+          explanation: 'Selalu beritahu orang dewasa terpercaya jika ada yang berlaku jahat online! Mereka bisa membantumu menangani situasi dengan aman.',
           points: 20
         },
         {
           id: 's5',
-          question: 'What are privacy settings for?',
-          options: ['Making your profile look cool', 'Controlling who can see your posts', 'Getting more followers', 'Making posts load faster'],
+          question: 'Untuk apa pengaturan privasi?',
+          options: ['Membuat profilmu terlihat keren', 'Mengontrol siapa yang bisa melihat postinganmu', 'Mendapat lebih banyak pengikut', 'Membuat postingan memuat lebih cepat'],
           correctAnswer: 1,
-          explanation: 'Privacy settings help you control who can see your posts and information! They\'re like choosing who can come into your digital room.',
+          explanation: 'Pengaturan privasi membantumu mengontrol siapa yang bisa melihat postingan dan informasimu! Seperti memilih siapa yang boleh masuk ke kamar digitalmu.',
           points: 20
         }
       ]
@@ -325,7 +325,7 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed':
-        return 'border-green-500 bg-green-50';
+        return 'border-green-500 bg-green-50 hover:shadow-xl hover:scale-105 cursor-pointer';
       case 'available':
         return 'border-blue-500 bg-blue-50 hover:shadow-xl hover:scale-105 cursor-pointer';
       case 'locked':
@@ -346,7 +346,7 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-lg font-bold text-gray-800">{selectedQuiz.title}</h2>
-              <p className="text-sm text-gray-600">Mission Level {selectedQuiz.level}</p>
+              <p className="text-sm text-gray-600">Misi Level {selectedQuiz.level}</p>
             </div>
             <div className="flex items-center gap-3">
               <div className="text-center">
@@ -354,7 +354,7 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
                   {currentQuestion + 1}/{selectedQuiz.questions.length}
                 </span>
                 <div className="text-xs text-gray-500">
-                  Need {Math.ceil((selectedQuiz.requiredScore / 100) * selectedQuiz.questions.length)} correct
+                  Perlu {Math.ceil((selectedQuiz.requiredScore / 100) * selectedQuiz.questions.length)} benar
                 </div>
               </div>
               <div className="bg-blue-100 px-2 py-1 rounded-full">
@@ -414,11 +414,11 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
                   <Star className="h-5 w-5 text-blue-500" />
                 )}
                 <h4 className="font-bold text-base">
-                  {isCorrect ? 'Excellent! 🎉' : 'Good try! 💪'}
+                  {isCorrect ? 'Hebat! 🎉' : 'Kurang tepat 😓'}
                 </h4>
                 {isCorrect && (
                   <span className="text-green-600 font-semibold text-sm ml-auto">
-                    +{currentQ.points} points! ⭐
+                    +{currentQ.points} poin! ⭐
                   </span>
                 )}
               </div>
@@ -433,7 +433,7 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
                 onClick={handleNextQuestion}
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center gap-2 text-sm"
               >
-                {currentQuestion < selectedQuiz.questions.length - 1 ? 'Next Question' : 'Complete Mission'}
+                {currentQuestion < selectedQuiz.questions.length - 1 ? 'Pertanyaan Selanjutnya' : 'Selesaikan Misi'}
                 <ArrowRight className="h-4 w-4" />
               </button>
             </div>
@@ -460,15 +460,15 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
             {missionPassed ? (
               <>
                 <Trophy className="h-12 w-12 text-yellow-500 mx-auto mb-3" />
-                <h2 className="text-xl font-bold text-gray-800 mb-2">Mission Complete! 🎉</h2>
-                <p className="text-green-600 text-base font-semibold">You passed with {scorePercentage}%!</p>
-                <p className="text-blue-600 text-xs mt-1">🔓 Level up! New missions may be available!</p>
+                <h2 className="text-xl font-bold text-gray-800 mb-2">Misi Selesai! 🎉</h2>
+                <p className="text-green-600 text-base font-semibold">Kamu berhasil dengan skor {scorePercentage}%!</p>
+                <p className="text-blue-600 text-xs mt-1">🔓 Naik level! Misi baru mungkin sudah tersedia!</p>
               </>
             ) : (
               <>
                 <Target className="h-12 w-12 text-orange-500 mx-auto mb-3" />
-                <h2 className="text-xl font-bold text-gray-800 mb-2">Mission Incomplete 📚</h2>
-                <p className="text-orange-600 text-base font-semibold">You scored {scorePercentage}% - Need {selectedQuiz.requiredScore}% to pass</p>
+                <h2 className="text-xl font-bold text-gray-800 mb-2">Misi Belum Selesai 📚</h2>
+                <p className="text-orange-600 text-base font-semibold">Skormu {scorePercentage}% - Perlu {selectedQuiz.requiredScore}% untuk lulus</p>
               </>
             )}
           </div>
@@ -477,33 +477,33 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
                 <div className="text-lg font-bold text-blue-600">{correctAnswers}</div>
-                <div className="text-xs text-gray-600">Correct</div>
+                <div className="text-xs text-gray-600">Benar</div>
               </div>
               <div>
                 <div className="text-lg font-bold text-purple-600">{totalQuestions - correctAnswers}</div>
-                <div className="text-xs text-gray-600">Incorrect</div>
+                <div className="text-xs text-gray-600">Salah</div>
               </div>
               <div>
                 <div className="text-lg font-bold text-green-600">{missionPassed ? quizScore : 0}</div>
-                <div className="text-xs text-gray-600">Points Earned</div>
+                <div className="text-xs text-gray-600">Poin Diperoleh</div>
               </div>
             </div>
           </div>
 
           {missionPassed ? (
             <div className="mb-4">
-              <h3 className="font-bold text-gray-800 mb-1 text-sm">🎯 Mission Accomplished!</h3>
+              <h3 className="font-bold text-gray-800 mb-1 text-sm">🎯 Misi Berhasil!</h3>
               <p className="text-gray-600 text-sm">
-                You've mastered "{selectedQuiz.title}" and earned valuable privacy knowledge!
-                Check if new missions are now available for your level!
+                Kamu telah menguasai "{selectedQuiz.title}" dan mendapat pengetahuan privasi yang berharga!
+                Cek apakah ada misi baru yang tersedia untuk levelmu!
               </p>
             </div>
           ) : (
             <div className="mb-4">
-              <h3 className="font-bold text-gray-800 mb-1 text-sm">💪 Keep Learning!</h3>
+              <h3 className="font-bold text-gray-800 mb-1 text-sm">💪 Terus Belajar!</h3>
               <p className="text-gray-600 text-sm">
-                You need to get {Math.ceil((selectedQuiz.requiredScore / 100) * totalQuestions)} out of {totalQuestions} questions correct to pass this mission. 
-                Review the explanations and try again!
+                Kamu perlu menjawab {Math.ceil((selectedQuiz.requiredScore / 100) * totalQuestions)} dari {totalQuestions} pertanyaan dengan benar untuk lulus misi ini. 
+                Pelajari lagi penjelasannya dan coba lagi!
               </p>
             </div>
           )}
@@ -515,14 +515,14 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
                 className="bg-orange-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-orange-700 transition-colors flex items-center gap-2 text-sm"
               >
                 <Zap className="h-4 w-4" />
-                Try Again
+                Coba Lagi
               </button>
             )}
             <button
               onClick={resetQuiz}
               className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-sm"
             >
-              {missionPassed ? 'Choose Next Mission' : 'Back to Missions'}
+              {missionPassed ? 'Pilih Misi Selanjutnya' : 'Kembali ke Misi'}
             </button>
           </div>
         </div>
@@ -533,11 +533,11 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
   return (
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-4">Knowledge Missions 🎯</h2>
-        <p className="text-gray-600 text-lg">Complete missions in order to unlock higher levels and advance!</p>
+        <h2 className="text-3xl font-bold text-gray-800 mb-4">Misi Utama 🎯</h2>
+        <p className="text-gray-600 text-lg">Selesaikan misi seru untuk naik level dan jadi jagoan privasi!</p>
         <div className="mt-4 bg-blue-50 rounded-xl p-4 max-w-2xl mx-auto">
           <p className="text-blue-700 font-medium">
-            💡 <strong>Mission Rules:</strong> You need to answer most questions correctly to pass each mission and level up!
+            💡 <strong>Aturan Misi:</strong> Jawab sebagian besar pertanyaan dengan benar untuk lulus dan naik level!
           </p>
         </div>
       </div>
@@ -545,7 +545,7 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
       <div className="grid md:grid-cols-2 gap-6">
         {quizzes.map((quiz) => {
           const status = getQuizStatus(quiz);
-          const isClickable = status === 'available';
+          const isClickable = status === 'available' || status === 'completed';
 
           return (
             <div
@@ -578,28 +578,35 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-500">{quiz.questions.length} questions</span>
-                  <span className="text-gray-500">Need {quiz.requiredScore}% to pass</span>
+                  <span className="text-gray-500">{quiz.questions.length} pertanyaan</span>
+                  <span className="text-gray-500">Perlu {quiz.requiredScore}% untuk lulus</span>
                 </div>
                 
                 {status === 'completed' && (
                   <div className="text-green-600 font-semibold text-sm flex items-center gap-1">
                     <CheckCircle className="h-4 w-4" />
-                    Mission Completed! ✓
+                    Misi Selesai! ✓
                   </div>
                 )}
                 
                 {status === 'locked' && (
                   <div className="text-gray-400 text-sm flex items-center gap-1">
                     <Lock className="h-4 w-4" />
-                    Requires Level {quiz.requiredLevel}
+                    Perlu Level {quiz.requiredLevel}
                   </div>
                 )}
 
                 {status === 'available' && (
                   <div className="text-blue-600 font-semibold text-sm flex items-center gap-1">
                     <Target className="h-4 w-4" />
-                    Ready to start!
+                    Siap dimulai!
+                  </div>
+                )}
+
+                {status === 'completed' && (
+                  <div className="text-green-600 font-semibold text-sm flex items-center gap-1">
+                    <Zap className="h-4 w-4" />
+                    Klik untuk mulai lagi!
                   </div>
                 )}
               </div>
@@ -610,23 +617,23 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
 
       {/* Progress Overview */}
       <div className="mt-12 bg-white rounded-2xl shadow-lg p-6">
-        <h3 className="text-xl font-bold text-gray-800 mb-4">Your Mission Progress 📊</h3>
+        <h3 className="text-xl font-bold text-gray-800 mb-4">Progress Misimu 📊</h3>
         <div className="grid md:grid-cols-4 gap-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600">{userProgress.completedQuizzes.length}</div>
-            <div className="text-sm text-gray-600">Missions Completed</div>
+            <div className="text-sm text-gray-600">Misi Selesai</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-purple-600">{quizzes.length - userProgress.completedQuizzes.length}</div>
-            <div className="text-sm text-gray-600">Missions Remaining</div>
+            <div className="text-sm text-gray-600">Misi Tersisa</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">{userProgress.level}</div>
-            <div className="text-sm text-gray-600">Current Level</div>
+            <div className="text-sm text-gray-600">Level Saat Ini</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-yellow-600">{userProgress.totalPoints}</div>
-            <div className="text-sm text-gray-600">Total Points</div>
+            <div className="text-sm text-gray-600">Total Poin</div>
           </div>
         </div>
       </div>
