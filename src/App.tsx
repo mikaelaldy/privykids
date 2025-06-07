@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Star, Trophy, MessageCircle, Play, ChevronRight, Award, Lock, Eye, EyeOff, ArrowRight, Users, Target, Gamepad2, Brain, CheckCircle, Sparkles } from 'lucide-react';
+import { Shield } from 'lucide-react';
 import Dashboard from './components/Dashboard';
 import QuizSystem from './components/QuizSystem';
 import MiniGames from './components/MiniGames';
@@ -7,6 +7,9 @@ import Chatbot from './components/Chatbot';
 import Navigation from './components/Navigation';
 import LandingPage from './components/LandingPage';
 import { UserProgress, Achievement } from './types';
+import { cosmosDbService } from './services/cosmosDbService';
+import { openAIService } from './services/openAIService';
+import { logConfigStatus } from './config/azure';
 
 function App() {
   const [currentView, setCurrentView] = useState('landing');
@@ -18,6 +21,10 @@ function App() {
     completedGames: [],
     streakDays: 1
   });
+  const [servicesAvailable, setServicesAvailable] = useState({
+    cosmosDb: false,
+    openAI: false
+  });
 
   const [achievements] = useState<Achievement[]>([
     { id: 'first-steps', name: 'First Steps', description: 'Complete your first quiz!', icon: '🎯', unlocked: false },
@@ -28,23 +35,85 @@ function App() {
   ]);
 
   useEffect(() => {
-    // Load saved progress from localStorage
-    const savedProgress = localStorage.getItem('privykids-progress');
-    if (savedProgress) {
-      setUserProgress(JSON.parse(savedProgress));
-    }
+    initializeApp();
   }, []);
 
-  useEffect(() => {
-    // Save progress to localStorage
-    localStorage.setItem('privykids-progress', JSON.stringify(userProgress));
-  }, [userProgress]);
+  const initializeApp = async () => {
+    console.log('🚀 Initializing Privykids app...');
+    
+    try {
+      // Validate Azure configuration
+      const configValidation = logConfigStatus();
 
-  const updateProgress = (updates: Partial<UserProgress>) => {
-    setUserProgress(prev => ({
-      ...prev,
+      // Check service availability in background
+      const [cosmosStatus, openAIStatus] = await Promise.all([
+        cosmosDbService.getServiceStatus(),
+        openAIService.getServiceStatus()
+      ]);
+
+      setServicesAvailable({
+        cosmosDb: cosmosStatus.available,
+        openAI: openAIStatus.available
+      });
+
+      // Load user progress
+      if (cosmosStatus.available) {
+        console.log('📊 Loading progress from Cosmos DB...');
+        const result = await cosmosDbService.getUserProgress();
+        
+        if (result.success && result.data) {
+          setUserProgress(result.data);
+          console.log('✅ Progress loaded successfully');
+        } else {
+          console.warn('⚠️ Failed to load from Cosmos DB, using fallback');
+        }
+      } else {
+        console.log('📱 Loading progress from localStorage fallback...');
+        const savedProgress = localStorage.getItem('privykids-progress');
+        if (savedProgress) {
+          setUserProgress(JSON.parse(savedProgress));
+        }
+      }
+    } catch (error) {
+      console.error('💥 App initialization error:', error);
+      
+      // Fallback to localStorage
+      const savedProgress = localStorage.getItem('privykids-progress');
+      if (savedProgress) {
+        setUserProgress(JSON.parse(savedProgress));
+      }
+    }
+    
+    console.log('✨ App initialization complete!');
+  };
+
+  const updateProgress = async (updates: Partial<UserProgress>) => {
+    const newProgress = {
+      ...userProgress,
       ...updates
-    }));
+    };
+    
+    setUserProgress(newProgress);
+
+    try {
+      if (servicesAvailable.cosmosDb) {
+        console.log('💾 Saving progress to Cosmos DB...');
+        const result = await cosmosDbService.updateUserProgress(newProgress);
+        
+        if (result.success) {
+          console.log('✅ Progress saved to Cosmos DB');
+        } else {
+          console.warn('⚠️ Cosmos DB save failed, using localStorage backup');
+        }
+      } else {
+        console.log('📱 Saving progress to localStorage (offline mode)');
+        localStorage.setItem('privykids-progress', JSON.stringify(newProgress));
+      }
+    } catch (error) {
+      console.error('❌ Failed to save progress:', error);
+      // Always save to localStorage as backup
+      localStorage.setItem('privykids-progress', JSON.stringify(newProgress));
+    }
   };
 
   const startAdventure = () => {
@@ -96,6 +165,7 @@ function App() {
             <Chatbot 
               userProgress={userProgress} 
               updateProgress={updateProgress}
+              isOnline={servicesAvailable.openAI}
             />
           )}
         </main>
