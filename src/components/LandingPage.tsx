@@ -129,7 +129,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 font-nunito">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-nunito">
       {/* Navigation */}
       <LandingNavbar 
         onStartAdventure={onStartAdventure} 
@@ -137,8 +137,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
       />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-16">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
+      <section className="relative overflow-hidden pt-16 border-b border-slate-200">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(37,99,235,0.10),_transparent_55%)]"></div>
         <div className="container mx-auto px-4 py-16 relative">
           <div className="text-center max-w-4xl mx-auto">
             {/* Logo and Brand */}
@@ -152,16 +152,15 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
             </div>
 
             {/* Hero Headline */}
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6 leading-tight">
-              Ubah Anakmu Jadi
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                Pahlawan Privasi Digital! 🚀
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
+              Bangun kebiasaan digital sehat
+              <span className="block text-blue-700">
+                sejak usia dini.
               </span>
             </h2>
 
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-              Bekali anak dengan pengetahuan keamanan siber melalui petualangan game dan kuis yang seru. 
-              Belajar privasi data kini jadi menyenangkan!
+            <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+              Privykids membantu anak memahami privasi, keamanan akun, dan jejak digital lewat aktivitas interaktif yang terarah.
             </p>
 
             {/* Single CTA Button */}
@@ -171,7 +170,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
                 className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-5 rounded-2xl font-bold text-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center gap-3"
               >
                 <Rocket className="h-7 w-7" />
-                Mulai Petualangan!
+                Mulai Belajar
               </button>
             </div>
 
@@ -209,7 +208,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
       </section>
 
       {/* Importance Section (Replacing Stats) */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-slate-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h3 className="text-4xl font-bold text-gray-800 mb-4">
@@ -245,7 +244,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h3 className="text-4xl font-bold text-gray-800 mb-4">
-              Kenapa Anak-anak Akan Suka Privykids ❤️
+              Kenapa Anak-anak Akan Suka Privykids
             </h3>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Kami merancang setiap fitur agar proses belajar terasa seperti bermain.
@@ -273,11 +272,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-slate-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h3 className="text-4xl font-bold text-gray-800 mb-4">
-              Perjalanan Privasi Anakmu 🗺️
+              Perjalanan Belajar Anak
             </h3>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Dari Kadet Privasi jadi Pahlawan Privasi hanya dalam beberapa langkah seru!
@@ -325,7 +324,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h3 className="text-4xl font-bold text-gray-800 mb-4">
-              Pertanyaan yang Sering Ditanyakan 🤔
+              Pertanyaan yang Sering Ditanyakan
             </h3>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Punya pertanyaan? Kami punya jawabannya!
@@ -357,7 +356,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h3 className="text-4xl font-bold text-gray-800 mb-4">
-              Panduan untuk Orang Tua 👨‍👩‍👧‍👦
+              Panduan untuk Orang Tua
             </h3>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Tips dan panduan untuk memaksimalkan pembelajaran anak dengan Privykids.
@@ -452,7 +451,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h3 className="text-4xl font-bold text-gray-800 mb-4">
-              Visi Kami untuk Anak Indonesia 🇮🇩
+              Visi Kami untuk Anak Indonesia
             </h3>
             <p className="text-xl text-gray-600 mb-8">
               Menciptakan Generasi Emas Digital yang Cerdas, Kritis, dan Aman.
@@ -474,11 +473,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
       </section>
 
       {/* Safety & Trust Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-slate-100">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h3 className="text-4xl font-bold text-gray-800 mb-8">
-              Dibangun dengan Prinsip Keamanan & Kepercayaan 🛡️
+              Dibangun dengan Prinsip Keamanan & Kepercayaan
             </h3>
             
             <div className="grid md:grid-cols-3 gap-8 mb-12">
@@ -514,7 +513,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
       <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
         <div className="container mx-auto px-4 text-center">
           <h3 className="text-4xl font-bold mb-6">
-            Siap Memulai Petualangan Digital yang Aman? 🚀
+            Siap Memulai Pembelajaran Digital yang Aman?
           </h3>
           <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
             Bergabunglah dalam misi kami untuk menciptakan generasi digital yang lebih bijak. 
@@ -527,7 +526,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
               className="bg-white text-blue-600 px-10 py-5 rounded-2xl font-bold text-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center gap-3"
             >
               <Sparkles className="h-7 w-7" />
-              Mulai Sekarang, Gratis!
+              Coba Sekarang
             </button>
           </div>
         </div>
