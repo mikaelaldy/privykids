@@ -111,7 +111,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 font-nunito">
+    <div className="min-h-screen bg-slate-50 font-nunito">
       <div className="container mx-auto px-4 py-6">
         <AppNavbar 
           currentView={currentView} 

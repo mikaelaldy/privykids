@@ -26,7 +26,7 @@ const LandingNavbar: React.FC<LandingNavbarProps> = ({ onStartAdventure, onNavig
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo/Brand */}
@@ -34,10 +34,10 @@ const LandingNavbar: React.FC<LandingNavbarProps> = ({ onStartAdventure, onNavig
             onClick={scrollToTop}
             className="flex items-center gap-3 hover:opacity-80 transition-opacity"
           >
-            <div className="bg-gradient-to-br from-blue-600 to-purple-600 p-2 rounded-xl shadow-lg">
+            <div className="bg-blue-700 p-2 rounded-xl">
               <Shield className="h-6 w-6 text-white" />
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-2xl font-bold text-slate-900">
               Privykids
             </span>
           </button>
@@ -61,7 +61,7 @@ const LandingNavbar: React.FC<LandingNavbarProps> = ({ onStartAdventure, onNavig
             {/* CTA Button */}
             <button
               onClick={onStartAdventure}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="bg-blue-700 text-white px-6 py-2 rounded-xl font-semibold hover:bg-blue-800 transition-colors duration-200"
             >
               Mulai Petualangan!
             </button>
@@ -102,7 +102,7 @@ const LandingNavbar: React.FC<LandingNavbarProps> = ({ onStartAdventure, onNavig
               <div className="pt-4 border-t border-gray-100">
                 <button
                   onClick={onStartAdventure}
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg"
+                  className="w-full bg-blue-700 text-white py-3 rounded-xl font-semibold hover:bg-blue-800 transition-colors duration-200"
                 >
                   Mulai Petualangan!
                 </button>
