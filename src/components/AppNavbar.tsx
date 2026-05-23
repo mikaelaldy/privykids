@@ -30,7 +30,7 @@ const AppNavbar: React.FC<AppNavbarProps> = ({ currentView, setCurrentView, onBa
   };
 
   return (
-    <nav className="bg-white rounded-2xl shadow-lg mb-8">
+    <nav className="bg-slate-800 rounded-2xl shadow-lg mb-8">
       <div className="px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Logo/Brand */}
@@ -42,7 +42,7 @@ const AppNavbar: React.FC<AppNavbarProps> = ({ currentView, setCurrentView, onBa
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Privykids
               </h1>
-              <p className="text-sm text-gray-600">Akademi Privasi Digital Petualanganmu!</p>
+              <p className="text-sm text-slate-400">Akademi Privasi Digital Petualanganmu!</p>
             </div>
           </div>
 
@@ -57,7 +57,7 @@ const AppNavbar: React.FC<AppNavbarProps> = ({ currentView, setCurrentView, onBa
                   className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all duration-300 ${
                     currentView === item.id
                       ? 'bg-blue-600 text-white shadow-lg transform scale-105'
-                      : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600'
+                      : 'text-slate-400 hover:bg-blue-50 hover:text-blue-600'
                   }`}
                 >
                   <Icon className="h-5 w-5" />
@@ -82,9 +82,9 @@ const AppNavbar: React.FC<AppNavbarProps> = ({ currentView, setCurrentView, onBa
             className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
           >
             {isMenuOpen ? (
-              <X className="h-6 w-6 text-gray-700" />
+              <X className="h-6 w-6 text-slate-300" />
             ) : (
-              <Menu className="h-6 w-6 text-gray-700" />
+              <Menu className="h-6 w-6 text-slate-300" />
             )}
           </button>
         </div>
@@ -102,7 +102,7 @@ const AppNavbar: React.FC<AppNavbarProps> = ({ currentView, setCurrentView, onBa
                     className={`flex flex-col items-center gap-2 p-3 rounded-xl transition-all duration-300 ${
                       currentView === item.id
                         ? 'bg-blue-600 text-white shadow-lg'
-                        : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600'
+                        : 'text-slate-400 hover:bg-blue-50 hover:text-blue-600'
                     }`}
                   >
                     <Icon className="h-5 w-5" />

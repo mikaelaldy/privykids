@@ -62,16 +62,16 @@ const MiniGames: React.FC<MiniGamesProps> = ({ userProgress, updateProgress }) =
   if (gameCompleted) {
     return (
       <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
+        <div className="bg-slate-800 rounded-3xl shadow-xl p-8 text-center">
           <div className="mb-6">
             <Trophy className="h-16 w-16 text-yellow-500 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold text-gray-800 mb-2">Game Selesai! 🎮</h2>
-            <p className="text-gray-600 text-lg">Kamu berhasil meraih {gameScore} poin!</p>
+            <h2 className="text-3xl font-bold text-slate-100 mb-2">Game Selesai! 🎮</h2>
+            <p className="text-slate-400 text-lg">Kamu berhasil meraih {gameScore} poin!</p>
           </div>
           
           <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-6 mb-6">
-            <h3 className="font-bold text-gray-800 mb-2">Kerja Bagus!</h3>
-            <p className="text-gray-600">
+            <h3 className="font-bold text-slate-100 mb-2">Kerja Bagus!</h3>
+            <p className="text-slate-400">
               Kamu telah menyelesaikan "{selectedGame!.title}" dan mempelajari keterampilan keamanan yang penting!
             </p>
           </div>
@@ -90,8 +90,8 @@ const MiniGames: React.FC<MiniGamesProps> = ({ userProgress, updateProgress }) =
   return (
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-4">Simulator Keamanan 🎮</h2>
-        <p className="text-gray-600 text-lg">Belajar keamanan digital melalui permainan interaktif yang seru!</p>
+        <h2 className="text-3xl font-bold text-slate-100 mb-4">Simulator Keamanan 🎮</h2>
+        <p className="text-slate-400 text-lg">Belajar keamanan digital melalui permainan interaktif yang seru!</p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
@@ -102,7 +102,7 @@ const MiniGames: React.FC<MiniGamesProps> = ({ userProgress, updateProgress }) =
           return (
             <div
               key={game.id}
-              className={`bg-white rounded-2xl shadow-lg p-8 transition-all duration-300 ${
+              className={`bg-slate-800 rounded-2xl shadow-lg p-8 transition-all duration-300 ${
                 isUnlocked ? 'hover:shadow-xl hover:scale-105 cursor-pointer' : 'opacity-60'
               }`}
               onClick={() => isUnlocked && setSelectedGame(game)}
@@ -126,8 +126,8 @@ const MiniGames: React.FC<MiniGamesProps> = ({ userProgress, updateProgress }) =
                 )}
               </div>
 
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">{game.title}</h3>
-              <p className="text-gray-600 mb-6 text-lg">{game.description}</p>
+              <h3 className="text-2xl font-bold text-slate-100 mb-3">{game.title}</h3>
+              <p className="text-slate-400 mb-6 text-lg">{game.description}</p>
 
               <div className="flex items-center justify-between">
                 <span className="text-purple-600 font-semibold">
@@ -304,11 +304,11 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
   if (!gameStarted) {
     return (
       <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-xl p-8">
+        <div className="bg-slate-800 rounded-3xl shadow-xl p-8">
           <div className="text-center mb-8">
             <Shield className="h-16 w-16 text-blue-600 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Benteng Kata Sandi 🔐</h2>
-            <p className="text-gray-600 text-lg">
+            <h2 className="text-3xl font-bold text-slate-100 mb-4">Benteng Kata Sandi 🔐</h2>
+            <p className="text-slate-400 text-lg">
               Buat kata sandi yang kuat sambil mengikuti aturan yang terus bertambah! 
               Setiap kali kamu memenuhi semua aturan, aturan baru akan muncul. Bisakah kamu memenuhi semuanya?
             </p>
@@ -357,7 +357,7 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
           onClick={() => setShowHint(false)}
         >
           <div 
-            className="bg-white rounded-2xl shadow-2xl p-6 max-w-md mx-4 transform transition-all duration-300 animate-bounce-in"
+            className="bg-slate-800 rounded-2xl shadow-2xl p-6 max-w-md mx-4 transform transition-all duration-300 animate-bounce-in"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="text-center">
@@ -366,8 +366,8 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">💡 Petunjuk!</h3>
-              <p className="text-gray-600 mb-6 text-lg leading-relaxed">{currentHint}</p>
+              <h3 className="text-xl font-bold text-slate-100 mb-3">💡 Petunjuk!</h3>
+              <p className="text-slate-400 mb-6 text-lg leading-relaxed">{currentHint}</p>
               <button
                 onClick={() => setShowHint(false)}
                 className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow-lg"
@@ -379,11 +379,11 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
         </div>
       )}
       
-      <div className="bg-white rounded-3xl shadow-xl p-8">
+      <div className="bg-slate-800 rounded-3xl shadow-xl p-8">
         <div className="flex items-center justify-between mb-8">
           <button
             onClick={onBack}
-            className="text-gray-600 hover:text-gray-800 font-semibold"
+            className="text-slate-400 hover:text-slate-100 font-semibold"
           >
             ← Kembali ke Games
           </button>
@@ -392,21 +392,21 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
               <div className={`text-2xl font-bold ${timeLeft <= 30 ? 'text-red-600' : 'text-blue-600'}`}>
                 {formatTime(timeLeft)}
               </div>
-              <div className="text-sm text-gray-600">Waktu Tersisa</div>
+              <div className="text-sm text-slate-400">Waktu Tersisa</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-green-600">{currentRuleIndex + 1}/{rules.length}</div>
-              <div className="text-sm text-gray-600">Aturan Aktif</div>
+              <div className="text-sm text-slate-400">Aturan Aktif</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-purple-600">{hintsUsed}</div>
-              <div className="text-sm text-gray-600">Petunjuk Digunakan</div>
+              <div className="text-sm text-slate-400">Petunjuk Digunakan</div>
             </div>
           </div>
         </div>
 
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Buat Kata Sandimu! 🔐</h2>
+          <h2 className="text-2xl font-bold text-slate-100 mb-4">Buat Kata Sandimu! 🔐</h2>
           <div className="relative">
             <input
               type="text"
@@ -424,7 +424,7 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
 
         {/* Rules List */}
         <div className="space-y-4 mb-8">
-          <h3 className="text-lg font-bold text-gray-800">Aturan Kata Sandi:</h3>
+          <h3 className="text-lg font-bold text-slate-100">Aturan Kata Sandi:</h3>
           {getActiveRules().map((rule, index) => {
             const isValid = rule.check(password);
             const isLatest = index === currentRuleIndex;
@@ -475,7 +475,7 @@ const PasswordGame: React.FC<{ onComplete: (points: number) => void; onBack: () 
         {/* Progress Bar */}
         <div className="bg-gray-100 rounded-2xl p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="font-bold text-gray-800">Kemajuan:</span>
+            <span className="font-bold text-slate-100">Kemajuan:</span>
             <span className="font-bold text-blue-600">
               {Math.round(((currentRuleIndex + (checkAllActiveRules() ? 1 : 0)) / rules.length) * 100)}%
             </span>
@@ -712,11 +712,11 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
   if (!gameStarted) {
     return (
       <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-xl p-8">
+        <div className="bg-slate-800 rounded-3xl shadow-xl p-8">
           <div className="text-center mb-8">
             <Eye className="h-16 w-16 text-blue-600 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Bagikan atau Lindungi? 🛡️</h2>
-            <p className="text-gray-600 text-lg">
+            <h2 className="text-3xl font-bold text-slate-100 mb-4">Bagikan atau Lindungi? 🛡️</h2>
+            <p className="text-slate-400 text-lg">
               Bantu putuskan informasi mana yang aman dibagikan online dan mana yang harus dijaga kerahasiaannya!
             </p>
           </div>
@@ -757,22 +757,22 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-white rounded-3xl shadow-xl p-8">
+      <div className="bg-slate-800 rounded-3xl shadow-xl p-8">
         <div className="flex items-center justify-between mb-8">
           <button
             onClick={onBack}
-            className="text-gray-600 hover:text-gray-800 font-semibold"
+            className="text-slate-400 hover:text-slate-100 font-semibold"
           >
             ← Kembali ke Games
           </button>
           <div className="flex items-center gap-6">
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-600">{currentCard + 1}/{infoCards.length}</div>
-              <div className="text-sm text-gray-600">Kartu</div>
+              <div className="text-sm text-slate-400">Kartu</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-green-600">{score}</div>
-              <div className="text-sm text-gray-600">Poin</div>
+              <div className="text-sm text-slate-400">Poin</div>
             </div>
           </div>
         </div>
@@ -783,10 +783,10 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
             <CircularTimer />
             
             <div className="bg-gradient-to-br from-blue-100 to-purple-100 rounded-3xl p-12 mb-8 shadow-lg">
-              <h3 className="text-3xl font-bold text-gray-800 mb-6">
+              <h3 className="text-3xl font-bold text-slate-100 mb-6">
                 {infoCards[currentCard].info}
               </h3>
-              <p className="text-gray-600 text-lg mb-8">
+              <p className="text-slate-400 text-lg mb-8">
                 Apakah kamu boleh membagikan informasi ini online?
               </p>
               
@@ -816,17 +816,17 @@ const ShareOrShield: React.FC<{ onComplete: (points: number) => void; onBack: ()
               <div className="text-6xl mb-4">
                 {feedback.startsWith('Benar') ? '🎉' : feedback.startsWith('Waktu habis') ? '⏰' : '💡'}
               </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">
+              <h3 className="text-2xl font-bold text-slate-100 mb-4">
                 {feedback.startsWith('Benar') ? 'Hebat!' : feedback.startsWith('Waktu habis') ? 'Waktu Habis!' : 'Coba Lagi!'}
               </h3>
-              <p className="text-gray-700 text-lg">{feedback}</p>
+              <p className="text-slate-300 text-lg">{feedback}</p>
             </div>
           </div>
         )}
 
         <div className="bg-gray-100 rounded-2xl p-4">
           <div className="flex items-center justify-between">
-            <span className="font-bold text-gray-800">Kemajuan:</span>
+            <span className="font-bold text-slate-100">Kemajuan:</span>
             <div className="flex-1 mx-4">
               <div className="bg-gray-300 rounded-full h-3">
                 <div 

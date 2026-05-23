@@ -129,7 +129,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-nunito">
+    <div className="min-h-screen bg-slate-50 text-slate-100 font-nunito">
       {/* Navigation */}
       <LandingNavbar 
         onStartAdventure={onStartAdventure} 
@@ -152,7 +152,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
             </div>
 
             {/* Hero Headline */}
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-100 mb-6 leading-tight">
               Bangun kebiasaan digital sehat
               <span className="block text-blue-700">
                 sejak usia dini.
@@ -176,28 +176,28 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
 
             {/* Activities Section */}
             <div className="relative max-w-3xl mx-auto">
-              <div className="bg-white rounded-3xl shadow-2xl p-8 border-4 border-blue-100">
-                <h3 className="text-2xl font-bold text-gray-800 mb-6">Jelajahi Aktivitas Seru Kami:</h3>
+              <div className="bg-slate-800 rounded-3xl shadow-2xl p-8 border-4 border-blue-100">
+                <h3 className="text-2xl font-bold text-slate-100 mb-6">Jelajahi Aktivitas Seru Kami:</h3>
                 <div className="space-y-4 text-left">
                   <div className="flex items-center gap-4 p-4 bg-blue-50 rounded-lg">
                     <span className="text-2xl">🎮</span>
                     <div>
-                      <h4 className="font-bold text-gray-800">Game Interaktif</h4>
-                      <p className="text-gray-600">Latih insting keamanan anak.</p>
+                      <h4 className="font-bold text-slate-100">Game Interaktif</h4>
+                      <p className="text-slate-400">Latih insting keamanan anak.</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4 p-4 bg-purple-50 rounded-lg">
                     <span className="text-2xl">🧠</span>
                     <div>
-                      <h4 className="font-bold text-gray-800">Kuis Cerdas</h4>
-                      <p className="text-gray-600">Uji dan tingkatkan pengetahuan.</p>
+                      <h4 className="font-bold text-slate-100">Kuis Cerdas</h4>
+                      <p className="text-slate-400">Uji dan tingkatkan pengetahuan.</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4 p-4 bg-green-50 rounded-lg">
                     <span className="text-2xl">🤖</span>
                     <div>
-                      <h4 className="font-bold text-gray-800">Tanya AI Privy</h4>
-                      <p className="text-gray-600">Dapatkan jawaban instan dan ramah.</p>
+                      <h4 className="font-bold text-slate-100">Tanya AI Privy</h4>
+                      <p className="text-slate-400">Dapatkan jawaban instan dan ramah.</p>
                     </div>
                   </div>
                 </div>
@@ -211,10 +211,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
       <section className="py-20 bg-slate-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h3 className="text-4xl font-bold text-gray-800 mb-4">
+            <h3 className="text-4xl font-bold text-slate-100 mb-4">
               Kenapa Literasi Privasi Digital Penting?
             </h3>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
               Di dunia yang serba terhubung, membekali anak dengan pengetahuan adalah tameng terbaik mereka.
             </p>
           </div>
@@ -225,13 +225,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
               return (
                 <div
                   key={index}
-                  className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 text-center border-l-4 border-blue-500"
+                  className="bg-slate-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 text-center border-l-4 border-blue-500"
                 >
                   <div className={`bg-${point.color}-100 p-4 rounded-full mb-6 mx-auto w-fit`}>
                     <Icon className={`h-8 w-8 text-${point.color}-600`} />
                   </div>
-                  <h4 className="text-xl font-bold text-gray-800 mb-4">{point.title}</h4>
-                  <p className="text-gray-600 leading-relaxed">{point.description}</p>
+                  <h4 className="text-xl font-bold text-slate-100 mb-4">{point.title}</h4>
+                  <p className="text-slate-400 leading-relaxed">{point.description}</p>
                 </div>
               );
             })}
@@ -243,10 +243,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
       <section ref={fiturRef} className="py-20 bg-gradient-to-br from-blue-50 to-purple-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h3 className="text-4xl font-bold text-gray-800 mb-4">
+            <h3 className="text-4xl font-bold text-slate-100 mb-4">
               Kenapa Anak-anak Akan Suka Privykids
             </h3>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
               Kami merancang setiap fitur agar proses belajar terasa seperti bermain.
             </p>
           </div>
@@ -257,13 +257,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
               return (
                 <div
                   key={index}
-                  className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-center"
+                  className="bg-slate-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-center"
                 >
                   <div className={`bg-${feature.color}-100 p-4 rounded-full mb-6 mx-auto w-fit`}>
                     <Icon className={`h-8 w-8 text-${feature.color}-600`} />
                   </div>
-                  <h4 className="text-xl font-bold text-gray-800 mb-4">{feature.title}</h4>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                  <h4 className="text-xl font-bold text-slate-100 mb-4">{feature.title}</h4>
+                  <p className="text-slate-400 leading-relaxed">{feature.description}</p>
                 </div>
               );
             })}
@@ -275,10 +275,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
       <section className="py-20 bg-slate-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h3 className="text-4xl font-bold text-gray-800 mb-4">
+            <h3 className="text-4xl font-bold text-slate-100 mb-4">
               Perjalanan Belajar Anak
             </h3>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
               Dari Kadet Privasi jadi Pahlawan Privasi hanya dalam beberapa langkah seru!
             </p>
           </div>
@@ -289,8 +289,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
                 <div className="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold mx-auto mb-6">
                   1
                 </div>
-                <h4 className="text-xl font-bold text-gray-800 mb-4">Mulai sebagai Kadet Privasi</h4>
-                <p className="text-gray-600">
+                <h4 className="text-xl font-bold text-slate-100 mb-4">Mulai sebagai Kadet Privasi</h4>
+                <p className="text-slate-400">
                   Mulai petualanganmu dengan konsep privasi dasar lewat kuis interaktif yang seru dan kenalan sama Teman Privasi AI!
                 </p>
               </div>
@@ -299,8 +299,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
                 <div className="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold mx-auto mb-6">
                   2
                 </div>
-                <h4 className="text-xl font-bold text-gray-800 mb-4">Taklukkan Game Keamanan</h4>
-                <p className="text-gray-600">
+                <h4 className="text-xl font-bold text-slate-100 mb-4">Taklukkan Game Keamanan</h4>
+                <p className="text-slate-400">
                   Main Benteng Password, Share or Shield, dan mini-game lain yang ngajarin skill keamanan digital dunia nyata.
                 </p>
               </div>
@@ -309,8 +309,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
                 <div className="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold mx-auto mb-6">
                   3
                 </div>
-                <h4 className="text-xl font-bold text-gray-800 mb-4">Lulus sebagai Pahlawan Privasi</h4>
-                <p className="text-gray-600">
+                <h4 className="text-xl font-bold text-slate-100 mb-4">Lulus sebagai Pahlawan Privasi</h4>
+                <p className="text-slate-400">
                   Raih lencana, naik level, dan lulus jadi Pahlawan Privasi tersertifikasi yang siap menjelajahi dunia digital dengan aman!
                 </p>
               </div>
@@ -323,10 +323,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
       <section ref={faqRef} className="py-20 bg-gradient-to-br from-purple-50 to-pink-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h3 className="text-4xl font-bold text-gray-800 mb-4">
+            <h3 className="text-4xl font-bold text-slate-100 mb-4">
               Pertanyaan yang Sering Ditanyakan
             </h3>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
               Punya pertanyaan? Kami punya jawabannya!
             </p>
           </div>
@@ -334,14 +334,14 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
           <div className="max-w-4xl mx-auto">
             <div className="space-y-6">
               {faqItems.map((item, index) => (
-                <div key={index} className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+                <div key={index} className="bg-slate-800 rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
                   <div className="flex items-start gap-4">
                     <div className="bg-blue-100 p-2 rounded-full flex-shrink-0">
                       <HelpCircle className="h-5 w-5 text-blue-600" />
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold text-gray-800 mb-3">{item.question}</h4>
-                      <p className="text-gray-600 leading-relaxed">{item.answer}</p>
+                      <h4 className="text-xl font-bold text-slate-100 mb-3">{item.question}</h4>
+                      <p className="text-slate-400 leading-relaxed">{item.answer}</p>
                     </div>
                   </div>
                 </div>
@@ -352,13 +352,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
       </section>
 
       {/* For Parents Section */}
-      <section ref={parentRef} className="py-20 bg-white">
+      <section ref={parentRef} className="py-20 bg-slate-800">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h3 className="text-4xl font-bold text-gray-800 mb-4">
+            <h3 className="text-4xl font-bold text-slate-100 mb-4">
               Panduan untuk Orang Tua
             </h3>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
               Tips dan panduan untuk memaksimalkan pembelajaran anak dengan Privykids.
             </p>
           </div>
@@ -367,15 +367,15 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
             <div className="grid md:grid-cols-2 gap-12">
               {/* Left Column - Tips */}
               <div>
-                <h4 className="text-2xl font-bold text-gray-800 mb-6">💡 Tips Mendampingi Anak</h4>
+                <h4 className="text-2xl font-bold text-slate-100 mb-6">💡 Tips Mendampingi Anak</h4>
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
                     <div className="bg-blue-100 p-2 rounded-full flex-shrink-0">
                       <Clock className="h-5 w-5 text-blue-600" />
                     </div>
                     <div>
-                      <h5 className="font-bold text-gray-800 mb-2">Dampingi Saat Belajar</h5>
-                      <p className="text-gray-600">Luangkan waktu 15-30 menit untuk belajar bersama anak. Ini bukan hanya meningkatkan pemahaman, tapi juga memperkuat bonding.</p>
+                      <h5 className="font-bold text-slate-100 mb-2">Dampingi Saat Belajar</h5>
+                      <p className="text-slate-400">Luangkan waktu 15-30 menit untuk belajar bersama anak. Ini bukan hanya meningkatkan pemahaman, tapi juga memperkuat bonding.</p>
                     </div>
                   </div>
                   
@@ -384,8 +384,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
                       <MessageCircle className="h-5 w-5 text-green-600" />
                     </div>
                     <div>
-                      <h5 className="font-bold text-gray-800 mb-2">Diskusikan Materi</h5>
-                      <p className="text-gray-600">Tanyakan apa yang dipelajari anak hari ini. Diskusi terbuka membantu anak memahami konsep lebih dalam.</p>
+                      <h5 className="font-bold text-slate-100 mb-2">Diskusikan Materi</h5>
+                      <p className="text-slate-400">Tanyakan apa yang dipelajari anak hari ini. Diskusi terbuka membantu anak memahami konsep lebih dalam.</p>
                     </div>
                   </div>
                   
@@ -394,8 +394,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
                       <Target className="h-5 w-5 text-purple-600" />
                     </div>
                     <div>
-                      <h5 className="font-bold text-gray-800 mb-2">Buat Rutina Belajar</h5>
-                      <p className="text-gray-600">Jadwalkan sesi Privykids secara rutin, misalnya 3x seminggu. Konsistensi adalah kunci pembelajaran yang efektif.</p>
+                      <h5 className="font-bold text-slate-100 mb-2">Buat Rutina Belajar</h5>
+                      <p className="text-slate-400">Jadwalkan sesi Privykids secara rutin, misalnya 3x seminggu. Konsistensi adalah kunci pembelajaran yang efektif.</p>
                     </div>
                   </div>
                   
@@ -404,8 +404,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
                       <Trophy className="h-5 w-5 text-yellow-600" />
                     </div>
                     <div>
-                      <h5 className="font-bold text-gray-800 mb-2">Rayakan Pencapaian</h5>
-                      <p className="text-gray-600">Berikan apresiasi saat anak menyelesaikan misi atau mendapat lencana. Motivasi positif meningkatkan semangat belajar.</p>
+                      <h5 className="font-bold text-slate-100 mb-2">Rayakan Pencapaian</h5>
+                      <p className="text-slate-400">Berikan apresiasi saat anak menyelesaikan misi atau mendapat lencana. Motivasi positif meningkatkan semangat belajar.</p>
                     </div>
                   </div>
                 </div>
@@ -413,7 +413,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
 
               {/* Right Column - Safety Guidelines */}
               <div>
-                <h4 className="text-2xl font-bold text-gray-800 mb-6">🛡️ Panduan Keamanan</h4>
+                <h4 className="text-2xl font-bold text-slate-100 mb-6">🛡️ Panduan Keamanan</h4>
                 <div className="bg-blue-50 rounded-2xl p-6 mb-6">
                   <h5 className="font-bold text-blue-800 mb-4">Privykids Aman untuk Anak</h5>
                   <ul className="space-y-2 text-blue-700">
@@ -425,19 +425,19 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
                 </div>
                 
                 <div className="space-y-4">
-                  <div className="bg-white border border-gray-200 rounded-lg p-4">
-                    <h6 className="font-bold text-gray-800 mb-2">💬 Topik untuk Didiskusikan</h6>
-                    <p className="text-gray-600 text-sm">Password yang kuat, informasi yang boleh dibagikan online, cara mengenali penipuan internet, pentingnya ijin orang tua sebelum download aplikasi.</p>
+                  <div className="bg-slate-800 border border-gray-200 rounded-lg p-4">
+                    <h6 className="font-bold text-slate-100 mb-2">💬 Topik untuk Didiskusikan</h6>
+                    <p className="text-slate-400 text-sm">Password yang kuat, informasi yang boleh dibagikan online, cara mengenali penipuan internet, pentingnya ijin orang tua sebelum download aplikasi.</p>
                   </div>
                   
-                  <div className="bg-white border border-gray-200 rounded-lg p-4">
-                    <h6 className="font-bold text-gray-800 mb-2">📱 Praktik di Kehidupan Nyata</h6>
-                    <p className="text-gray-600 text-sm">Terapkan pembelajaran Privykids saat anak menggunakan gadget sehari-hari. Buat password untuk akun bersama, cek pengaturan privasi bersama.</p>
+                  <div className="bg-slate-800 border border-gray-200 rounded-lg p-4">
+                    <h6 className="font-bold text-slate-100 mb-2">📱 Praktik di Kehidupan Nyata</h6>
+                    <p className="text-slate-400 text-sm">Terapkan pembelajaran Privykids saat anak menggunakan gadget sehari-hari. Buat password untuk akun bersama, cek pengaturan privasi bersama.</p>
                   </div>
                   
-                  <div className="bg-white border border-gray-200 rounded-lg p-4">
-                    <h6 className="font-bold text-gray-800 mb-2">🎯 Indikator Keberhasilan</h6>
-                    <p className="text-gray-600 text-sm">Anak mulai bertanya sebelum membagikan informasi, dapat membuat password yang kuat, memahami perbedaan informasi pribadi vs publik.</p>
+                  <div className="bg-slate-800 border border-gray-200 rounded-lg p-4">
+                    <h6 className="font-bold text-slate-100 mb-2">🎯 Indikator Keberhasilan</h6>
+                    <p className="text-slate-400 text-sm">Anak mulai bertanya sebelum membagikan informasi, dapat membuat password yang kuat, memahami perbedaan informasi pribadi vs publik.</p>
                   </div>
                 </div>
               </div>
@@ -450,17 +450,17 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
       <section className="py-20 bg-gradient-to-br from-purple-50 to-pink-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h3 className="text-4xl font-bold text-gray-800 mb-4">
+            <h3 className="text-4xl font-bold text-slate-100 mb-4">
               Visi Kami untuk Anak Indonesia
             </h3>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-xl text-slate-400 mb-8">
               Menciptakan Generasi Emas Digital yang Cerdas, Kritis, dan Aman.
             </p>
           </div>
 
           <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-3xl shadow-xl p-12 text-center">
-              <p className="text-xl text-gray-700 leading-relaxed">
+            <div className="bg-slate-800 rounded-3xl shadow-xl p-12 text-center">
+              <p className="text-xl text-slate-300 leading-relaxed">
                 Kami membangun Privykids bukan hanya sebagai aplikasi, tetapi sebagai sebuah gerakan. 
                 Visi kami adalah memberdayakan setiap anak di Indonesia dengan pemahaman mendalam tentang 
                 hak privasi dan cara melindungi diri di dunia maya. Melalui permainan yang menyenangkan, 
@@ -476,7 +476,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
       <section className="py-20 bg-slate-100">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h3 className="text-4xl font-bold text-gray-800 mb-8">
+            <h3 className="text-4xl font-bold text-slate-100 mb-8">
               Dibangun dengan Prinsip Keamanan & Kepercayaan
             </h3>
             
@@ -485,24 +485,24 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
                 <div className="bg-green-100 p-4 rounded-full mb-4 mx-auto w-fit">
                   <Shield className="h-8 w-8 text-green-600" />
                 </div>
-                <h4 className="font-bold text-gray-800 mb-2">Privasi Terjaga</h4>
-                <p className="text-gray-600">Kami berkomitmen untuk tidak mengumpulkan data pribadi yang tidak diperlukan. Progres belajar dirancang untuk tetap aman.</p>
+                <h4 className="font-bold text-slate-100 mb-2">Privasi Terjaga</h4>
+                <p className="text-slate-400">Kami berkomitmen untuk tidak mengumpulkan data pribadi yang tidak diperlukan. Progres belajar dirancang untuk tetap aman.</p>
               </div>
               
               <div className="text-center">
                 <div className="bg-blue-100 p-4 rounded-full mb-4 mx-auto w-fit">
                   <Heart className="h-8 w-8 text-blue-600" />
                 </div>
-                <h4 className="font-bold text-gray-800 mb-2">Konten Sesuai Usia</h4>
-                <p className="text-gray-600">Semua materi dan permainan dirancang oleh tim kami khusus untuk anak-anak, dengan bahasa yang positif dan mudah dipahami.</p>
+                <h4 className="font-bold text-slate-100 mb-2">Konten Sesuai Usia</h4>
+                <p className="text-slate-400">Semua materi dan permainan dirancang oleh tim kami khusus untuk anak-anak, dengan bahasa yang positif dan mudah dipahami.</p>
               </div>
               
               <div className="text-center">
                 <div className="bg-purple-100 p-4 rounded-full mb-4 mx-auto w-fit">
                   <Users className="h-8 w-8 text-purple-600" />
                 </div>
-                <h4 className="font-bold text-gray-800 mb-2">Dirancang untuk Orang Tua</h4>
-                <p className="text-gray-600">Kami menyediakan platform yang aman bagi orang tua untuk memperkenalkan konsep privasi digital kepada anak-anak mereka.</p>
+                <h4 className="font-bold text-slate-100 mb-2">Dirancang untuk Orang Tua</h4>
+                <p className="text-slate-400">Kami menyediakan platform yang aman bagi orang tua untuk memperkenalkan konsep privasi digital kepada anak-anak mereka.</p>
               </div>
             </div>
           </div>
@@ -523,7 +523,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartAdventure }) => {
           <div className="flex justify-center items-center">
             <button
               onClick={onStartAdventure}
-              className="bg-white text-blue-600 px-10 py-5 rounded-2xl font-bold text-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center gap-3"
+              className="bg-slate-800 text-blue-600 px-10 py-5 rounded-2xl font-bold text-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center gap-3"
             >
               <Sparkles className="h-7 w-7" />
               Coba Sekarang

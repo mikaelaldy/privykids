@@ -341,16 +341,16 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
 
     return (
       <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl p-4">
+        <div className="bg-slate-800 rounded-2xl shadow-xl p-4">
           {/* Compact Header */}
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-lg font-bold text-gray-800">{selectedQuiz.title}</h2>
-              <p className="text-sm text-gray-600">Misi Level {selectedQuiz.level}</p>
+              <h2 className="text-lg font-bold text-slate-100">{selectedQuiz.title}</h2>
+              <p className="text-sm text-slate-400">Misi Level {selectedQuiz.level}</p>
             </div>
             <div className="flex items-center gap-3">
               <div className="text-center">
-                <span className="text-xs font-semibold text-gray-600">
+                <span className="text-xs font-semibold text-slate-400">
                   {currentQuestion + 1}/{selectedQuiz.questions.length}
                 </span>
                 <div className="text-xs text-gray-500">
@@ -373,7 +373,7 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
 
           {/* Question Section */}
           <div className="mb-4">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">{currentQ.question}</h3>
+            <h3 className="text-lg font-semibold text-slate-100 mb-4">{currentQ.question}</h3>
             <div className="grid gap-3">
               {currentQ.options.map((option, index) => (
                 <button
@@ -422,7 +422,7 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
                   </span>
                 )}
               </div>
-              <p className="text-gray-700 text-sm">{currentQ.explanation}</p>
+              <p className="text-slate-300 text-sm">{currentQ.explanation}</p>
             </div>
           )}
 
@@ -455,19 +455,19 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
 
     return (
       <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl p-6 text-center">
+        <div className="bg-slate-800 rounded-2xl shadow-xl p-6 text-center">
           <div className="mb-4">
             {missionPassed ? (
               <>
                 <Trophy className="h-12 w-12 text-yellow-500 mx-auto mb-3" />
-                <h2 className="text-xl font-bold text-gray-800 mb-2">Misi Selesai! 🎉</h2>
+                <h2 className="text-xl font-bold text-slate-100 mb-2">Misi Selesai! 🎉</h2>
                 <p className="text-green-600 text-base font-semibold">Kamu berhasil dengan skor {scorePercentage}%!</p>
                 <p className="text-blue-600 text-xs mt-1">🔓 Naik level! Misi baru mungkin sudah tersedia!</p>
               </>
             ) : (
               <>
                 <Target className="h-12 w-12 text-orange-500 mx-auto mb-3" />
-                <h2 className="text-xl font-bold text-gray-800 mb-2">Misi Belum Selesai 📚</h2>
+                <h2 className="text-xl font-bold text-slate-100 mb-2">Misi Belum Selesai 📚</h2>
                 <p className="text-orange-600 text-base font-semibold">Skormu {scorePercentage}% - Perlu {selectedQuiz.requiredScore}% untuk lulus</p>
               </>
             )}
@@ -477,31 +477,31 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
                 <div className="text-lg font-bold text-blue-600">{correctAnswers}</div>
-                <div className="text-xs text-gray-600">Benar</div>
+                <div className="text-xs text-slate-400">Benar</div>
               </div>
               <div>
                 <div className="text-lg font-bold text-purple-600">{totalQuestions - correctAnswers}</div>
-                <div className="text-xs text-gray-600">Salah</div>
+                <div className="text-xs text-slate-400">Salah</div>
               </div>
               <div>
                 <div className="text-lg font-bold text-green-600">{missionPassed ? quizScore : 0}</div>
-                <div className="text-xs text-gray-600">Poin Diperoleh</div>
+                <div className="text-xs text-slate-400">Poin Diperoleh</div>
               </div>
             </div>
           </div>
 
           {missionPassed ? (
             <div className="mb-4">
-              <h3 className="font-bold text-gray-800 mb-1 text-sm">🎯 Misi Berhasil!</h3>
-              <p className="text-gray-600 text-sm">
+              <h3 className="font-bold text-slate-100 mb-1 text-sm">🎯 Misi Berhasil!</h3>
+              <p className="text-slate-400 text-sm">
                 Kamu telah menguasai "{selectedQuiz.title}" dan mendapat pengetahuan privasi yang berharga!
                 Cek apakah ada misi baru yang tersedia untuk levelmu!
               </p>
             </div>
           ) : (
             <div className="mb-4">
-              <h3 className="font-bold text-gray-800 mb-1 text-sm">💪 Terus Belajar!</h3>
-              <p className="text-gray-600 text-sm">
+              <h3 className="font-bold text-slate-100 mb-1 text-sm">💪 Terus Belajar!</h3>
+              <p className="text-slate-400 text-sm">
                 Kamu perlu menjawab {Math.ceil((selectedQuiz.requiredScore / 100) * totalQuestions)} dari {totalQuestions} pertanyaan dengan benar untuk lulus misi ini. 
                 Pelajari lagi penjelasannya dan coba lagi!
               </p>
@@ -533,8 +533,8 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
   return (
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-4">Misi Utama 🎯</h2>
-        <p className="text-gray-600 text-lg">Selesaikan misi seru untuk naik level dan jadi jagoan privasi!</p>
+        <h2 className="text-3xl font-bold text-slate-100 mb-4">Misi Utama 🎯</h2>
+        <p className="text-slate-400 text-lg">Selesaikan misi seru untuk naik level dan jadi jagoan privasi!</p>
         <div className="mt-4 bg-blue-50 rounded-xl p-4 max-w-2xl mx-auto">
           <p className="text-blue-700 font-medium">
             💡 <strong>Aturan Misi:</strong> Jawab sebagian besar pertanyaan dengan benar untuk lulus dan naik level!
@@ -550,7 +550,7 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
           return (
             <div
               key={quiz.id}
-              className={`bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 border-2 ${getStatusColor(status)}`}
+              className={`bg-slate-800 rounded-2xl shadow-lg p-6 transition-all duration-300 border-2 ${getStatusColor(status)}`}
               onClick={() => isClickable && setSelectedQuiz(quiz)}
             >
               <div className="flex items-center justify-between mb-4">
@@ -573,8 +573,8 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
                 </div>
               </div>
 
-              <h3 className="text-xl font-bold text-gray-800 mb-2">{quiz.title}</h3>
-              <p className="text-gray-600 mb-4">{quiz.description}</p>
+              <h3 className="text-xl font-bold text-slate-100 mb-2">{quiz.title}</h3>
+              <p className="text-slate-400 mb-4">{quiz.description}</p>
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
@@ -616,24 +616,24 @@ const QuizSystem: React.FC<QuizSystemProps> = ({ userProgress, updateProgress })
       </div>
 
       {/* Progress Overview */}
-      <div className="mt-12 bg-white rounded-2xl shadow-lg p-6">
-        <h3 className="text-xl font-bold text-gray-800 mb-4">Progress Misimu 📊</h3>
+      <div className="mt-12 bg-slate-800 rounded-2xl shadow-lg p-6">
+        <h3 className="text-xl font-bold text-slate-100 mb-4">Progress Misimu 📊</h3>
         <div className="grid md:grid-cols-4 gap-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600">{userProgress.completedQuizzes.length}</div>
-            <div className="text-sm text-gray-600">Misi Selesai</div>
+            <div className="text-sm text-slate-400">Misi Selesai</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-purple-600">{quizzes.length - userProgress.completedQuizzes.length}</div>
-            <div className="text-sm text-gray-600">Misi Tersisa</div>
+            <div className="text-sm text-slate-400">Misi Tersisa</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">{userProgress.level}</div>
-            <div className="text-sm text-gray-600">Level Saat Ini</div>
+            <div className="text-sm text-slate-400">Level Saat Ini</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-yellow-600">{userProgress.totalPoints}</div>
-            <div className="text-sm text-gray-600">Total Poin</div>
+            <div className="text-sm text-slate-400">Total Poin</div>
           </div>
         </div>
       </div>
