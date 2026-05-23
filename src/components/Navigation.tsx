@@ -26,7 +26,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, setCurrentView }) 
               className={`flex flex-col items-center gap-2 px-6 py-4 rounded-xl transition-all duration-300 ${
                 currentView === item.id
                   ? 'bg-blue-600 text-white shadow-lg transform scale-105'
-                  : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600'
+                  : 'text-slate-400 hover:bg-blue-50 hover:text-blue-600'
               }`}
             >
               <Icon className="h-6 w-6" />

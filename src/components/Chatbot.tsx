@@ -201,22 +201,22 @@ Halo, Privacy Guardian! Aku Privacy Pal, siap membantu kamu belajar tentang keam
           onClick={cancelDeleteChat}
         >
           <div 
-            className="bg-white rounded-2xl shadow-2xl p-6 max-w-md mx-4 transform transition-all duration-300 animate-bounce-in"
+            className="bg-slate-800 rounded-2xl shadow-2xl p-6 max-w-md mx-4 transform transition-all duration-300 animate-bounce-in"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="text-center">
               <div className="bg-red-100 p-3 rounded-full w-fit mx-auto mb-4">
                 <AlertTriangle className="h-8 w-8 text-red-600" />
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">Hapus Riwayat Chat? 🗑️</h3>
-              <p className="text-gray-600 mb-6 text-sm leading-relaxed">
+              <h3 className="text-xl font-bold text-slate-100 mb-3">Hapus Riwayat Chat? 🗑️</h3>
+              <p className="text-slate-400 mb-6 text-sm leading-relaxed">
                 Semua percakapan dengan Privacy Pal akan dihapus dan tidak bisa dikembalikan. 
                 Yakin mau melanjutkan?
               </p>
               <div className="flex gap-3">
                 <button
                   onClick={cancelDeleteChat}
-                  className="flex-1 bg-gray-100 text-gray-700 px-4 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
+                  className="flex-1 bg-gray-100 text-slate-300 px-4 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
                 >
                   Batal
                 </button>
@@ -232,12 +232,12 @@ Halo, Privacy Guardian! Aku Privacy Pal, siap membantu kamu belajar tentang keam
         </div>
       )}
 
-      <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
+      <div className="bg-slate-800 rounded-3xl shadow-xl overflow-hidden">
         {/* Header */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="bg-white/20 p-3 rounded-full">
+              <div className="bg-slate-800/20 p-3 rounded-full">
                 <Bot className="h-8 w-8" />
               </div>
               <div>
@@ -251,7 +251,7 @@ Halo, Privacy Guardian! Aku Privacy Pal, siap membantu kamu belajar tentang keam
               {conversationStarted && (
                 <button
                   onClick={startNewConversation}
-                  className="bg-white/20 hover:bg-white/30 p-2 rounded-full transition-colors"
+                  className="bg-slate-800/20 hover:bg-slate-800/30 p-2 rounded-full transition-colors"
                   title="Mulai percakapan baru"
                 >
                   <RotateCcw className="h-5 w-5" />
@@ -261,7 +261,7 @@ Halo, Privacy Guardian! Aku Privacy Pal, siap membantu kamu belajar tentang keam
               {messages.length > 1 && (
                 <button
                   onClick={handleDeleteChat}
-                  className="bg-white/20 hover:bg-red-500/30 p-2 rounded-full transition-colors"
+                  className="bg-slate-800/20 hover:bg-red-500/30 p-2 rounded-full transition-colors"
                   title="Hapus riwayat chat"
                 >
                   <Trash2 className="h-5 w-5" />
@@ -303,13 +303,13 @@ Halo, Privacy Guardian! Aku Privacy Pal, siap membantu kamu belajar tentang keam
           
           {/* Quick Suggestions */}
           <div className="space-y-2">
-            <p className="text-sm font-medium text-gray-600">Saran pertanyaan:</p>
+            <p className="text-sm font-medium text-slate-400">Saran pertanyaan:</p>
             <div className="flex flex-wrap gap-2">
               {quickSuggestions.map((suggestion, index) => (
                 <button
                   key={index}
                   onClick={() => handleSendMessage(suggestion.text)}
-                  className="bg-white text-gray-700 px-3 py-2 rounded-full text-xs font-medium hover:bg-gray-50 transition-colors border border-gray-200 flex items-center gap-1"
+                  className="bg-slate-800 text-slate-300 px-3 py-2 rounded-full text-xs font-medium hover:bg-gray-50 transition-colors border border-gray-200 flex items-center gap-1"
                   disabled={isTyping}
                 >
                   <span>{suggestion.icon}</span>
@@ -341,7 +341,7 @@ Halo, Privacy Guardian! Aku Privacy Pal, siap membantu kamu belajar tentang keam
               <div className={`max-w-xs lg:max-w-md px-4 py-3 rounded-2xl ${
                 message.role === 'user'
                   ? 'bg-blue-600 text-white ml-auto'
-                  : 'bg-gray-100 text-gray-800'
+                  : 'bg-gray-100 text-slate-100'
               }`}>
                 <p className="whitespace-pre-line leading-relaxed">{message.content}</p>
                 <p className={`text-xs mt-2 ${

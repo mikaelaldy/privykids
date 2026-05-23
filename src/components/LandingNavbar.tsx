@@ -26,7 +26,7 @@ const LandingNavbar: React.FC<LandingNavbarProps> = ({ onStartAdventure, onNavig
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-800/95 backdrop-blur-md shadow-sm border-b border-slate-200">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo/Brand */}
@@ -37,7 +37,7 @@ const LandingNavbar: React.FC<LandingNavbarProps> = ({ onStartAdventure, onNavig
             <div className="bg-blue-700 p-2 rounded-xl">
               <Shield className="h-6 w-6 text-white" />
             </div>
-            <span className="text-2xl font-bold text-slate-900">
+            <span className="text-2xl font-bold text-slate-100">
               Privykids
             </span>
           </button>
@@ -50,7 +50,7 @@ const LandingNavbar: React.FC<LandingNavbarProps> = ({ onStartAdventure, onNavig
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors font-medium"
+                  className="flex items-center gap-2 text-slate-300 hover:text-blue-600 transition-colors font-medium"
                 >
                   <Icon className="h-4 w-4" />
                   {item.label}
@@ -73,16 +73,16 @@ const LandingNavbar: React.FC<LandingNavbarProps> = ({ onStartAdventure, onNavig
             className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
           >
             {isMenuOpen ? (
-              <X className="h-6 w-6 text-gray-700" />
+              <X className="h-6 w-6 text-slate-300" />
             ) : (
-              <Menu className="h-6 w-6 text-gray-700" />
+              <Menu className="h-6 w-6 text-slate-300" />
             )}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-100 bg-white">
+          <div className="md:hidden py-4 border-t border-gray-100 bg-slate-800">
             <div className="space-y-4">
               {navItems.map((item) => {
                 const Icon = item.icon;
@@ -93,7 +93,7 @@ const LandingNavbar: React.FC<LandingNavbarProps> = ({ onStartAdventure, onNavig
                     className="flex items-center gap-3 w-full text-left p-3 rounded-lg hover:bg-gray-50 transition-colors"
                   >
                     <Icon className="h-5 w-5 text-blue-600" />
-                    <span className="font-medium text-gray-700">{item.label}</span>
+                    <span className="font-medium text-slate-300">{item.label}</span>
                   </button>
                 );
               })}
