@@ -78,11 +78,9 @@ VITE_COSMOS_DB_ENDPOINT=https://your-cosmos-account.documents.azure.com:443/
 VITE_COSMOS_DB_KEY=your-cosmos-db-primary-key
 VITE_COSMOS_DB_DATABASE_ID=privykids-database
 
-# Azure OpenAI
-VITE_AZURE_OPENAI_ENDPOINT=https://your-openai-resource.openai.azure.com/
-VITE_AZURE_OPENAI_API_KEY=your-openai-api-key
-VITE_AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4o-mini-privykid
-VITE_AZURE_OPENAI_API_VERSION=2024-08-01-preview
+# Gemini
+VITE_GEMINI_API_KEY=your-gemini-api-key
+VITE_GEMINI_MODEL=gemini-1.5-flash
 ```
 
 ### Development
@@ -109,7 +107,7 @@ npm run preview
 
 - Node.js 18+ 
 - Azure Cosmos DB account
-- Azure OpenAI service
+- Gemini API access
 - Vercel account (for deployment)
 
 ## 🔧 Environment Setup
@@ -122,10 +120,9 @@ VITE_COSMOS_DB_ENDPOINT=https://your-cosmos-account.documents.azure.com:443/
 VITE_COSMOS_DB_KEY=your-cosmos-db-primary-key
 VITE_COSMOS_DB_DATABASE_ID=privykids-database
 
-# Azure OpenAI Configuration  
-VITE_AZURE_OPENAI_ENDPOINT=https://your-openai-resource.openai.azure.com/
-VITE_AZURE_OPENAI_API_KEY=your-openai-api-key
-VITE_AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4o-mini-privykid
+# Gemini Configuration  
+VITE_GEMINI_API_KEY=your-gemini-api-key
+VITE_GEMINI_MODEL=gemini-1.5-flash
 
 # Optional Settings
 VITE_APP_ENVIRONMENT=development
@@ -160,12 +157,24 @@ vercel dev
 
 ## 🤖 AI Assistant Setup
 
-1. Create an Azure OpenAI resource
-2. Deploy a model (recommended: `gpt-4o-mini`)
-3. Update the deployment name in environment variables
-4. The assistant will be auto-created with privacy-focused instructions
+1. Create a Gemini API key in Google AI Studio
+2. Set `VITE_GEMINI_API_KEY` in your environment
+3. Set `VITE_GEMINI_MODEL` (recommended: `gemini-1.5-flash`)
+4. Keep Cosmos DB variables unchanged
+5. Remove legacy `VITE_AZURE_OPENAI_*` variables after migration is fully complete
 
 ## 📦 Deployment
+
+
+### Vercel Environment Variable Migration (Azure OpenAI → Gemini)
+
+In **Vercel Project Settings → Environment Variables**:
+
+1. Add `VITE_GEMINI_API_KEY`
+2. Add `VITE_GEMINI_MODEL`
+3. Keep all Cosmos DB variables unchanged
+4. Remove old `VITE_AZURE_OPENAI_*` variables after migration is complete
+5. Redeploy so the new Vite environment variables are available at build time
 
 ### Vercel (Recommended)
 
