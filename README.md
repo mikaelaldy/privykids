@@ -20,7 +20,7 @@ Platform edukasi privasi digital yang interaktif untuk anak-anak Indonesia usia 
 - Passing score yang dapat dikonfigurasi
 
 ### 🤖 **AI Assistant "Privacy Pal"**
-- Chatbot berbasis Azure OpenAI (GPT-4o-mini)
+- Chatbot berbasis Google Gemini API
 - Khusus membahas topik keamanan digital
 - Bahasa Indonesia yang ramah anak
 - Sistem pencegahan off-topic otomatis
@@ -41,7 +41,7 @@ Platform edukasi privasi digital yang interaktif untuk anak-anak Indonesia usia 
 
 ### Backend & Cloud
 - **Azure Cosmos DB** untuk penyimpanan data
-- **Azure OpenAI** untuk AI assistant
+- **Google Gemini API** untuk AI assistant
 - **Vercel** untuk hosting dan serverless functions
 
 ### Audio
@@ -78,11 +78,9 @@ VITE_COSMOS_DB_ENDPOINT=https://your-cosmos-account.documents.azure.com:443/
 VITE_COSMOS_DB_KEY=your-cosmos-db-primary-key
 VITE_COSMOS_DB_DATABASE_ID=privykids-database
 
-# Azure OpenAI
-VITE_AZURE_OPENAI_ENDPOINT=https://your-openai-resource.openai.azure.com/
-VITE_AZURE_OPENAI_API_KEY=your-openai-api-key
-VITE_AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4o-mini-privykid
-VITE_AZURE_OPENAI_API_VERSION=2024-08-01-preview
+# Gemini
+VITE_GEMINI_API_KEY=your-gemini-api-key
+VITE_GEMINI_MODEL=gemini-1.5-flash
 ```
 
 ### Development
@@ -109,7 +107,7 @@ npm run preview
 
 - Node.js 18+ 
 - Azure Cosmos DB account
-- Azure OpenAI service
+- Google AI Studio / Gemini API key
 - Vercel account (for deployment)
 
 ## 🔧 Environment Setup
@@ -122,10 +120,9 @@ VITE_COSMOS_DB_ENDPOINT=https://your-cosmos-account.documents.azure.com:443/
 VITE_COSMOS_DB_KEY=your-cosmos-db-primary-key
 VITE_COSMOS_DB_DATABASE_ID=privykids-database
 
-# Azure OpenAI Configuration  
-VITE_AZURE_OPENAI_ENDPOINT=https://your-openai-resource.openai.azure.com/
-VITE_AZURE_OPENAI_API_KEY=your-openai-api-key
-VITE_AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4o-mini-privykid
+# Gemini Configuration
+VITE_GEMINI_API_KEY=your-gemini-api-key
+VITE_GEMINI_MODEL=gemini-1.5-flash
 
 # Optional Settings
 VITE_APP_ENVIRONMENT=development
@@ -158,12 +155,16 @@ vercel dev
    - `achievements` (partition key: `/userId`)  
    - `chat-history` (partition key: `/userId`)
 
-## 🤖 AI Assistant Setup
+## 🤖 AI Assistant Setup (Gemini)
 
-1. Create an Azure OpenAI resource
-2. Deploy a model (recommended: `gpt-4o-mini`)
-3. Update the deployment name in environment variables
-4. The assistant will be auto-created with privacy-focused instructions
+1. Buka Google AI Studio dan buat API key Gemini.
+2. Tambahkan `VITE_GEMINI_API_KEY` dan `VITE_GEMINI_MODEL` ke environment variables.
+3. Model yang direkomendasikan untuk biaya/performa: `gemini-1.5-flash`.
+4. Assistant akan tetap dibatasi untuk topik privasi digital sesuai instruksi aplikasi.
+
+> ⚠️ **Penting (Security):** Jika `VITE_GEMINI_API_KEY` dipakai langsung dari frontend, key akan terekspos ke client/browser.
+>
+> ✅ **Rekomendasi produksi:** Gunakan server-side proxy (misalnya Vercel Function) agar API key disimpan di server dan tidak dikirim ke browser.
 
 ## 📦 Deployment
 
@@ -240,9 +241,9 @@ vercel --prod
    - Ensure Vercel deployment has proper CORS headers
 
 3. **Assistant not responding**
-   - Verify Azure OpenAI deployment name
+   - Verify Gemini model name
    - Check API key permissions
-   - Monitor Azure OpenAI quota
+   - Monitor Gemini API quota
 
 ## 📝 License
 
